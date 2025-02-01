@@ -1,11 +1,11 @@
 @import 'tailwindcss';
 @import '@fontsource/raleway';
 
-body {
-  @apply bg-slate-800;
-}
-
-
 @theme {
   --font-raleway: "Raleway", "sans-serif";
+}
+
+.bg-mountain {
+  background-image: url('@/assets/images/backgrounds/desktop-mountain-layer.svg');
+  background-size: cover;
 }

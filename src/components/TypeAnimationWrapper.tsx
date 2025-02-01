@@ -1,13 +1,19 @@
-import { animationControls, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
 interface props {
   children: ReactNode;
   /** A duration of how long will the animation run */
   duration: number;
+  /** The background color that is behind the children*/
+  backgroundClr: string;
 }
 
-function TypeAnimationWrapper({ children, duration }: props): JSX.Element {
+function TypeAnimationWrapper({
+  children,
+  duration,
+  backgroundClr,
+}: props): JSX.Element {
   const moveLeftToRight = {
     animation: {
       transform: 'translateX(1000px)',
@@ -42,22 +48,27 @@ function TypeAnimationWrapper({ children, duration }: props): JSX.Element {
   };
 
   return (
-    <div className="relative p-1 overflow-hidden inline-block">
-      {/* Hide the rest of the white "blinker" to make it look like a blinker */}
-      <motion.div
-        variants={moveLeftToRight}
-        animate="animation"
-        className="absolute bg-slate-800 left-3 top-0 right-0 bottom-0 z-50"
-      ></motion.div>
-      {/* Blinker */}
-      <div className="relative inline-block z-10">
+    <div className="block">
+      <div className="relative p-1 overflow-hidden inline-block">
+        {/* Hide the rest of the white "blinker" to make it look like a blinker */}
         <motion.div
-          variants={blink}
+          variants={moveLeftToRight}
           animate="animation"
-          initial="initial"
-          className="absolute inline-block bg-white z-50 left-0 right-0 top-0 bottom-0"
+          className="absolute  left-3 top-0 right-0 bottom-0 z-50"
+          style={{
+            backgroundColor: backgroundClr,
+          }}
         ></motion.div>
-        {children}
+        {/* Blinker */}
+        <div className="relative inline-block z-10">
+          <motion.div
+            variants={blink}
+            animate="animation"
+            initial="initial"
+            className="absolute inline-block bg-white z-50 left-0 right-0 top-0 bottom-0"
+          ></motion.div>
+          {children}
+        </div>
       </div>
     </div>
   );

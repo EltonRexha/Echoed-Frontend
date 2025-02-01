@@ -6,12 +6,19 @@ function GettingStartedPage(): JSX.Element {
   return (
     <div>
       <Nav />
-      <TypeAnimationWrapper duration={6}>
-        <CycleHeader
-          content={['Welcome to Echoed', 'Open source social media website']}
-          delay={6000}
-        />
-      </TypeAnimationWrapper>
+      <div className="h-[95vh] bg-mountain">
+        <div className="ml-10 pt-4">
+          <TypeAnimationWrapper duration={6} backgroundClr="#140021">
+            <CycleHeader
+              content={['Welcome to Echoed', 'Open source']}
+              delay={6000}
+            />
+          </TypeAnimationWrapper>
+          <TypeAnimationWrapper duration={6.1} backgroundClr="#140021">
+            <CycleHeader content={['', 'Social Media website']} delay={6100} />
+          </TypeAnimationWrapper>
+        </div>
+      </div>
     </div>
   );
 }
