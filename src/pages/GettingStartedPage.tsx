@@ -1,4 +1,13 @@
+import CycleHeader from '@/components/ui/CycleHeader';
+import Nav from '@/components/ui/Nav';
 
-export default function GettingStartedPage() {
-  return <h1 className='text-red-500'>Getting started</h1>;
+function GettingStartedPage(): JSX.Element {
+  return (
+    <div>
+      <Nav />
+      <CycleHeader content={['Welcome to Echoed', 'Open source social media website']} delay={2000} />
+    </div>
+  );
 }
+
+export default GettingStartedPage;

@@ -1,1 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@fontsource/raleway';
+
+body {
+  @apply bg-slate-800;
+}
+
+
+@theme {
+  --font-raleway: "Raleway", "sans-serif";
+}
