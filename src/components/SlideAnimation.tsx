@@ -11,7 +11,7 @@ interface props {
 function SlideAnimation({ bgColor, duration, delay }: props): JSX.Element {
   const slideVariants = {
     initial: {
-      transform: 'translateX(-100%)',
+      x: '-100%',
     },
     animation: {
       transform: 'translateX(100%)',

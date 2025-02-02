@@ -16,7 +16,7 @@ function TypeAnimationWrapper({
 }: props): JSX.Element {
   const moveLeftToRight = {
     animation: {
-      transform: 'translateX(1000px)',
+      x: '1000px',
       transition: {
         duration: duration,
         ease: 'linear',
@@ -30,10 +30,10 @@ function TypeAnimationWrapper({
       opacity: 0,
     },
     animation: {
-      transform: 'translateX(1000px)',
+      x: '1000px',
       opacity: 1,
       transition: {
-        transform: {
+        x: {
           duration: duration,
           ease: 'linear',
           repeat: Infinity,
@@ -46,7 +46,6 @@ function TypeAnimationWrapper({
       },
     },
   };
-
   return (
     <div className="block">
       <div className="relative p-1 overflow-hidden inline-block z-10">
