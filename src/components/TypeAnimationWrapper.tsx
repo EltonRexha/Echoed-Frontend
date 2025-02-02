@@ -49,12 +49,12 @@ function TypeAnimationWrapper({
 
   return (
     <div className="block">
-      <div className="relative p-1 overflow-hidden inline-block">
+      <div className="relative p-1 overflow-hidden inline-block z-10">
         {/* Hide the rest of the white "blinker" to make it look like a blinker */}
         <motion.div
           variants={moveLeftToRight}
           animate="animation"
-          className="absolute  left-3 top-0 right-0 bottom-0 z-50"
+          className="absolute left-3 top-0 right-0 bottom-0 z-50"
           style={{
             backgroundColor: backgroundClr,
           }}
@@ -65,7 +65,7 @@ function TypeAnimationWrapper({
             variants={blink}
             animate="animation"
             initial="initial"
-            className="absolute inline-block bg-white z-50 left-0 right-0 top-0 bottom-0"
+            className="absolute inline-block bg-white z-auto left-0 right-0 top-0 bottom-0"
           ></motion.div>
           {children}
         </div>

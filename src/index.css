@@ -5,6 +5,10 @@
   --font-raleway: "Raleway", "sans-serif";
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 .bg-mountain {
   background-image: url('@/assets/images/backgrounds/desktop-mountain-layer.svg');
   background-size: cover;
