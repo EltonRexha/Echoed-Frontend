@@ -48,7 +48,7 @@ function TypeAnimationWrapper({
   };
   return (
     <div className="block">
-      <div className="relative p-1 overflow-hidden inline-block z-10">
+      <div className="relative overflow-hidden inline-block z-10">
         {/* Hide the rest of the white "blinker" to make it look like a blinker */}
         <motion.div
           variants={moveLeftToRight}

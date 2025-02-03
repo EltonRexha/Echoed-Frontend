@@ -2,10 +2,14 @@
 @import '@fontsource/raleway';
 
 @theme {
-  --font-raleway: "Raleway", "sans-serif";
+  --font-raleway: 'Raleway', 'sans-serif';
+  --color-purple-shade: #7700C6;
+  --color-purple-shade-200: #560090;
+  --color-purple-shade-300: #140021;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
