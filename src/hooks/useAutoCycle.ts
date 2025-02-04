@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function useAutoCycle(content: string[], delay: number) {
+function useAutoCycle<T>(content: T[], delay: number): T {
   const [currentContentIndex, setCurrentContentIndex] = useState(0);
 
   useEffect(() => {

@@ -3,17 +3,29 @@
 
 @theme {
   --font-raleway: 'Raleway', 'sans-serif';
-  --color-purple-shade: #7700C6;
+  --color-purple-shade-100: #7700c6;
   --color-purple-shade-200: #560090;
   --color-purple-shade-300: #140021;
 }
 
-html,
-body {
-  overflow-x: hidden;
+@layer base {
+  html,
+  body {
+    overflow-x: hidden;
+  }
 }
 
-.bg-mountain {
-  background-image: url('@/assets/images/backgrounds/desktop-mountain-layer.svg');
-  background-size: cover;
+@layer utilities {
+  .bg-mountain {
+    background-image: url('@/assets/images/backgrounds/desktop-mountain-layer.svg');
+    background-size: cover;
+  }
+  .bg-light-blob {
+    background-image: url('@/assets/images/backgrounds/blobLight.svg');
+    background-size: cover;
+  }
+  .bg-dark-blob {
+    background-image: url('@/assets/images/backgrounds/blobDark.svg');
+    background-size: cover;
+  }
 }

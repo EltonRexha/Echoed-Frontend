@@ -6,15 +6,25 @@ interface props {
   duration: number;
   /** delay in seconds*/
   delay: number;
+  /**The percentage of the start x */
+  startX?: number;
+  /**The percentage of the end x */
+  endX?: number;
 }
 
-function SlideAnimation({ bgColor, duration, delay }: props): JSX.Element {
+function SlideAnimation({
+  bgColor,
+  duration,
+  delay,
+  startX = -100,
+  endX = 100,
+}: props): JSX.Element {
   const slideVariants = {
     initial: {
-      x: '-100%',
+      x: `${startX}%`,
     },
     animation: {
-      transform: 'translateX(100%)',
+      transform: `translateX(${endX}%)`,
       transition: {
         duration: duration,
         ease: 'ease-out',
