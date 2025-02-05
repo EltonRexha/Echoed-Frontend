@@ -1,11 +1,46 @@
 @import 'tailwindcss';
-@import '@fontsource/raleway';
 
-body {
-  @apply bg-slate-800;
-}
+
+
+@import '@fontsource/raleway';
 
 
 @theme {
-  --font-raleway: "Raleway", "sans-serif";
+  --font-raleway: 'Raleway', 'sans-serif';
+  --color-purple-shade-100: #7700c6;
+  --color-purple-shade-200: #560090;
+  --color-purple-shade-300: #140021;
+  --color-dark-primary: #f3f4f6;
+  --color-dark-secondary: #d1d5db;
+  --color-dark-secondary-darker: #9ca3af;
+  --color-light-primary: #09090b;
+  --color-light-secondary: #27272a;
+  --color-light-secondary-lighter: #27272a;
+  --color-light: #d4d4d8;
+}
+
+@layer base {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .dark .bg-mountain {
+    background-image: url('./assets/images/backgrounds/desktop-mountain-layer.svg');
+    background-size: cover;
+  }
+  .bg-mountain {
+    background-image: url('@/assets/images/backgrounds/desktop-mountain-layer-light.svg');
+    background-size: cover;
+  }
+  .bg-blob {
+    background-image: url('@/assets/images/backgrounds/blobLight.svg');
+    background-size: cover;
+  }
+  .dark .bg-blob {
+    background-image: url('@/assets/images/backgrounds/blobDark.svg');
+    background-size: cover;
+  }
 }

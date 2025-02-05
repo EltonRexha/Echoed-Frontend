@@ -1,12 +1,12 @@
-<svg width="250" height="60" viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg">
-    <line x1="0" y1="20" x2="20" y2="20" stroke="#007BFF" stroke-width="3" />
-    <line x1="5" y1="30" x2="25" y2="30" stroke="#007BFF" stroke-width="3" />
-    <line x1="0" y1="40" x2="20" y2="40" stroke="#007BFF" stroke-width="3" />
-    <text x="29" y="45" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#007BFF">
+<svg width="250" height="60" viewBox="0 0 250 65" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="20" x2="20" y2="20" stroke="#560090" stroke-width="3" />
+    <line x1="5" y1="30" x2="25" y2="30" stroke="#560090" stroke-width="3" />
+    <line x1="0" y1="40" x2="20" y2="40" stroke="#560090" stroke-width="3" />
+    <text x="29" y="45" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#560090">
         E
     </text>
 
-    <text x="55" y="47" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333333">
+    <text x="55" y="47" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#9d9d9d">
         choed
     </text>
 </svg>

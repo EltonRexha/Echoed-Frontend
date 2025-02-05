@@ -1,0 +1,65 @@
+import downArrow from '@/assets/images/icons/down-arrow.svg';
+import { motion, useAnimationControls } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+interface props {
+  /**Id to where to go */
+  to: string;
+}
+
+const arrowVariants = {
+  initial: {
+    scale: 1,
+    y: 0,
+  },
+  animate: {
+    scale: 1.3,
+    y: 20,
+    transition: {
+      duration: 1,
+      ease: 'easeIn',
+      type: 'spring',
+    },
+  },
+};
+
+function ViewMore({ to }: props): JSX.Element {
+  const animateArrowControls = useAnimationControls();
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    if (hovered) {
+      animateArrowControls.start('animate');
+      return;
+    }
+
+    animateArrowControls.start('initial');
+  }, [hovered, animateArrowControls]);
+
+  return (
+    <div className="absolute left-0 right-0 bottom-0 text-light-primary dark:text-dark-primary text-2xl">
+      <div
+        className="m-auto w-max mb-30 flex flex-col items-center"
+        onMouseEnter={() => {
+          setHovered(true);
+        }}
+        onMouseLeave={() => {
+          setHovered(false);
+        }}
+      >
+        <p>
+          <a href={to}>View more</a>
+        </p>
+        <motion.div
+          variants={arrowVariants}
+          animate={animateArrowControls}
+          className="w-5 h-5"
+        >
+          <img src={downArrow} alt="" className="w-[100%] h-[100%]" />
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+export default ViewMore;
