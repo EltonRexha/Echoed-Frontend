@@ -91,7 +91,7 @@ function GettingStartedPage(): JSX.Element {
             </Link>
           </Line>
         </div>
-        <div className='font-mono'>
+        <div className="font-mono">
           <ViewMore to="#example" />
         </div>
       </div>
@@ -120,7 +120,7 @@ function GettingStartedPage(): JSX.Element {
             </div>
           </>
         )}
-        <div className="w-full min-h-[100vh] p-2 sm:p-20 grid gap-2 lg:grid-cols-2 justify-items-center">
+        <div className="w-full min-h-[100vh] p-2 sm:p-20 overflow-y-hidden grid gap-2 lg:grid-cols-2 justify-items-center">
           <div className="self-center">
             <CycleComponents delay={12000}>
               <AnimatePresence mode="popLayout">
@@ -218,51 +218,57 @@ function GettingStartedPage(): JSX.Element {
                       </p>
                     </div>
 
-                    <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
-                      How Trending Works
-                    </h3>
-                    <p>
-                      Trending topics are determined by a combination of
-                      factors, including the number of posts, engagement levels,
-                      and sudden spikes in activity. The trending list updates
-                      dynamically to reflect what people are talking about the
-                      most.
-                    </p>
+                    <div className="mb-3">
+                      <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
+                        How Trending Works
+                      </h3>
+                      <p>
+                        Trending topics are determined by a combination of
+                        factors, including the number of posts, engagement
+                        levels, and sudden spikes in activity. The trending list
+                        updates dynamically to reflect what people are talking
+                        about the most.
+                      </p>
+                    </div>
 
-                    <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
-                      Using Hashtags
-                    </h3>
-                    <ul className="flex flex-col gap-2">
-                      <li>
-                        <span className="font-bold">Create a Hashtag</span>{' '}
-                        Simply type <code>#</code> followed by a word or phrase
-                        (without spaces) to create a hashtag.
-                      </li>
-                      <li>
-                        <span className="font-bold">Discover Topics:</span>{' '}
-                        Click on a hashtag to explore posts related to that
-                        topic.
-                      </li>
-                      <li>
-                        <span className="font-bold">Join Conversations:</span>{' '}
-                        Use relevant hashtags in your posts to increase
-                        visibility and engage with a wider audience.
-                      </li>
-                    </ul>
+                    <div className="mb-3">
+                      <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
+                        Using Hashtags
+                      </h3>
+                      <ul className="flex flex-col gap-2">
+                        <li>
+                          <span className="font-bold">Create a Hashtag</span>{' '}
+                          Simply type <code>#</code> followed by a word or
+                          phrase (without spaces) to create a hashtag.
+                        </li>
+                        <li>
+                          <span className="font-bold">Discover Topics:</span>{' '}
+                          Click on a hashtag to explore posts related to that
+                          topic.
+                        </li>
+                        <li>
+                          <span className="font-bold">Join Conversations:</span>{' '}
+                          Use relevant hashtags in your posts to increase
+                          visibility and engage with a wider audience.
+                        </li>
+                      </ul>
+                    </div>
 
-                    <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
-                      Personalized Trends
-                    </h3>
-                    <p>
-                      Echoed offers personalized trending topics based on your
-                      location, interests, and engagement. You can also explore
-                      global trends to see what’s happening worldwide.
-                    </p>
+                    <div className="mb-3">
+                      <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
+                        Personalized Trends
+                      </h3>
+                      <p>
+                        Echoed offers personalized trending topics based on your
+                        location, interests, and engagement. You can also
+                        explore global trends to see what’s happening worldwide.
+                      </p>
 
-                    <p>
-                      Engage with trending topics to stay in the loop and be
-                      part of the conversation!
-                    </p>
+                      <p>
+                        Engage with trending topics to stay in the loop and be
+                        part of the conversation!
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
