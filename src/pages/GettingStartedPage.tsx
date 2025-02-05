@@ -16,6 +16,7 @@ import postDark from '@/assets/images/layout/postDark.svg';
 import postLight from '@/assets/images/layout/postLight.svg';
 import trendingDark from '@/assets/images/layout/trendingDark.svg';
 import trendingLight from '@/assets/images/layout/trendingLight.svg';
+import '@/assets/images/backgrounds/desktop-mountain-layer.svg';
 import { motion } from 'framer-motion';
 
 const layoutVariant = {
@@ -48,72 +49,78 @@ function GettingStartedPage(): JSX.Element {
   const examplesPartInView = useInView(examplesPart, { once: true });
 
   return (
-    <div className="overflow-x-hidden">
-      <div className="min-h-[101vh] bg-mountain pl-2 pr-2 sm:pl-10 relative">
-        <SlideAnimation duration={0.5} delay={0} bgColor="#7700c6" />
-        <SlideAnimation duration={0.5} delay={0.1} bgColor="#560090" />
+    <div className="overflow-x-hidden font-raleway">
+      <div className="min-h-[101vh] bg-mountain pl-2 pr-2 sm:pl-10 sm:pr-10 relative">
+        <div className="hidden sm:block">
+          <SlideAnimation duration={0.5} delay={0} bgColor="#7700c6" />
+          <SlideAnimation duration={0.5} delay={0.1} bgColor="#560090" />
+        </div>
         <GettingStartedNav />
-        <div className="p-5 mt-5 h-36 bg-slate-600 border-slate-500 border-2 w-[100%] sm:w-[450px] md:w-[550px] text-gray-100">
+        <div className="p-5 mt-5 h-36 bg-slate-600 border-slate-500 border-2 w-[100%] sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
           <TypeAnimationWrapper duration={6} backgroundClr="#475569">
             <CycleComponents delay={6000}>
-              <h1 className="sm:text-4xl text-2xl md:text-5xl  font-raleway text-gray-300 font-semiBold">
+              <h1 className="sm:text-4xl text-2xl md:text-5xl text-dark-secondary font-semiBold">
                 Welcome to Echoed
               </h1>
-              <h1 className="sm:text-4xl text-2xl md:text-5xl font-raleway text-gray-300 font-semiBold">
+              <h1 className="sm:text-4xl text-2xl md:text-5xl text-dark-secondary font-semiBold">
                 Open source
               </h1>
             </CycleComponents>
           </TypeAnimationWrapper>
           <TypeAnimationWrapper duration={6} backgroundClr="#475569">
             <CycleComponents delay={6000}>
-              <h1 className="sm:text-4xl text-2xl md:text-5xl font-raleway text-gray-300 font-semiBold">
+              <h1 className="sm:text-4xl text-2xl md:text-5xl font-raleway text-dark-secondary font-semiBold">
                 {' '}
               </h1>
-              <h1 className="sm:text-4xl text-2xl md:text-5xl font-raleway text-gray-300 font-semiBold">
+              <h1 className="sm:text-4xl text-2xl md:text-5xl font-raleway text-dark-secondary font-semiBold">
                 Social Media website
               </h1>
             </CycleComponents>
           </TypeAnimationWrapper>
         </div>
         <div>
-          <p className="text-md mt-10 ml-2 sm:ml-0 text-gray-400 font-mono">
+          <p className="text-md mt-10 ml-2 sm:ml-0 text-light-secondary dark:text-dark-secondary-darker font-mono">
             A Place To Share Your Ideas, Create Firends,{' '}
             <span className="text-purple-500">And Go Open.</span>
           </p>
         </div>
-        <div className="mt-10 text-purple-300 text-2xl ml-2 sm:ml-0 sm:mr-0 sm:text-3xl font-mono w-max">
+        <div className="mt-10 text-purple-shade-300 dark:text-purple-300 text-2xl ml-2 sm:ml-0 sm:mr-0 sm:text-3xl font-mono w-max">
           <Line color="#560090" height={2}>
             <Link to="/sign-up">
               <p>Get started</p>
             </Link>
           </Line>
         </div>
-        <ViewMore to="#example" />
+        <div className='font-mono'>
+          <ViewMore to="#example" />
+        </div>
       </div>
       <div
-        className="relative min-h-[100vh] bg-dark-blob"
+        className="relative min-h-[100vh] bg-blob"
         id="example"
         ref={examplesPart}
       >
         {examplesPartInView && (
           <>
-            <SlideAnimation
-              duration={0.5}
-              delay={0}
-              bgColor="#7700c6"
-              startX={100}
-              endX={-100}
-            />
-            <SlideAnimation
-              duration={0.5}
-              delay={0.2}
-              bgColor="#560090"
-              startX={100}
-              endX={-100}
-            />
+            <div className="hidden sm:block">
+              <SlideAnimation
+                duration={0.5}
+                delay={0}
+                bgColor="#7700c6"
+                startX={100}
+                endX={-100}
+              />
+              <SlideAnimation
+                duration={0.5}
+                delay={0.2}
+                bgColor="#560090"
+                startX={100}
+                endX={-100}
+              />
+            </div>
           </>
         )}
-        <div className="w-full h-[100vh] p-20 grid grid-cols-2 justify-items-center">
+        <div className="w-full min-h-[100vh] p-2 sm:p-20 grid gap-2 lg:grid-cols-2 justify-items-center">
           <div className="self-center">
             <CycleComponents delay={12000}>
               <AnimatePresence mode="popLayout">
@@ -152,8 +159,8 @@ function GettingStartedPage(): JSX.Element {
                   animate="animate"
                   initial="initial"
                 >
-                  <div className="text-gray-300 text-sm bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4  backdrop-blur-2xl">
-                    <h2 className="text-gray-100 text-3xl mb-10">
+                  <div className="text-light-secondary dark:text-dark-secondary bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4  backdrop-blur-2xl">
+                    <h2 className="text-light-primary dark:text-dark-primary text-3xl mb-10 font-semibold">
                       Create Posts
                     </h2>
                     <p className="mb-10">
@@ -198,9 +205,9 @@ function GettingStartedPage(): JSX.Element {
                   animate="animate"
                   initial="initial"
                 >
-                  <div className="text-gray-300 text-sm bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4 backdrop-blur-2xl">
+                  <div className="text-light-secondary dark:text-dark-secondary bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4 backdrop-blur-2xl">
                     <div className="mb-3">
-                      <h2 className="text-gray-100 text-3xl mb-2">
+                      <h2 className="text-light-primary dark:text-dark-primary text-3xl mb-2 font-semibold">
                         Trending Topics & Hashtags
                       </h2>
                       <p>
@@ -211,7 +218,7 @@ function GettingStartedPage(): JSX.Element {
                       </p>
                     </div>
 
-                    <h3 className="text-gray-100 text-2xl mb-2">
+                    <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
                       How Trending Works
                     </h3>
                     <p>
@@ -222,7 +229,7 @@ function GettingStartedPage(): JSX.Element {
                       most.
                     </p>
 
-                    <h3 className="text-gray-100 text-2xl mb-2">
+                    <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
                       Using Hashtags
                     </h3>
                     <ul className="flex flex-col gap-2">
@@ -243,7 +250,7 @@ function GettingStartedPage(): JSX.Element {
                       </li>
                     </ul>
 
-                    <h3 className="text-gray-100 text-2xl mb-2">
+                    <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
                       Personalized Trends
                     </h3>
                     <p>
