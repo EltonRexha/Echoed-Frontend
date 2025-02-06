@@ -37,27 +37,25 @@ function ViewMore({ to }: props): JSX.Element {
   }, [hovered, animateArrowControls]);
 
   return (
-    <div className="absolute left-0 right-0 bottom-0 text-light-primary dark:text-dark-primary text-2xl">
-      <div
-        className="m-auto w-max mb-30 flex flex-col items-center"
-        onMouseEnter={() => {
-          setHovered(true);
-        }}
-        onMouseLeave={() => {
-          setHovered(false);
-        }}
+    <div
+      className="flex flex-col items-center"
+      onMouseEnter={() => {
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+      }}
+    >
+      <p>
+        <a href={to}>View more</a>
+      </p>
+      <motion.div
+        variants={arrowVariants}
+        animate={animateArrowControls}
+        className="w-5 h-5"
       >
-        <p>
-          <a href={to}>View more</a>
-        </p>
-        <motion.div
-          variants={arrowVariants}
-          animate={animateArrowControls}
-          className="w-5 h-5"
-        >
-          <img src={downArrow} alt="" className="w-[100%] h-[100%]" />
-        </motion.div>
-      </div>
+        <img src={downArrow} alt="" className="w-[100%] h-[100%]" />
+      </motion.div>
     </div>
   );
 }
