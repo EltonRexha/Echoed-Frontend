@@ -37,7 +37,7 @@ function ViewMore({ to }: props): JSX.Element {
   }, [hovered, animateArrowControls]);
 
   return (
-    <div className="absolute left-0 right-0 bottom-0 text-light-primary dark:text-dark-primary text-2xl">
+    <div className="absolute left-0 right-0 bottom-0 text-purple-300 dark:text-dark-primary text-2xl">
       <div
         className="m-auto w-max mb-30 flex flex-col items-center"
         onMouseEnter={() => {

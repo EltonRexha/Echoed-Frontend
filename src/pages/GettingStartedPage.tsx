@@ -6,12 +6,7 @@ import { Link } from 'react-router-dom';
 import Line from '@/components/ui/LineAnimation';
 import ViewMore from '@/components/ui/viewMore';
 import { useRef } from 'react';
-import {
-  AnimatePresence,
-  easeInOut,
-  MotionConfig,
-  useInView,
-} from 'framer-motion';
+import { AnimatePresence, useInView } from 'framer-motion';
 import postDark from '@/assets/images/layout/postDark.svg';
 import postLight from '@/assets/images/layout/postLight.svg';
 import trendingDark from '@/assets/images/layout/trendingDark.svg';
@@ -122,18 +117,18 @@ function GettingStartedPage(): JSX.Element {
             </div>
           </>
         )}
-        <div className="w-full lg:min-h-[100vh]">
-          <div className="pb-4 pt-20 w-max m-auto flex gap-2 items-center">
-            <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS - 500}>
+        <div className="w-full min-h-[100vh] ">
+          <div className="pb-4 pt-5 w-max left-0 right-0 m-auto flex gap-2 items-center absolute">
+            <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS}>
               <div className="w-3 h-3 rounded-full bg-gray-200 border-4 border-purple-shade-300"></div>
               <div className="w-2 h-2 rounded-full bg-gray-200 "></div>
             </CycleComponents>
-            <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS - 500}>
+            <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS}>
               <div className="w-2 h-2 rounded-full bg-gray-200"></div>
               <div className="w-3 h-3 rounded-full bg-gray-200 border-4 border-purple-shade-300"></div>
             </CycleComponents>
           </div>
-          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center p-2 sm:p-20">
+          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center min-h-[100vh] p-2 sm:p-20">
             <div className="self-center">
               <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS}>
                 <AnimatePresence mode="popLayout">
@@ -145,7 +140,16 @@ function GettingStartedPage(): JSX.Element {
                     initial="initial"
                     className="shadow-2xl"
                   >
-                    <img src={postDark} alt="Post" />
+                    <img
+                      src={postDark}
+                      alt="Post"
+                      className="hidden dark:block"
+                    />
+                    <img
+                      src={postLight}
+                      alt="Post"
+                      className="block dark:hidden"
+                    />
                   </motion.div>
                 </AnimatePresence>
                 <AnimatePresence mode="popLayout">
@@ -157,7 +161,16 @@ function GettingStartedPage(): JSX.Element {
                     initial="initial"
                     className="shadow-2xl"
                   >
-                    <img src={trendingDark} alt="Trending" />
+                    <img
+                      src={trendingDark}
+                      alt="Trending"
+                      className="hidden dark:block"
+                    />
+                    <img
+                      src={trendingLight}
+                      alt="Trending"
+                      className="block dark:hidden"
+                    />
                   </motion.div>
                 </AnimatePresence>
               </CycleComponents>
