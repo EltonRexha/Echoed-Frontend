@@ -133,7 +133,7 @@ function GettingStartedPage(): JSX.Element {
               stepsAmount={2}
             />
           </div>
-          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center min-h-[100vh] p-2 sm:p-20">
+          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center items-center min-h-[100vh] p-2 sm:p-20">
             <div className="self-center">
               <CycleComponents delay={POST_EXAMPLE_LAYOUT_CHANGE_DELAY}>
                 <AnimatePresence mode="popLayout">
@@ -190,7 +190,7 @@ function GettingStartedPage(): JSX.Element {
                     animate="animate"
                     initial="initial"
                   >
-                    <div className="text-light-secondary dark:text-dark-secondary bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4  backdrop-blur-2xl">
+                    <div className="text-light-secondary dark:text-dark-secondary bg-[color:rgba(255,255,255,0.2)] dark:bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4 backdrop-blur-2xl">
                       <h2 className="text-light-primary dark:text-dark-primary text-3xl mb-10 font-semibold">
                         Create Posts
                       </h2>
@@ -236,7 +236,7 @@ function GettingStartedPage(): JSX.Element {
                     animate="animate"
                     initial="initial"
                   >
-                    <div className="text-light-secondary dark:text-dark-secondary bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4 backdrop-blur-2xl">
+                    <div className="text-light-secondary dark:text-dark-secondary bg-[color:rgba(255,255,255,0.2)] dark:bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4 backdrop-blur-2xl">
                       <div className="mb-3">
                         <h2 className="text-light-primary dark:text-dark-primary text-3xl mb-2 font-semibold">
                           Trending Topics & Hashtags
