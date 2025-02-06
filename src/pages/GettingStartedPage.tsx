@@ -4,7 +4,6 @@ import CycleComponents from '@/components/ui/CycleComponents';
 import GettingStartedNav from '@/components/ui/GettingStartedNav';
 import { Link } from 'react-router-dom';
 import Line from '@/components/ui/LineAnimation';
-import ViewMore from '@/components/ui/viewMore';
 import { useRef } from 'react';
 import { AnimatePresence, useInView } from 'framer-motion';
 import postDark from '@/assets/images/layout/postDark.svg';
@@ -13,6 +12,9 @@ import trendingDark from '@/assets/images/layout/trendingDark.svg';
 import trendingLight from '@/assets/images/layout/trendingLight.svg';
 import '@/assets/images/backgrounds/desktop-mountain-layer.svg';
 import { motion } from 'framer-motion';
+import useAutoCycle from '@/hooks/useAutoCycle';
+import StepIndicator from '@/components/ui/stepIndicator';
+import ViewMore from '@/components/ui/ViewMore';
 
 const layoutVariant = {
   initial: {
@@ -39,11 +41,17 @@ const layoutVariant = {
   },
 };
 
-const LAYOUT_CHANGE_DELAY_MS = 12000;
+const POST_EXAMPLE_LAYOUT_CHANGE_DELAY = 12000;
 
 function GettingStartedPage(): JSX.Element {
-  const examplesPart = useRef(null);
-  const examplesPartInView = useInView(examplesPart, { once: true });
+  const postsExample = useRef(null);
+  const postExampleInView = useInView(postsExample, { once: true });
+  //This will switch from 0 to 1 in some delay
+  //It is used to tell which of the post example layout it is currently displaying
+  const postExampleCurrentIndex = useAutoCycle(
+    [0, 1],
+    POST_EXAMPLE_LAYOUT_CHANGE_DELAY
+  );
 
   return (
     <div className="overflow-x-hidden font-raleway">
@@ -89,15 +97,15 @@ function GettingStartedPage(): JSX.Element {
           </Line>
         </div>
         <div className="font-mono">
-          <ViewMore to="#example" />
+          <ViewMore to="#post-example" />
         </div>
       </div>
       <div
         className="relative min-h-[100vh] bg-blob"
-        id="example"
-        ref={examplesPart}
+        id="post-example"
+        ref={postsExample}
       >
-        {examplesPartInView && (
+        {postExampleInView && (
           <>
             <div className="hidden sm:block">
               <SlideAnimation
@@ -119,18 +127,15 @@ function GettingStartedPage(): JSX.Element {
         )}
         <div className="w-full min-h-[100vh] ">
           <div className="pb-4 pt-5 w-max left-0 right-0 m-auto flex gap-2 items-center absolute">
-            <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS}>
-              <div className="w-3 h-3 rounded-full bg-gray-200 border-4 border-purple-shade-300"></div>
-              <div className="w-2 h-2 rounded-full bg-gray-200 "></div>
-            </CycleComponents>
-            <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS}>
-              <div className="w-2 h-2 rounded-full bg-gray-200"></div>
-              <div className="w-3 h-3 rounded-full bg-gray-200 border-4 border-purple-shade-300"></div>
-            </CycleComponents>
+            <StepIndicator
+              currentIndex={postExampleCurrentIndex}
+              // This is the layout amount which is 2 in this case one for the posts and one for the trending
+              stepsAmount={2}
+            />
           </div>
           <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center min-h-[100vh] p-2 sm:p-20">
             <div className="self-center">
-              <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS}>
+              <CycleComponents delay={POST_EXAMPLE_LAYOUT_CHANGE_DELAY}>
                 <AnimatePresence mode="popLayout">
                   <motion.div
                     key={1}
@@ -176,7 +181,7 @@ function GettingStartedPage(): JSX.Element {
               </CycleComponents>
             </div>
             <div>
-              <CycleComponents delay={LAYOUT_CHANGE_DELAY_MS}>
+              <CycleComponents delay={POST_EXAMPLE_LAYOUT_CHANGE_DELAY}>
                 <AnimatePresence mode="popLayout">
                   <motion.div
                     key={2}
