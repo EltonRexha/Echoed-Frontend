@@ -4,8 +4,12 @@ import CycleComponents from '@/components/ui/CycleComponents';
 import GettingStartedNav from '@/components/ui/GettingStartedNav';
 import { Link } from 'react-router-dom';
 import Line from '@/components/ui/LineAnimation';
-import { useRef } from 'react';
-import { AnimatePresence, useInView } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import {
+  AnimatePresence,
+  useAnimationControls,
+  useInView,
+} from 'framer-motion';
 import postDark from '@/assets/images/layout/postDark.svg';
 import postLight from '@/assets/images/layout/postLight.svg';
 import trendingDark from '@/assets/images/layout/trendingDark.svg';
@@ -15,8 +19,10 @@ import { motion } from 'framer-motion';
 import useAutoCycle from '@/hooks/useAutoCycle';
 import StepIndicator from '@/components/ui/stepIndicator';
 import ViewMore from '@/components/ui/ViewMore';
+import messageDark from '@/assets/images/layout/messageDark.svg';
+import messageLight from '@/assets/images/layout/messageLight.svg';
 
-const layoutVariant = {
+const postExampleVariant = {
   initial: {
     scale: 0,
     opacity: 0,
@@ -41,6 +47,20 @@ const layoutVariant = {
   },
 };
 
+const messageExampleVariant = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: 'anticipate',
+      staggerChildren: 0.2,
+    },
+  },
+};
+
 const POST_EXAMPLE_LAYOUT_CHANGE_DELAY = 12000;
 
 function GettingStartedPage(): JSX.Element {
@@ -53,6 +73,16 @@ function GettingStartedPage(): JSX.Element {
     POST_EXAMPLE_LAYOUT_CHANGE_DELAY
   );
 
+  const messageExample = useRef(null);
+  const messageExampleInView = useInView(messageExample, { once: true });
+  const messageExampleControler = useAnimationControls();
+
+  useEffect(() => {
+    if (messageExampleInView) {
+      messageExampleControler.start('animate');
+    }
+  }, [messageExampleControler, messageExampleInView]);
+
   return (
     <div className="overflow-x-hidden font-raleway">
       <div className="min-h-[101vh] bg-mountain pl-2 pr-2 sm:pl-10 sm:pr-10 relative">
@@ -61,7 +91,7 @@ function GettingStartedPage(): JSX.Element {
           <SlideAnimation duration={0.5} delay={0.1} bgColor="#560090" />
         </div>
         <GettingStartedNav />
-        <div className="p-5 mt-5 h-36 bg-slate-600 border-slate-500 border-2 w-[100%] sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
+        <div className="p-5 mt-5 h-36 bg-slate-600 border-slate-500 border-2 w-full sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
           <TypeAnimationWrapper duration={6} backgroundClr="#475569">
             <CycleComponents delay={6000}>
               <h1 className="sm:text-4xl text-2xl md:text-5xl text-dark-secondary font-semiBold">
@@ -97,7 +127,11 @@ function GettingStartedPage(): JSX.Element {
           </Line>
         </div>
         <div className="font-mono">
-          <ViewMore to="#post-example" />
+          <div className="absolute left-0 right-0 bottom-0 text-purple-300 dark:text-dark-primary text-2xl mb-30">
+            <div className="m-auto w-max">
+              <ViewMore to="#post-example" />
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -126,20 +160,20 @@ function GettingStartedPage(): JSX.Element {
           </>
         )}
         <div className="w-full min-h-[100vh] ">
-          <div className="pb-4 pt-5 w-max left-0 right-0 m-auto flex gap-2 items-center absolute">
+          <div className="pb-4 pt-5 w-max m-auto flex gap-2 items-center h-max">
             <StepIndicator
               currentIndex={postExampleCurrentIndex}
               // This is the layout amount which is 2 in this case one for the posts and one for the trending
               stepsAmount={2}
             />
           </div>
-          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center items-center min-h-[100vh] p-2 sm:p-20">
+          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center items-center min-h-[80vh] p-2 sm:p-20 sm:pt-5">
             <div className="self-center">
               <CycleComponents delay={POST_EXAMPLE_LAYOUT_CHANGE_DELAY}>
                 <AnimatePresence mode="popLayout">
                   <motion.div
                     key={1}
-                    variants={layoutVariant}
+                    variants={postExampleVariant}
                     exit="exit"
                     animate="animate"
                     initial="initial"
@@ -160,7 +194,7 @@ function GettingStartedPage(): JSX.Element {
                 <AnimatePresence mode="popLayout">
                   <motion.div
                     key={2}
-                    variants={layoutVariant}
+                    variants={postExampleVariant}
                     exit="exit"
                     animate="animate"
                     initial="initial"
@@ -185,7 +219,7 @@ function GettingStartedPage(): JSX.Element {
                 <AnimatePresence mode="popLayout">
                   <motion.div
                     key={2}
-                    variants={layoutVariant}
+                    variants={postExampleVariant}
                     exit="exit"
                     animate="animate"
                     initial="initial"
@@ -231,7 +265,7 @@ function GettingStartedPage(): JSX.Element {
                 <AnimatePresence mode="popLayout">
                   <motion.div
                     key={3}
-                    variants={layoutVariant}
+                    variants={postExampleVariant}
                     exit="exit"
                     animate="animate"
                     initial="initial"
@@ -310,6 +344,121 @@ function GettingStartedPage(): JSX.Element {
             </div>
           </div>
         </div>
+      </div>
+      <div
+        id="message-example"
+        className="w-full min-h-[100vh] bg-light dark:bg-purple-shade-300"
+      >
+        <motion.div
+          className="bg-layer min-h-[100vh] w-[100vw]"
+          variants={messageExampleVariant}
+          animate={messageExampleControler}
+          initial="initial"
+          ref={messageExample}
+        >
+          <div className="grid md:grid-cols-2 gap-4 p-2 md:p-10 lg:p-20 items-center justify-items-center">
+            {/* 
+            initial: {
+    scale: 0,
+    opacity: 0,
+  },
+  animate: {
+    scale: [1.3, 1],
+    opacity: 1,
+    transition: {
+      ease: 'easeIn',
+      delay: 1,
+      duration: 1,
+      type: 'spring',
+    },
+  }
+             */}
+            <motion.div
+              initial={{
+                scale: 0,
+                opacity: 0,
+              }}
+              animate={{
+                scale: [1.3, 1],
+                opacity: 1,
+              }}
+              transition={{
+                ease: 'easeIn',
+                delay: 0.5,
+                duration: 1,
+              }}
+            >
+              <div className="hidden dark:block">
+                <img src={messageDark} alt="" />
+              </div>
+              <div className="block dark:hidden">
+                <img src={messageLight} alt="" />
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{
+                scale: 0,
+                opacity: 0,
+              }}
+              animate={{
+                scale: [1.3, 1],
+                opacity: 1,
+              }}
+              transition={{
+                ease: 'easeIn',
+                delay: 0.5,
+                duration: 1,
+              }}
+              className="text-light-secondary dark:text-dark-secondary bg-[color:rgba(255,255,255,0.2)] dark:bg-[color:rgba(255,255,255,0.1)] rounded shadow-2xl p-4 backdrop-blur-2xl"
+            >
+              <div className="mb-3">
+                <h2 className="text-light-primary dark:text-dark-primary text-3xl mb-2 font-semibold">
+                  Message people
+                </h2>
+                <p>
+                  Connect and communicate with others effortlessly on Echoed.
+                  Our messaging feature allows you to stay in touch with
+                  friends, family, or colleagues directly within the app.
+                </p>
+              </div>
+
+              <div className="mb-3">
+                <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
+                  How Messaging Works
+                </h3>
+                <p>
+                  You can share text, images, and more, with the option to send
+                  messages privately or in group chats. Conversations are easy
+                  to keep track of, and you’ll never miss an important message.
+                </p>
+              </div>
+
+              <div className="mb-3">
+                <h3 className="text-light-primary dark:text-dark-primary text-2xl mb-2">
+                  Sending Media in Messages
+                </h3>
+                <ul className="flex flex-col gap-2">
+                  <li>
+                    <span className="font-bold">Send Photos and Videos:</span>{' '}
+                    Attach media files to your messages to make your
+                    conversations more engaging.
+                  </li>
+                  <li>
+                    <span className="font-bold">Group Conversations:</span>{' '}
+                    Create a group chat to communicate with multiple people at
+                    once, perfect for planning events or staying in touch with
+                    teams.
+                  </li>
+                  <li>
+                    <span className="font-bold">Instant Notifications:</span>{' '}
+                    Receive instant notifications whenever someone sends you a
+                    message, ensuring you never miss out on important updates.
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

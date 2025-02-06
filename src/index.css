@@ -44,4 +44,12 @@
     background-image: url('@/assets/images/backgrounds/blobDark.svg');
     background-size: cover;
   }
+  .bg-layer {
+    background-image: url('@/assets/images/backgrounds/layeredLight.svg');
+    background-size: cover;
+  }
+  .dark .bg-layer {
+    background-image: url('@/assets/images/backgrounds/layeredDark.svg');
+    background-size: cover;
+  }
 }
