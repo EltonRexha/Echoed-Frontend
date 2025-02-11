@@ -1,4 +1,5 @@
-import logo from '@/assets/images/icons/longLogo.svg';
+import lightLogo from '@/assets/images/icons/longLogo.svg';
+import darkLogo from '@/assets/images/icons/longLogoDark.svg';
 import { Link } from 'react-router-dom';
 import Line from './LineAnimation';
 
@@ -7,7 +8,12 @@ export default function GettingStartedNav(): JSX.Element {
     <nav className="h-10 pt-3 flex gap-4">
       <div className="w-30">
         <Link to="/">
-          <img src={logo} alt="Logo" />
+          <div className="hidden dark:block">
+            <img src={lightLogo} alt="Logo" />
+          </div>
+          <div className="block dark:hidden">
+            <img src={darkLogo} alt="Logo" />
+          </div>
         </Link>
       </div>
 

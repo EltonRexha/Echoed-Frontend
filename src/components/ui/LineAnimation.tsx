@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion, useAnimationControls, Variants } from 'framer-motion';
 
 interface props {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface props {
   height: number;
 }
 
-const lineVariant = {
+const lineVariant: Variants = {
   initial: {
     width: '0%',
   },

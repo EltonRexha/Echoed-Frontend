@@ -9,6 +9,7 @@ import {
   AnimatePresence,
   useAnimationControls,
   useInView,
+  Variants,
 } from 'framer-motion';
 import postDark from '@/assets/images/layout/postDark.svg';
 import postLight from '@/assets/images/layout/postLight.svg';
@@ -17,12 +18,12 @@ import trendingLight from '@/assets/images/layout/trendingLight.svg';
 import '@/assets/images/backgrounds/desktop-mountain-layer.svg';
 import { motion } from 'framer-motion';
 import useAutoCycle from '@/hooks/useAutoCycle';
-import StepIndicator from '@/components/ui/stepIndicator';
 import ViewMore from '@/components/ui/ViewMore';
 import messageDark from '@/assets/images/layout/messageDark.svg';
 import messageLight from '@/assets/images/layout/messageLight.svg';
+import StepIndicator from '@/components/ui/StepIndicator';
 
-const postExampleVariant = {
+const postExampleVariant: Variants = {
   initial: {
     scale: 0,
     opacity: 0,
