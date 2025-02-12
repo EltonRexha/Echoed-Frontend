@@ -1,5 +1,5 @@
 import downArrow from '@/assets/images/icons/down-arrow.svg';
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion, useAnimationControls, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 interface props {
@@ -7,7 +7,7 @@ interface props {
   to: string;
 }
 
-const arrowVariants = {
+const arrowVariants: Variants = {
   initial: {
     scale: 1,
     y: 0,

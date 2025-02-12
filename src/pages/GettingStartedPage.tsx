@@ -9,6 +9,7 @@ import {
   AnimatePresence,
   useAnimationControls,
   useInView,
+  Variants,
 } from 'framer-motion';
 import postDark from '@/assets/images/layout/postDark.svg';
 import postLight from '@/assets/images/layout/postLight.svg';
@@ -17,12 +18,12 @@ import trendingLight from '@/assets/images/layout/trendingLight.svg';
 import '@/assets/images/backgrounds/desktop-mountain-layer.svg';
 import { motion } from 'framer-motion';
 import useAutoCycle from '@/hooks/useAutoCycle';
-import StepIndicator from '@/components/ui/stepIndicator';
 import ViewMore from '@/components/ui/ViewMore';
 import messageDark from '@/assets/images/layout/messageDark.svg';
 import messageLight from '@/assets/images/layout/messageLight.svg';
+import StepIndicator from '@/components/ui/StepIndicator';
 
-const postExampleVariant = {
+const postExampleVariant: Variants = {
   initial: {
     scale: 0,
     opacity: 0,
@@ -90,7 +91,9 @@ function GettingStartedPage(): JSX.Element {
           <SlideAnimation duration={0.5} delay={0} bgColor="#7700c6" />
           <SlideAnimation duration={0.5} delay={0.1} bgColor="#560090" />
         </div>
-        <GettingStartedNav />
+        <div className='h-10'>
+          <GettingStartedNav />
+        </div>
         <div className="p-5 mt-5 h-36 bg-slate-600 border-slate-500 border-2 w-full sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
           <TypeAnimationWrapper duration={6} backgroundClr="#475569">
             <CycleComponents delay={6000}>
