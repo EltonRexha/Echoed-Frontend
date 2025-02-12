@@ -1,9 +1,5 @@
 @import 'tailwindcss';
-
-
-
 @import '@fontsource/raleway';
-
 
 @theme {
   --font-raleway: 'Raleway', 'sans-serif';
