@@ -39,15 +39,21 @@ const schema = z
     confirmPassword: z.string(),
     country: z.enum(COUNTRIES as [string, ...string[]]),
     gender: z.enum(genders as [string, ...string[]]),
-    dateOfBirth: z.date().refine((date) => {
-      const today = new Date();
-      const minDate = new Date(
-        today.getFullYear() - MIN_AGE,
-        today.getMonth(),
-        today.getDate()
-      );
-      return date <= minDate;
-    }, `You must be at least ${MIN_AGE} years old`),
+    dateOfBirth: z
+      .date()
+      .refine((date) => {
+        const today = new Date();
+        const minDate = new Date(
+          today.getFullYear() - MIN_AGE,
+          today.getMonth(),
+          today.getDate()
+        );
+        return date <= minDate;
+      }, `You must be at least ${MIN_AGE} years old`)
+      .refine((date) => {
+        const year1900 = new Date(1900, 0, 1);
+        return date > year1900;
+      }, 'Date must be after the year 1900'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must match',
@@ -88,7 +94,7 @@ function SignupBox(): JSX.Element {
       errors={errors}
       watch={watch}
     />,
-    <ThirdInputGroup register={register} next={incrementCurrentInputBox} />,
+    <VerifyEmail register={register} />,
   ];
 
   return (
@@ -395,12 +401,10 @@ function SecondInputGroup({
   );
 }
 
-function ThirdInputGroup({
+function VerifyEmail({
   register,
-  next,
 }: {
   register: UseFormRegister<Inputs>;
-  next: () => void;
 }): JSX.Element {
   return (
     <div>
@@ -443,7 +447,13 @@ const buttonVariants: Variants = {
   },
 };
 
-function NextButton({ onClick }: { onClick: () => void }): JSX.Element {
+function NextButton({
+  onClick,
+  text = 'Next',
+}: {
+  onClick: () => void;
+  text?: string;
+}): JSX.Element {
   const arrowAnimateControls = useAnimationControls();
 
   return (
@@ -454,7 +464,7 @@ function NextButton({ onClick }: { onClick: () => void }): JSX.Element {
           type="button"
           onClick={onClick}
         >
-          Next
+          {text}
         </button>
       </div>
       <div className="hidden sm:flex gap-1 pr-15 mb-10 ml-auto ">
@@ -472,7 +482,7 @@ function NextButton({ onClick }: { onClick: () => void }): JSX.Element {
           }}
           type="button"
         >
-          Next
+          {text}
         </motion.button>
         <motion.p
           className="text-purple-shade-100"
