@@ -98,7 +98,7 @@ function SignupBox(): JSX.Element {
   ];
 
   return (
-    <div className="flex flex-col mt-5 sm:mt-0 w-full sm:w-[650px] font-raleway p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
+    <div className="flex flex-col mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
       <div className="sm:p-2">
         <div className="hidden sm:block">
           <StepDescriptionIndicator
