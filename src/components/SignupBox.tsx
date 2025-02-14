@@ -61,7 +61,7 @@ function SignupBox(): JSX.Element {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -82,12 +82,17 @@ function SignupBox(): JSX.Element {
       errors={errors}
       watch={watch}
     />,
-    <SecondInputGroup register={register} next={incrementCurrentInputBox} />,
+    <SecondInputGroup
+      register={register}
+      next={incrementCurrentInputBox}
+      errors={errors}
+      watch={watch}
+    />,
     <ThirdInputGroup register={register} next={incrementCurrentInputBox} />,
   ];
 
   return (
-    <div className="flex flex-col mt-5 sm:mt-0 w-full sm:w-[650px] font-raleway p-2 sm:h-[650px] rounded border-dark-secondary dark:border-purple-shade-300 border-2 text-light-primary dark:text-dark-primary">
+    <div className="flex flex-col mt-5 sm:mt-0 w-full sm:w-[650px] font-raleway p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
       <div className="sm:p-2">
         <div className="hidden sm:block">
           <StepDescriptionIndicator
@@ -95,7 +100,7 @@ function SignupBox(): JSX.Element {
             descriptions={['Personal Info', 'Account Info', 'Finish']}
           />
         </div>
-        <div className="block sm:hidden mb-10 ml-4">
+        <div className="block sm:hidden sm:mb-10 ml-4">
           <StepDescriptionIndicator
             currentIndex={currentInputBox}
             descriptions={['Personal', 'Account', 'Finish']}
@@ -131,9 +136,9 @@ function FirstInputGroup({
     firstName && lastName && email && gender && country && dateOfBirth;
 
   return (
-    <div className="relative h-full flex flex-col">
-      <ul className="flex flex-col gap-3 px-2 sm:px-15 justify-center flex-1">
-        <li className="sm:flex gap-5 w-full x">
+    <div className="relative h-full flex flex-col font-sans">
+      <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
+        <li className="flex flex-col sm:flex-row gap-3 w-full">
           <div className="relative z-0 w-full mb-5 group">
             <input
               id="first_name"
@@ -199,7 +204,7 @@ function FirstInputGroup({
           </div>
         </li>
         <li className="w-full">
-          <div className="w-full mb-5 flex flex-col gap-2">
+          <div className="w-full mb-5 flex flex-col gap-2 mt-5">
             <label
               htmlFor="gender"
               className="text-sm text-gray-500 dark:text-gray-400 "
@@ -262,7 +267,7 @@ function FirstInputGroup({
               {...register('dateOfBirth', {
                 setValueAs: (value) => (value ? new Date(value) : value),
               })}
-              className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600"
+              className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 w-full"
             />
           </div>
           {errors.dateOfBirth && (
@@ -274,8 +279,19 @@ function FirstInputGroup({
           )}
         </li>
       </ul>
+
       {/* Show Next button only if all fields are filled */}
-      {isFormValid && <NextButton onClick={next} />}
+      {isFormValid &&
+        Object.keys(errors).filter((item) =>
+          [
+            'firstName',
+            'lastName',
+            'email',
+            'gender',
+            'country',
+            'dateOfBirth',
+          ].includes(item)
+        ).length === 0 && <NextButton onClick={next} />}
     </div>
   );
 }
@@ -283,15 +299,98 @@ function FirstInputGroup({
 function SecondInputGroup({
   register,
   next,
+  errors,
+  watch,
 }: {
   register: UseFormRegister<Inputs>;
   next: () => void;
+  errors: FieldErrors<Inputs>;
+  watch: UseFormWatch<Inputs>;
 }): JSX.Element {
+  const username = watch('username');
+  const password = watch('password');
+  const confirmPassword = watch('confirmPassword');
+
+  const isFormValid = username && password && confirmPassword;
+
   return (
-    <div>
-      {' '}
-      <label>First Name</label>
-      <input {...register('firstName')} />
+    <div className="relative h-full flex flex-col">
+      <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
+        <li className="w-full">
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              id="username"
+              {...register('username')}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              htmlFor="username"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Username
+            </label>
+            {errors.username && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                {errors.username.message}
+              </p>
+            )}
+          </div>
+        </li>
+        <li className="w-full">
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="password"
+              id="password"
+              {...register('password')}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              htmlFor="password"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Password
+            </label>
+            {errors.password && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+        </li>
+        <li className="w-full">
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="password"
+              id="confirmPassword"
+              {...register('confirmPassword')}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
+              placeholder=" "
+              required
+            />
+            <label
+              htmlFor="confirmPassword"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              confirm password
+            </label>
+            {errors.confirmPassword && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+        </li>
+      </ul>
+      {/* Show Next button only if all fields are filled */}
+      {isFormValid &&
+        Object.keys(errors).filter((item) =>
+          ['password', 'confirmPassword', 'username'].includes(item)
+        ).length === 0 &&
+        !errors.confirmPassword?.message && <NextButton onClick={next} />}
     </div>
   );
 }
@@ -349,10 +448,11 @@ function NextButton({ onClick }: { onClick: () => void }): JSX.Element {
 
   return (
     <>
-      <div className="block sm:hidden">
+      <div className="inline-block sm:hidden fixed bottom-0 right-0">
         <button
-          className="font-bold font-sans border-2 p-2 border-purple-shade-200 w-full rounded-1xl"
+          className="font-bold font-sans mb-5 mr-5 px-5 py-2 bg-purple-shade-200 rounded-2xl "
           type="button"
+          onClick={onClick}
         >
           Next
         </button>

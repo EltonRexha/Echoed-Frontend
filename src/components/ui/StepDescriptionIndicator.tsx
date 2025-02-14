@@ -70,7 +70,7 @@ function StepDescriptionIndicator({
   currentIndex,
 }: props): JSX.Element {
   return (
-    <ol className="flex items-center w-full justify-center space-x-2 text-sm font-medium text-center text-gray-500  border-gray-200 rounded-lg dark:text-gray-400 sm:text-base dark:border-gray-700 sm:space-x-4 ">
+    <ol className="flex items-center w-full justify-center space-x-2 text-sm font-medium text-center text-gray-500  border-gray-200 rounded-lg dark:text-gray-400 sm:text-base dark:border-gray-700 sm:space-x-4 font-sans">
       {descriptions.map((description, index) => {
         if (index === currentIndex) {
           return (

@@ -5,7 +5,7 @@ import Line from './LineAnimation';
 
 export default function GettingStartedNav(): JSX.Element {
   return (
-    <nav className="h-full pt-3 flex gap-4">
+    <nav className="h-full py-5 px-5 sm:px-0 flex gap-4">
       <div className="w-30">
         <Link to="/">
           <div className="hidden dark:block">

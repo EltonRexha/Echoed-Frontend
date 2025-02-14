@@ -25,7 +25,7 @@ function SignupPage(): JSX.Element {
         initial="initial"
       >
         <GettingStartedNav />
-        <div className="w-full flex items-center justify-center flex-1">
+        <div className="w-full flex sm:items-center sm:justify-center flex-1">
           <SignupBox />
         </div>
       </motion.div>

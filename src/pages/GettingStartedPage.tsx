@@ -94,9 +94,9 @@ function GettingStartedPage(): JSX.Element {
         <div className='h-10'>
           <GettingStartedNav />
         </div>
-        <div className="p-5 mt-5 h-36 bg-slate-600 border-slate-500 border-2 w-full sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
-          <TypeAnimationWrapper duration={6} backgroundClr="#475569">
-            <CycleComponents delay={6000}>
+        <div className="p-5 mt-5 h-28 sm:h-36 bg-slate-600 border-slate-500 border-2 w-full sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
+          <TypeAnimationWrapper duration={9} backgroundClr="#475569">
+            <CycleComponents delay={9000}>
               <h1 className="sm:text-4xl text-2xl md:text-5xl text-dark-secondary font-semiBold">
                 Welcome to Echoed
               </h1>
@@ -105,8 +105,8 @@ function GettingStartedPage(): JSX.Element {
               </h1>
             </CycleComponents>
           </TypeAnimationWrapper>
-          <TypeAnimationWrapper duration={6} backgroundClr="#475569">
-            <CycleComponents delay={6000}>
+          <TypeAnimationWrapper duration={9} backgroundClr="#475569">
+            <CycleComponents delay={9000}>
               <h1 className="sm:text-4xl text-2xl md:text-5xl font-raleway text-dark-secondary font-semiBold">
                 {' '}
               </h1>
@@ -350,7 +350,7 @@ function GettingStartedPage(): JSX.Element {
       </div>
       <div
         id="message-example"
-        className="w-full min-h-[100vh] bg-light dark:bg-purple-shade-300"
+        className="w-full min-h-[100vh] bg-light dark:bg-purple-shade-300 hidden sm:block"
       >
         <motion.div
           className="bg-layer min-h-[100vh] w-[100vw]"
@@ -360,22 +360,6 @@ function GettingStartedPage(): JSX.Element {
           ref={messageExample}
         >
           <div className="grid md:grid-cols-2 gap-4 p-2 md:p-10 lg:p-20 items-center justify-items-center">
-            {/* 
-            initial: {
-    scale: 0,
-    opacity: 0,
-  },
-  animate: {
-    scale: [1.3, 1],
-    opacity: 1,
-    transition: {
-      ease: 'easeIn',
-      delay: 1,
-      duration: 1,
-      type: 'spring',
-    },
-  }
-             */}
             <motion.div
               initial={{
                 scale: 0,
