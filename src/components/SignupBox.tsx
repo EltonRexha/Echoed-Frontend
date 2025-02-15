@@ -14,6 +14,8 @@ import { countries } from 'countries-list';
 import genders from '@/services/state/genders.json';
 import getMonthName from '@/utils/getMonthName';
 import getDaysInMonth from '@/utils/getDaysInMonth';
+import { useQuery } from '@tanstack/react-query';
+import { fetchUser } from '@/services/api/users/User';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -128,8 +130,47 @@ function FirstInputGroup({
   const gender = watch('gender');
   const country = watch('country');
   const month = watch('month');
+  const year = watch('year');
+  const day = watch('day');
 
-  const isFormValid = firstName && lastName && email && gender && country;
+  const { data: userData } = useQuery({
+    queryFn: () => fetchUser({ email }),
+    queryKey: ['user', { email }],
+    enabled: !errors.email,
+  });
+
+  const formIsFilled: boolean =
+    !!firstName &&
+    !!lastName &&
+    !!email &&
+    !!gender &&
+    !!country &&
+    !!year &&
+    !!day &&
+    !!month;
+
+  const emailAlreadyInUse = (userData?.length as number) > 0;
+
+  console.log(emailAlreadyInUse);
+
+  function formIsValid(): boolean {
+    return (
+      formIsFilled &&
+      Object.keys(errors).filter((item) =>
+        [
+          'firstName',
+          'lastName',
+          'email',
+          'gender',
+          'country',
+          'year',
+          'day',
+          'month',
+        ].includes(item)
+      ).length === 0 &&
+      !emailAlreadyInUse
+    );
+  }
 
   return (
     <div className="relative h-full flex flex-col font-sans">
@@ -195,6 +236,11 @@ function FirstInputGroup({
             {errors.email && (
               <p className="text-red-600 text-sm font-semibold font-sans">
                 {errors.email.message}
+              </p>
+            )}
+            {emailAlreadyInUse && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                Email is already in use
               </p>
             )}
           </div>
@@ -309,17 +355,7 @@ function FirstInputGroup({
       </ul>
 
       {/* Show Next button only if all fields are filled */}
-      {isFormValid &&
-        Object.keys(errors).filter((item) =>
-          [
-            'firstName',
-            'lastName',
-            'email',
-            'gender',
-            'country',
-            'dateOfBirth',
-          ].includes(item)
-        ).length === 0 && <NextButton onClick={next} />}
+      {formIsValid() && <NextButton onClick={next} />}
     </div>
   );
 }
@@ -340,6 +376,27 @@ function SecondInputGroup({
   const confirmPassword = watch('confirmPassword');
 
   const isFormValid = username && password && confirmPassword;
+
+  const { data: userData } = useQuery({
+    queryFn: () => fetchUser({ username }),
+    queryKey: ['user', { username }],
+    enabled: !errors.username,
+  });
+
+  const usernameInUse = (userData?.length as number) > 0;
+
+  console.log({usernameInUse, userData, username});
+
+  function formIsValid(): boolean {
+    return (
+      !!isFormValid &&
+      Object.keys(errors).filter((item) =>
+        ['password', 'confirmPassword', 'username'].includes(item)
+      ).length === 0 &&
+      !errors.confirmPassword?.message &&
+      !usernameInUse
+    );
+  }
 
   return (
     <div className="relative h-full flex flex-col">
@@ -362,6 +419,11 @@ function SecondInputGroup({
             {errors.username && (
               <p className="text-red-600 text-sm font-semibold font-sans">
                 {errors.username.message}
+              </p>
+            )}
+            {usernameInUse && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                this username is already in use
               </p>
             )}
           </div>
@@ -414,11 +476,7 @@ function SecondInputGroup({
         </li>
       </ul>
       {/* Show Next button only if all fields are filled */}
-      {isFormValid &&
-        Object.keys(errors).filter((item) =>
-          ['password', 'confirmPassword', 'username'].includes(item)
-        ).length === 0 &&
-        !errors.confirmPassword?.message && <NextButton onClick={next} />}
+      {formIsValid() && <NextButton onClick={next} />}
     </div>
   );
 }
