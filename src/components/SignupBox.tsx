@@ -16,6 +16,7 @@ import getMonthName from '@/utils/getMonthName';
 import getDaysInMonth from '@/utils/getDaysInMonth';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '@/services/api/users/User';
+import SubmitButton from './SubmitButton';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -68,7 +69,9 @@ function SignupBox(): JSX.Element {
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    incrementCurrentInputBox();
+  };
   const [currentInputBox, setCurrentInputBox] = useState(0);
   const incrementCurrentInputBox = (): void => {
     setCurrentInputBox(currentInputBox + 1);
@@ -81,13 +84,8 @@ function SignupBox(): JSX.Element {
       errors={errors}
       watch={watch}
     />,
-    <SecondInputGroup
-      register={register}
-      next={incrementCurrentInputBox}
-      errors={errors}
-      watch={watch}
-    />,
-    <VerifyEmail register={register} />,
+    <SecondInputGroup register={register} errors={errors} watch={watch} />,
+    <VerifyEmail watch={watch}/>,
   ];
 
   return (
@@ -150,8 +148,6 @@ function FirstInputGroup({
     !!month;
 
   const emailAlreadyInUse = (userData?.length as number) > 0;
-
-  console.log(emailAlreadyInUse);
 
   function formIsValid(): boolean {
     return (
@@ -307,8 +303,10 @@ function FirstInputGroup({
                 id="month"
                 className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 flex-1"
               >
-                {Array.from({ length: 12 }, (_, i) => i + 1).map((item) => (
-                  <option value={item}>{getMonthName(item)}</option>
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                  <option value={month} key={month}>
+                    {getMonthName(month)}
+                  </option>
                 ))}
               </select>{' '}
               <select
@@ -319,7 +317,9 @@ function FirstInputGroup({
                   { length: getDaysInMonth(month) as number },
                   (_, i) => i + 1
                 ).map((day) => (
-                  <option value={day}>{day}</option>
+                  <option value={day} key={day}>
+                    {day}
+                  </option>
                 ))}
               </select>
               <select
@@ -331,7 +331,9 @@ function FirstInputGroup({
                   { length: new Date().getFullYear() - 1900 + 1 },
                   (_, i) => 1900 + i
                 ).map((year) => (
-                  <option value={year}>{year}</option>
+                  <option value={year} key={year}>
+                    {year}
+                  </option>
                 ))}
               </select>
             </div>
@@ -362,12 +364,10 @@ function FirstInputGroup({
 
 function SecondInputGroup({
   register,
-  next,
   errors,
   watch,
 }: {
   register: UseFormRegister<Inputs>;
-  next: () => void;
   errors: FieldErrors<Inputs>;
   watch: UseFormWatch<Inputs>;
 }): JSX.Element {
@@ -384,8 +384,6 @@ function SecondInputGroup({
   });
 
   const usernameInUse = (userData?.length as number) > 0;
-
-  console.log({usernameInUse, userData, username});
 
   function formIsValid(): boolean {
     return (
@@ -476,21 +474,24 @@ function SecondInputGroup({
         </li>
       </ul>
       {/* Show Next button only if all fields are filled */}
-      {formIsValid() && <NextButton onClick={next} />}
+      {formIsValid() && <SubmitButton />}
     </div>
   );
 }
 
-function VerifyEmail({
-  register,
-}: {
-  register: UseFormRegister<Inputs>;
-}): JSX.Element {
+function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
+  const email = watch('email');
   return (
-    <div>
-      {' '}
-      <label>First Name</label>
-      <input {...register('firstName')} />
+    <div className="h-full flex flex-col items-center pt-20 gap-2">
+      <h1 className="text-center text-4xl text-purple-shade-300 dark:text-purple-shade-100">
+        Verify Email
+      </h1>
+      <p className="text-light-primary dark:text-dark-primary text-pretty text-lg">
+        All what is left now is to verify your email
+      </p>
+      <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+        Go to <span className="font-bold">{email}</span>
+      </p>
     </div>
   );
 }
