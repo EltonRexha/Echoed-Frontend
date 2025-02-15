@@ -12,11 +12,14 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { countries } from 'countries-list';
 import genders from '@/services/state/genders.json';
+import getMonthName from '@/utils/getMonthName';
+import getDaysInMonth from '@/utils/getDaysInMonth';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
   .sort();
 const MIN_AGE = 13;
+const NOW = new Date();
 
 const schema = z
   .object({
@@ -39,21 +42,12 @@ const schema = z
     confirmPassword: z.string(),
     country: z.enum(COUNTRIES as [string, ...string[]]),
     gender: z.enum(genders as [string, ...string[]]),
-    dateOfBirth: z
-      .date()
-      .refine((date) => {
-        const today = new Date();
-        const minDate = new Date(
-          today.getFullYear() - MIN_AGE,
-          today.getMonth(),
-          today.getDate()
-        );
-        return date <= minDate;
-      }, `You must be at least ${MIN_AGE} years old`)
-      .refine((date) => {
-        const year1900 = new Date(1900, 0, 1);
-        return date > year1900;
-      }, 'Date must be after the year 1900'),
+    year: z
+      .number()
+      .max(NOW.getFullYear() - MIN_AGE, 'You are too young')
+      .min(1900, 'Stop lying about your age'),
+    month: z.number().min(1, 'Invalid month').max(12, 'Invalid month'),
+    day: z.number().min(1, 'Invalid day').max(31, 'Invalid day'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must match',
@@ -71,9 +65,6 @@ function SignupBox(): JSX.Element {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     mode: 'onChange',
-    defaultValues: {
-      dateOfBirth: undefined,
-    },
   });
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   const [currentInputBox, setCurrentInputBox] = useState(0);
@@ -136,10 +127,9 @@ function FirstInputGroup({
   const email = watch('email');
   const gender = watch('gender');
   const country = watch('country');
-  const dateOfBirth = watch('dateOfBirth');
+  const month = watch('month');
 
-  const isFormValid =
-    firstName && lastName && email && gender && country && dateOfBirth;
+  const isFormValid = firstName && lastName && email && gender && country;
 
   return (
     <div className="relative h-full flex flex-col font-sans">
@@ -262,27 +252,59 @@ function FirstInputGroup({
 
         <li className="w-full">
           <div className="w-full mb-5 flex flex-col gap-2">
-            <label
-              htmlFor="dateOfBirth"
-              className="text-sm text-gray-500 dark:text-gray-400 "
-            >
+            <label className="text-sm text-gray-500 dark:text-gray-400 ">
               Date of birth
             </label>
-            <input
-              type="date"
-              {...register('dateOfBirth', {
-                setValueAs: (value) => (value ? new Date(value) : value),
-              })}
-              className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 w-full"
-            />
+            <div className="flex gap-1">
+              <select
+                {...register('month', { setValueAs: (value) => Number(value) })}
+                id="month"
+                className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 flex-1"
+              >
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((item) => (
+                  <option value={item}>{getMonthName(item)}</option>
+                ))}
+              </select>{' '}
+              <select
+                {...register('day', { setValueAs: (value) => Number(value) })}
+                className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 flex-1"
+              >
+                {Array.from(
+                  { length: getDaysInMonth(month) as number },
+                  (_, i) => i + 1
+                ).map((day) => (
+                  <option value={day}>{day}</option>
+                ))}
+              </select>
+              <select
+                {...register('year', { setValueAs: (value) => Number(value) })}
+                defaultValue={new Date().getFullYear()}
+                className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 flex-1"
+              >
+                {Array.from(
+                  { length: new Date().getFullYear() - 1900 + 1 },
+                  (_, i) => 1900 + i
+                ).map((year) => (
+                  <option value={year}>{year}</option>
+                ))}
+              </select>
+            </div>
+            {errors.year && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                {errors.year.message}
+              </p>
+            )}
+            {errors.day && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                {errors.day.message}
+              </p>
+            )}
+            {errors.month && (
+              <p className="text-red-600 text-sm font-semibold font-sans">
+                {errors.month.message}
+              </p>
+            )}
           </div>
-          {errors.dateOfBirth && (
-            <p className="text-red-600 text-sm font-semibold font-sans">
-              {errors.dateOfBirth.message === 'Expected date, received string'
-                ? 'Date of birth is required'
-                : errors.dateOfBirth.message}
-            </p>
-          )}
         </li>
       </ul>
 
