@@ -5,14 +5,14 @@ import Line from './LineAnimation';
 
 export default function GettingStartedNav(): JSX.Element {
   return (
-    <nav className="h-full py-5 px-5 sm:px-0 flex gap-4">
+    <nav className="py-5 px-5 sm:px-0 flex gap-4">
       <div className="w-30">
         <Link to="/">
-          <div className="hidden dark:block">
+          <div className="hidden dark:block w-full h-full">
             <img src={lightLogo} alt="Logo" />
           </div>
-          <div className="block dark:hidden">
-            <img src={darkLogo} alt="Logo" />
+          <div className="block dark:hidden w-full h-full">
+            <img src={darkLogo} alt="Logo"  />
           </div>
         </Link>
       </div>
