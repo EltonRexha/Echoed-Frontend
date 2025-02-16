@@ -91,10 +91,8 @@ function GettingStartedPage(): JSX.Element {
           <SlideAnimation duration={0.5} delay={0} bgColor="#7700c6" />
           <SlideAnimation duration={0.5} delay={0.1} bgColor="#560090" />
         </div>
-        <div className='h-10'>
-          <GettingStartedNav />
-        </div>
-        <div className="p-5 mt-5 h-28 sm:h-36 bg-slate-600 border-slate-500 border-2 w-full sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
+        <GettingStartedNav />
+        <div className="p-5 h-28 sm:h-36 bg-slate-600 border-slate-500 border-2 w-full sm:w-[450px] md:w-[550px] text-light-primary dark:text-dark-primary">
           <TypeAnimationWrapper duration={9} backgroundClr="#475569">
             <CycleComponents delay={9000}>
               <h1 className="sm:text-4xl text-2xl md:text-5xl text-dark-secondary font-semiBold">
