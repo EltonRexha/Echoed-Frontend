@@ -123,7 +123,7 @@ function EmailSignup(): JSX.Element {
     };
     createUserMutation.mutate(user);
   };
-  const [currentInputBox, setCurrentInputBox] = useState(1);
+  const [currentInputBox, setCurrentInputBox] = useState(0);
   const incrementCurrentInputBox = () => {
     setCurrentInputBox(currentInputBox + 1);
   };

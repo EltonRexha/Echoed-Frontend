@@ -34,7 +34,7 @@ const buttonVariants: Variants = {
 
 export default function PrevButton({
   onClick,
-  text = 'Prev',
+  text = 'Previous',
 }: {
   onClick: () => void;
   text?: string;
