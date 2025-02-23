@@ -1,4 +1,5 @@
 import axios from '@/services/axios';
+import { User } from '@/types/user';
 
 interface SearchUser {
   email?: string;
@@ -6,19 +7,20 @@ interface SearchUser {
   id?: string;
 }
 
-interface User {
+interface BasicUserInfo {
   firstName: string;
   lastName: string;
   email: string;
   username: string;
 }
 
-export async function fetchUser({
+
+export async function getUser({
   email,
   username,
   id,
-}: SearchUser): Promise<User[]> {
-  const users = await axios.get('/auth/user', {
+}: SearchUser): Promise<{user: BasicUserInfo}> {
+  const users = await axios.get('/user', {
     params: {
       email: email,
       username: username,
@@ -26,5 +28,10 @@ export async function fetchUser({
     },
   });
 
-  return users.data;
+  return {user: users.data.users[0]};
+}
+
+export async function createUser(payload: User): Promise<string> {
+  await axios.post('/auth/user', payload);
+  return 'Successfuly created user';
 }

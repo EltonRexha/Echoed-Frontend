@@ -14,19 +14,19 @@ const buttonVariants: Variants = {
     },
   },
 };
-
+// font-bold font-sans mb-5 ml-5 px-5 py-2 rounded-2xl text-light-primary dark:text-dark-primary
 export default function SubmitButton() {
   return (
     <>
       <div className="inline-block sm:hidden fixed bottom-0 right-0">
         <button
-          className="font-bold font-sans cursor-pointer z-10 flex items-center gap-1"
+          className="font-bold font-sans mb-5 mr-5 px-5 py-2 bg-purple-shade-200 rounded text-dark-primary flex items-center gap-2"
           type="submit"
         >
           <Send className="h-4 w-4" /> <p>Submit</p>
         </button>
       </div>
-      <div className="hidden sm:flex gap-1 pr-15 mb-10 ml-auto ">
+      <div className="hidden sm:flex gap-1">
         <motion.button
           variants={buttonVariants}
           initial="initial"
