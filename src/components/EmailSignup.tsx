@@ -22,6 +22,8 @@ import convertGenderString from '@/utils/convertGenderString';
 import { toast } from 'sonner';
 import NextButton from './NextButton';
 import PrevButton from './PrevButton';
+import { Button } from './ui/button';
+import ResendEmailButton from './ResendEmailBtn';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -123,7 +125,7 @@ function EmailSignup(): JSX.Element {
     };
     createUserMutation.mutate(user);
   };
-  const [currentInputBox, setCurrentInputBox] = useState(0);
+  const [currentInputBox, setCurrentInputBox] = useState(2);
   const incrementCurrentInputBox = () => {
     setCurrentInputBox(currentInputBox + 1);
   };
@@ -582,6 +584,7 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
           Cannot find you email?{' '}
           <span className="font-bold">Check your spams</span>
         </p>
+        <ResendEmailButton/>
       </div>
     </FadeIn>
   );
