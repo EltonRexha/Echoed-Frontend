@@ -7,17 +7,23 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 import StepDescriptionIndicator from './ui/StepDescriptionIndicator';
-import { Variants, motion, useAnimationControls } from 'framer-motion';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { countries } from 'countries-list';
 import genders from '@/services/state/genders.json';
 import getMonthName from '@/utils/getMonthName';
 import getDaysInMonth from '@/utils/getDaysInMonth';
-import { useQuery } from '@tanstack/react-query';
-import { fetchUser } from '@/services/api/users/User';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { createUser, getUser } from '@/services/api/User';
 import SubmitButton from './SubmitButton';
 import FadeIn from './ui/FadeIn';
+import { User } from '@/types/user';
+import convertGenderString from '@/utils/convertGenderString';
+import { toast } from 'sonner';
+import NextButton from './NextButton';
+import PrevButton from './PrevButton';
+import ResendEmailButton from './ResendEmailBtn';
+import { sendVerificationEmail } from '@/services/api/Email';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -25,38 +31,55 @@ const COUNTRIES = Object.values(countries)
 const MIN_AGE = 13;
 const NOW = new Date();
 
-const schema = z
-  .object({
-    firstName: z
-      .string()
-      .min(3, 'At least 3 characters')
-      .max(10, 'Reached max of characters (10)')
-      .regex(/^[A-Za-z]+$/, 'Only letters are allowed'),
-    lastName: z
-      .string()
-      .min(3, 'At least 3 characters')
-      .max(10, 'Reached max of characters (10)')
-      .regex(/^[A-Za-z]+$/, 'Only letters are allowed'),
-    username: z
-      .string()
-      .min(3, 'The username must have at least 3 characters')
-      .max(20, 'Reached max of characters'),
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string(),
-    country: z.enum(COUNTRIES as [string, ...string[]]),
-    gender: z.enum(genders as [string, ...string[]]),
-    year: z
-      .number()
-      .max(NOW.getFullYear() - MIN_AGE, 'You are too young')
-      .min(1900, 'Stop lying about your age'),
-    month: z.number().min(1, 'Invalid month').max(12, 'Invalid month'),
-    day: z.number().min(1, 'Invalid day').max(31, 'Invalid day'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords must match',
-    path: ['confirmPassword'],
-  });
+const schema = z.object({
+  firstName: z
+    .string()
+    .min(3, 'At least 3 characters')
+    .max(10, 'Reached max of characters (10)')
+    .regex(/^[A-Za-z]+$/, 'Only letters are allowed'),
+  lastName: z
+    .string()
+    .min(3, 'At least 3 characters')
+    .max(10, 'Reached max of characters (10)')
+    .regex(/^[A-Za-z]+$/, 'Only letters are allowed'),
+  username: z
+    .string()
+    .min(3, 'The username must have at least 3 characters')
+    .max(20, 'Reached max of characters'),
+  email: z.string().email('Invalid email address'),
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[\W_]/, 'Password must contain at least one special character')
+    .regex(/^\S*$/, 'Password cannot contain spaces')
+    .regex(
+      /^[A-Za-z0-9!@#$%^&*(),.?":{}|<>]*$/,
+      'Password contains invalid characters'
+    ),
+  confirmPassword: z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[\W_]/, 'Password must contain at least one special character')
+    .regex(/^\S*$/, 'Password cannot contain spaces')
+    .regex(
+      /^[A-Za-z0-9!@#$%^&*(),.?":{}|<>]*$/,
+      'Password contains invalid characters'
+    ),
+  country: z.enum(COUNTRIES as [string, ...string[]]),
+  gender: z.enum(genders as [string, ...string[]]),
+  year: z
+    .number()
+    .max(NOW.getFullYear() - MIN_AGE, 'You are too young')
+    .min(1900, 'Stop lying about your age'),
+  month: z.number().min(1, 'Invalid month').max(12, 'Invalid month'),
+  day: z.number().min(1, 'Invalid day').max(31, 'Invalid day'),
+});
 
 type Inputs = z.infer<typeof schema>;
 
@@ -70,12 +93,45 @@ function EmailSignup(): JSX.Element {
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+
+  const createUserMutation = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
+      incrementCurrentInputBox();
+      toast.success('Successfuly created account');
+    },
+    onError: () => {
+      toast.error('Something wrong happened', {
+        description: 'Try again',
+        action: {
+          label: 'Go to the start',
+          onClick: () => {
+            window.location.href = '/sign-up';
+          },
+        },
+      });
+    },
+  });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    incrementCurrentInputBox();
+    const user: User = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      country: data.country,
+      dateOfBirth: new Date(data.year, data.month - 1, data.day),
+      email: data.email,
+      gender: convertGenderString(data.gender),
+      username: data.username,
+      password: data.password,
+    };
+    createUserMutation.mutate(user);
   };
   const [currentInputBox, setCurrentInputBox] = useState(0);
-  const incrementCurrentInputBox = (): void => {
+  const incrementCurrentInputBox = () => {
     setCurrentInputBox(currentInputBox + 1);
+  };
+
+  const decrementCurrentInputBox = () => {
+    setCurrentInputBox(currentInputBox - 1);
   };
 
   const inputBoxes: ReactNode[] = [
@@ -85,30 +141,34 @@ function EmailSignup(): JSX.Element {
       errors={errors}
       watch={watch}
     />,
-    <SecondInputGroup register={register} errors={errors} watch={watch} />,
+    <SecondInputGroup
+      register={register}
+      errors={errors}
+      watch={watch}
+      previous={decrementCurrentInputBox}
+    />,
     <VerifyEmail watch={watch} />,
   ];
 
   return (
-    <div className="flex flex-col mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
-      <div className="sm:p-2">
-        <div className="hidden sm:block">
-          <StepDescriptionIndicator
-            currentIndex={currentInputBox}
-            descriptions={['Personal Info', 'Account Info', 'Finish']}
-          />
-        </div>
-        <div className="block sm:hidden sm:mb-10 ml-4">
-          <StepDescriptionIndicator
-            currentIndex={currentInputBox}
-            descriptions={['Personal', 'Account', 'Finish']}
-          />
-        </div>
+    <>
+      <div className="justify-self-start">
+        <StepDescriptionIndicator
+          currentIndex={currentInputBox}
+          descriptions={['Personal Info', 'Account Info', 'Finish']}
+        />
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex-1">
-        {inputBoxes[currentInputBox]}
-      </form>
-    </div>
+
+      <div className="mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex-1"
+          autoComplete="off"
+        >
+          {inputBoxes[currentInputBox]}
+        </form>
+      </div>
+    </>
   );
 }
 
@@ -133,9 +193,9 @@ function FirstInputGroup({
   const day = watch('day');
 
   const { data: userData } = useQuery({
-    queryFn: () => fetchUser({ email }),
+    queryFn: () => getUser({ email }),
     queryKey: ['user', { email }],
-    enabled: !errors.email,
+    enabled: !errors.email && email?.length > 1,
   });
 
   const formIsFilled: boolean =
@@ -148,7 +208,7 @@ function FirstInputGroup({
     !!day &&
     !!month;
 
-  const emailAlreadyInUse = (userData?.length as number) > 0;
+  const emailAlreadyInUse = !!userData?.user;
 
   function formIsValid(): boolean {
     return (
@@ -378,10 +438,12 @@ function SecondInputGroup({
   register,
   errors,
   watch,
+  previous,
 }: {
   register: UseFormRegister<Inputs>;
   errors: FieldErrors<Inputs>;
   watch: UseFormWatch<Inputs>;
+  previous: () => void;
 }): JSX.Element {
   const username = watch('username');
   const password = watch('password');
@@ -390,12 +452,12 @@ function SecondInputGroup({
   const isFormValid = username && password && confirmPassword;
 
   const { data: userData } = useQuery({
-    queryFn: () => fetchUser({ username }),
+    queryFn: () => getUser({ username }),
     queryKey: ['user', { username }],
     enabled: !errors.username,
   });
 
-  const usernameInUse = (userData?.length as number) > 0;
+  const usernameInUse = !!userData?.user;
 
   function formIsValid(): boolean {
     return (
@@ -404,7 +466,8 @@ function SecondInputGroup({
         ['password', 'confirmPassword', 'username'].includes(item)
       ).length === 0 &&
       !errors.confirmPassword?.message &&
-      !usernameInUse
+      !usernameInUse &&
+      password === confirmPassword
     );
   }
 
@@ -483,18 +546,39 @@ function SecondInputGroup({
                   {errors.confirmPassword.message}
                 </p>
               )}
+              {password !== confirmPassword && (
+                <p className="text-red-600 text-sm font-semibold font-sans">
+                  Password do not match
+                </p>
+              )}
             </div>
           </li>
         </ul>
         {/* Show Next button only if all fields are filled */}
-        {formIsValid() && <SubmitButton />}
+        <div className="flex pr-10 ml-10">
+          <div className="mr-auto">
+            <PrevButton onClick={previous} />
+          </div>
+          {formIsValid() && <SubmitButton />}
+        </div>
       </div>
     </FadeIn>
   );
 }
 
 function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
+  const emailVerificationMutation = useMutation({
+    mutationFn: (email: string) => sendVerificationEmail(email),
+    onSuccess: () => {
+      toast.success('Succesfully sent email');
+    },
+    onError: () => {
+      toast.error('Something went wrong sending email');
+    },
+  });
+
   const email = watch('email');
+
   return (
     <FadeIn>
       <div className="h-full flex flex-col items-center pt-20 gap-2">
@@ -507,90 +591,17 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
         <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
           Go to <span className="font-bold">{email}</span>
         </p>
+        <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+          Cannot find you email?{' '}
+          <span className="font-bold">Check your spams</span>
+        </p>
+        <ResendEmailButton
+          onClick={() => {
+            emailVerificationMutation.mutate(email);
+          }}
+        />
       </div>
     </FadeIn>
-  );
-}
-
-const arrowVariants: Variants = {
-  initial: {
-    x: -20,
-    opacity: 0,
-    transition: {
-      ease: 'easeIn',
-      duration: 0.5,
-    },
-  },
-  animate: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      ease: 'easeOut',
-      duration: 0.5,
-    },
-  },
-};
-
-const buttonVariants: Variants = {
-  initial: {
-    opacity: 0.7,
-  },
-  whileHover: {
-    opacity: 1,
-    transition: {
-      ease: 'easeInOut',
-      duration: 0.5,
-    },
-  },
-};
-
-function NextButton({
-  onClick,
-  text = 'Next',
-}: {
-  onClick: () => void;
-  text?: string;
-}): JSX.Element {
-  const arrowAnimateControls = useAnimationControls();
-
-  return (
-    <>
-      <div className="inline-block sm:hidden fixed bottom-0 right-0">
-        <button
-          className="font-bold font-sans mb-5 mr-5 px-5 py-2 bg-purple-shade-200 rounded-2xl "
-          type="button"
-          onClick={onClick}
-        >
-          {text}
-        </button>
-      </div>
-      <div className="hidden sm:flex gap-1 pr-15 mb-10 ml-auto ">
-        <motion.button
-          variants={buttonVariants}
-          initial="initial"
-          whileHover="whileHover"
-          className="font-bold font-sans cursor-pointer z-10"
-          onClick={onClick}
-          onMouseEnter={() => {
-            arrowAnimateControls.start('animate');
-          }}
-          onMouseLeave={() => {
-            arrowAnimateControls.start('initial');
-          }}
-          type="button"
-        >
-          {text}
-        </motion.button>
-        <motion.p
-          className="text-purple-shade-100"
-          variants={arrowVariants}
-          animate={arrowAnimateControls}
-          initial="initial"
-        >
-          &gt;
-        </motion.p>
-      </div>
-    </>
   );
 }
 

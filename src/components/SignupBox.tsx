@@ -13,12 +13,18 @@ export default function SignupBox() {
   const [currentSignupOption, setCurrentSignupOption] =
     useState<SignUpOptions>();
   return (
-    <div className="flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
+    <>
       {currentSignupOption === undefined && (
-        <SignupOptions setSignup={setCurrentSignupOption} />
+        <div className="justify-self-center flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 h-[80vh] sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
+          <SignupOptions setSignup={setCurrentSignupOption} />
+        </div>
       )}
-      {currentSignupOption === SignUpOptions.email && <EmailSignup />}
-    </div>
+      {currentSignupOption === SignUpOptions.email && (
+        <div className="flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
+          <EmailSignup />
+        </div>
+      )}
+    </>
   );
 }
 

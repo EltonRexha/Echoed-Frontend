@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import emailVerificationTimedOut from './slices/emailVerificationTimeout';
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    emailVerificationTimedOut
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
