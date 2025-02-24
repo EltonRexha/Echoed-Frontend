@@ -35,7 +35,7 @@ const ResendEmailButton = ({ onClick }: { onClick: () => void }) => {
   }, [emailTimedOut.ticking, dispatch]);
 
   return (
-    <Button onClick={resendEmail} disabled={isCooldown} type="button">
+    <Button onClick={resendEmail} disabled={isCooldown} type="button" className='cursor-pointer'>
       {isCooldown
         ? `Resend available in ${Math.floor(
             emailTimedOut.timeRemaining / 60
