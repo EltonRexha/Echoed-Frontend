@@ -14,7 +14,7 @@ import genders from '@/services/state/genders.json';
 import getMonthName from '@/utils/getMonthName';
 import getDaysInMonth from '@/utils/getDaysInMonth';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createUser, getUser } from '@/services/api/users/User';
+import { createUser, getUser } from '@/services/api/User';
 import SubmitButton from './SubmitButton';
 import FadeIn from './ui/FadeIn';
 import { User } from '@/types/user';
@@ -22,8 +22,8 @@ import convertGenderString from '@/utils/convertGenderString';
 import { toast } from 'sonner';
 import NextButton from './NextButton';
 import PrevButton from './PrevButton';
-import { Button } from './ui/button';
 import ResendEmailButton from './ResendEmailBtn';
+import { sendVerificationEmail } from '@/services/api/Email';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -125,7 +125,7 @@ function EmailSignup(): JSX.Element {
     };
     createUserMutation.mutate(user);
   };
-  const [currentInputBox, setCurrentInputBox] = useState(2);
+  const [currentInputBox, setCurrentInputBox] = useState(0);
   const incrementCurrentInputBox = () => {
     setCurrentInputBox(currentInputBox + 1);
   };
@@ -567,7 +567,18 @@ function SecondInputGroup({
 }
 
 function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
+  const emailVerificationMutation = useMutation({
+    mutationFn: (email: string) => sendVerificationEmail(email),
+    onSuccess: () => {
+      toast.success('Succesfully sent email');
+    },
+    onError: () => {
+      toast.error('Something went wrong sending email');
+    },
+  });
+
   const email = watch('email');
+
   return (
     <FadeIn>
       <div className="h-full flex flex-col items-center pt-20 gap-2">
@@ -584,7 +595,11 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
           Cannot find you email?{' '}
           <span className="font-bold">Check your spams</span>
         </p>
-        <ResendEmailButton/>
+        <ResendEmailButton
+          onClick={() => {
+            emailVerificationMutation.mutate(email);
+          }}
+        />
       </div>
     </FadeIn>
   );

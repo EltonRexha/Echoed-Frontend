@@ -8,7 +8,7 @@ import {
   substractSecond,
 } from '@/services/state/redux/slices/emailVerificationTimeout';
 
-const ResendEmailButton = () => {
+const ResendEmailButton = ({ onClick }: { onClick: () => void }) => {
   const emailTimedOut = useSelector(
     (state: RootState) => state.emailVerificationTimedOut
   );
@@ -22,7 +22,9 @@ const ResendEmailButton = () => {
   function resendEmail() {
     dispatch(setTimer());
 
-    //Logic for sending email
+    if (!isCooldown) {
+      onClick();
+    }
   }
 
   useEffect(() => {
