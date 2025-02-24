@@ -21,7 +21,7 @@ const pageVariants: Variants = {
 
 function FadeIn({ children }: Props): JSX.Element {
   return (
-    <motion.div variants={pageVariants} animate="animate" initial="initial">
+    <motion.div variants={pageVariants} animate="animate" initial="initial" className='h-full'>
       {children}
     </motion.div>
   );

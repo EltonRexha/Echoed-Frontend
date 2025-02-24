@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface Timeout {
   /**Time remaining in seconds */
@@ -11,7 +11,8 @@ interface Timeout {
 const initalState: Timeout = {
   timeRemaining: 0,
   //10 minutes
-  counter: 60 * 10,
+  counter:
+    60 * parseInt(import.meta.env.VITE_EMAIL_VERIFICATION_RESEND_TOKEN_TIMEOUT),
   ticking: false,
 };
 
@@ -19,18 +20,6 @@ const slice = createSlice({
   name: 'emailTimeout',
   initialState: initalState,
   reducers: {
-    inititalize: (state) => {
-      const isTimedOutLocalStorage = localStorage.getItem(
-        'emailVerificationIsTimedOut'
-      );
-      const isTimedOut = isTimedOutLocalStorage
-        ? JSON.parse(isTimedOutLocalStorage)
-        : false;
-      if (isTimedOut) {
-        state.timeRemaining = state.counter;
-        state.ticking = true;
-      }
-    },
     substractSecond: (state) => {
       state.timeRemaining -= 1;
       if (state.timeRemaining === 0) {
@@ -40,19 +29,13 @@ const slice = createSlice({
     setTimer: (state) => {
       state.timeRemaining = state.counter;
       state.ticking = true;
-      localStorage.setItem('emailVerificationIsTimedOut', JSON.stringify(true));
     },
     resetTimer: (state) => {
       state.timeRemaining = 0;
       state.ticking = false;
-      localStorage.setItem(
-        'emailVerificationIsTimedOut',
-        JSON.stringify(false)
-      );
     },
   },
 });
 
-export const { inititalize, substractSecond, resetTimer, setTimer } =
-  slice.actions;
+export const { substractSecond, resetTimer, setTimer } = slice.actions;
 export default slice.reducer;

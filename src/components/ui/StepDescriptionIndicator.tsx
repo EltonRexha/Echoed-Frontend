@@ -44,6 +44,7 @@ function UnSelectedIndicator({ description, last, index }: IndicatorProps) {
         {index}
       </span>
       {description}
+      {!last && (
       <svg
         className="w-3 h-3 ms-2 sm:ms-4 "
         aria-hidden="true"
@@ -51,7 +52,6 @@ function UnSelectedIndicator({ description, last, index }: IndicatorProps) {
         fill="none"
         viewBox="0 0 12 10"
       >
-        {!last && (
           <path
             stroke="currentColor"
             strokeLinecap="round"
@@ -59,8 +59,8 @@ function UnSelectedIndicator({ description, last, index }: IndicatorProps) {
             strokeWidth="2"
             d="m7 9 4-4-4-4M1 9l4-4-4-4"
           />
-        )}
       </svg>
+        )}
     </li>
   );
 }
