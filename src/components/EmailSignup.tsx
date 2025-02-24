@@ -96,12 +96,12 @@ function EmailSignup(): JSX.Element {
 
   const createUserMutation = useMutation({
     mutationFn: createUser,
-    onSuccess: () => {
+    onSuccess: (success) => {
       incrementCurrentInputBox();
-      toast.success('Successfuly created account');
+      toast.success(success.message);
     },
-    onError: () => {
-      toast.error('Something wrong happened', {
+    onError: (e) => {
+      toast.error(e.message, {
         description: 'Try again',
         action: {
           label: 'Go to the start',
@@ -480,7 +480,7 @@ function SecondInputGroup({
   }
 
   return (
-    <div className='h-full'>
+    <div className="h-full">
       <FadeIn>
         <div className="relative h-full flex flex-col">
           <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
@@ -579,11 +579,11 @@ function SecondInputGroup({
 function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
   const emailVerificationMutation = useMutation({
     mutationFn: (email: string) => sendVerificationEmail(email),
-    onSuccess: () => {
-      toast.success('Succesfully sent email');
+    onSuccess: (success) => {
+      toast.success(success.message);
     },
-    onError: () => {
-      toast.error('Something went wrong sending email');
+    onError: (e) => {
+      toast.error(e.message);
     },
   });
 
