@@ -153,16 +153,24 @@ function EmailSignup(): JSX.Element {
   return (
     <>
       <div className="justify-self-start">
-        <StepDescriptionIndicator
-          currentIndex={currentInputBox}
-          descriptions={['Personal Info', 'Account Info', 'Finish']}
-        />
+        <div className="hidden sm:block">
+          <StepDescriptionIndicator
+            currentIndex={currentInputBox}
+            descriptions={['Personal Info', 'Account Info', 'Finish']}
+          />
+        </div>
+        <div className="block sm:hidden">
+          <StepDescriptionIndicator
+            currentIndex={currentInputBox}
+            descriptions={['Personal', 'Account', 'Finish']}
+          />
+        </div>
       </div>
 
       <div className="mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex-1"
+          className="flex-1 h-full"
           autoComplete="off"
         >
           {inputBoxes[currentInputBox]}
@@ -472,97 +480,99 @@ function SecondInputGroup({
   }
 
   return (
-    <FadeIn>
-      <div className="relative h-full flex flex-col">
-        <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
-          <li className="w-full">
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                id="username"
-                {...register('username')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="username"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Username
-              </label>
-              {errors.username && (
-                <p className="text-red-600 text-sm font-semibold font-sans">
-                  {errors.username.message}
-                </p>
-              )}
-              {usernameInUse && (
-                <p className="text-red-600 text-sm font-semibold font-sans">
-                  this username is already in use
-                </p>
-              )}
+    <div className='h-full'>
+      <FadeIn>
+        <div className="relative h-full flex flex-col">
+          <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
+            <li className="w-full">
+              <div className="relative z-0 w-full mb-5 group">
+                <input
+                  id="username"
+                  {...register('username')}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="username"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Username
+                </label>
+                {errors.username && (
+                  <p className="text-red-600 text-sm font-semibold font-sans">
+                    {errors.username.message}
+                  </p>
+                )}
+                {usernameInUse && (
+                  <p className="text-red-600 text-sm font-semibold font-sans">
+                    this username is already in use
+                  </p>
+                )}
+              </div>
+            </li>
+            <li className="w-full">
+              <div className="relative z-0 w-full mb-5 group">
+                <input
+                  type="password"
+                  id="password"
+                  {...register('password')}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="password"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  Password
+                </label>
+                {errors.password && (
+                  <p className="text-red-600 text-sm font-semibold font-sans">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+            </li>
+            <li className="w-full">
+              <div className="relative z-0 w-full mb-5 group">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  {...register('confirmPassword')}
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
+                  placeholder=" "
+                  required
+                />
+                <label
+                  htmlFor="confirmPassword"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >
+                  confirm password
+                </label>
+                {errors.confirmPassword && (
+                  <p className="text-red-600 text-sm font-semibold font-sans">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+                {password !== confirmPassword && (
+                  <p className="text-red-600 text-sm font-semibold font-sans">
+                    Password do not match
+                  </p>
+                )}
+              </div>
+            </li>
+          </ul>
+          {/* Show Next button only if all fields are filled */}
+          <div className="flex pr-10 ml-10 mt-auto">
+            <div className="mr-auto">
+              <PrevButton onClick={previous} />
             </div>
-          </li>
-          <li className="w-full">
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="password"
-                id="password"
-                {...register('password')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="password"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Password
-              </label>
-              {errors.password && (
-                <p className="text-red-600 text-sm font-semibold font-sans">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-          </li>
-          <li className="w-full">
-            <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="password"
-                id="confirmPassword"
-                {...register('confirmPassword')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                htmlFor="confirmPassword"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                confirm password
-              </label>
-              {errors.confirmPassword && (
-                <p className="text-red-600 text-sm font-semibold font-sans">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-              {password !== confirmPassword && (
-                <p className="text-red-600 text-sm font-semibold font-sans">
-                  Password do not match
-                </p>
-              )}
-            </div>
-          </li>
-        </ul>
-        {/* Show Next button only if all fields are filled */}
-        <div className="flex pr-10 ml-10">
-          <div className="mr-auto">
-            <PrevButton onClick={previous} />
+            {formIsValid() && <SubmitButton />}
           </div>
-          {formIsValid() && <SubmitButton />}
         </div>
-      </div>
-    </FadeIn>
+      </FadeIn>
+    </div>
   );
 }
 

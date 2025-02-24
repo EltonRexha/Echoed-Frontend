@@ -3,7 +3,6 @@ import { Button } from './ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/services/state/redux/store';
 import {
-  inititalize,
   setTimer,
   substractSecond,
 } from '@/services/state/redux/slices/emailVerificationTimeout';
@@ -14,10 +13,6 @@ const ResendEmailButton = ({ onClick }: { onClick: () => void }) => {
   );
   const dispatch: AppDispatch = useDispatch();
   const isCooldown = emailTimedOut.timeRemaining !== 0;
-
-  useEffect(() => {
-    dispatch(inititalize());
-  }, [dispatch]);
 
   function resendEmail() {
     dispatch(setTimer());
@@ -40,7 +35,7 @@ const ResendEmailButton = ({ onClick }: { onClick: () => void }) => {
   }, [emailTimedOut.ticking, dispatch]);
 
   return (
-    <Button onClick={resendEmail} disabled={isCooldown}>
+    <Button onClick={resendEmail} disabled={isCooldown} type="button">
       {isCooldown
         ? `Resend available in ${Math.floor(
             emailTimedOut.timeRemaining / 60

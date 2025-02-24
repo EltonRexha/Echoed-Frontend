@@ -81,19 +81,21 @@ function GettingStartedPage(): JSX.Element {
           </CycleComponents>
         </div>
 
-        <FadeInList>
-          <p className="text-md mt-0 sm:mt-5 text-center text-light-secondary dark:text-dark-secondary-darker w-md mx-auto font-mono">
-            A Place To Share Your Ideas, Create Firends,{' '}
-            <span className="text-purple-500">And Go Open.</span>
-          </p>
-          <div className="mt-10 text-purple-shade-300 dark:text-purple-300 text-2xl mx-auto sm:text-3xl font-mono w-max">
-            <Line color="#560090" height={2}>
-              <Link to="/sign-up">
-                <p>Get started</p>
-              </Link>
-            </Line>
-          </div>
-        </FadeInList>
+        <div className='hidden sm:block'>
+          <FadeInList>
+            <p className="text-md mt-0 sm:mt-5 text-center text-light-secondary dark:text-dark-secondary-darker max-w-md mx-auto font-mono">
+              A Place To Share Your Ideas, Create Firends,{' '}
+              <span className="text-purple-500">And Go Open.</span>
+            </p>
+            <div className="mt-10 text-purple-shade-300 dark:text-purple-300 text-2xl mx-auto sm:text-3xl font-mono w-max">
+              <Line color="#560090" height={2}>
+                <Link to="/sign-up">
+                  <p>Get started</p>
+                </Link>
+              </Line>
+            </div>
+          </FadeInList>
+        </div>
 
         <div className="font-mono">
           <div className="absolute left-0 right-0 bottom-0 text-purple-300 dark:text-dark-primary text-2xl mb-30">
