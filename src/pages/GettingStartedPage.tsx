@@ -81,7 +81,7 @@ function GettingStartedPage(): JSX.Element {
           </CycleComponents>
         </div>
 
-        <div className='hidden sm:block'>
+        <div className="hidden sm:block">
           <FadeInList>
             <p className="text-md mt-0 sm:mt-5 text-center text-light-secondary dark:text-dark-secondary-darker max-w-md mx-auto font-mono">
               A Place To Share Your Ideas, Create Firends,{' '}
@@ -97,13 +97,15 @@ function GettingStartedPage(): JSX.Element {
           </FadeInList>
         </div>
 
-        <div className="font-mono">
-          <div className="absolute left-0 right-0 bottom-0 text-purple-300 dark:text-dark-primary text-2xl mb-30">
-            <div className="m-auto w-max">
-              <ViewMore to="#post-example" />
+        <FadeInView>
+          <div className="font-mono">
+            <div className="absolute left-0 right-0 bottom-0 text-purple-300 dark:text-dark-primary text-2xl mb-30">
+              <div className="m-auto w-max">
+                <ViewMore to="#post-example" />
+              </div>
             </div>
           </div>
-        </div>
+        </FadeInView>
       </div>
       <div
         className="relative min-h-[100vh] bg-blob"
