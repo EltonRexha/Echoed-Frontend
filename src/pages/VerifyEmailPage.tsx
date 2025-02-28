@@ -39,12 +39,21 @@ function VerifyEmailPage(): JSX.Element {
 
   if (!token || !encodedEmail) {
     return (
-      <div className="text-center">
-        <FadeInList>
-          <h1 className="text-light-primary dark:text-dark-primary font-bold text-bold text-3xl">
-            Broken verification link
-          </h1>
-        </FadeInList>
+      <div className="overflow-x-hidden font-raleway bg-lighter dark:bg-purple-shade-400">
+        <FadeIn>
+          <div className="min-h-[100vh] bg-lighter dark:bg-purple-shade-400 pl-2 pr-2 sm:pl-10 sm:pr-10 relative flex flex-col">
+            <GettingStartedNav />
+            <div className="w-full flex flex-col sm:items-center sm:justify-center flex-1">
+              <h1 className="text-light-primary dark:text-dark-primary font-bold text-bold text-3xl">
+                {' '}
+                You have a broken link
+              </h1>
+              <p className="text-light-secondary dark:text-dark-secondary mt-2">
+                what a shame
+              </p>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     );
   }

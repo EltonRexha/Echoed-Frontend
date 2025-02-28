@@ -1,3 +1,4 @@
+import HttpError from '@/Errors/httpError';
 import axios from '@/services/axios';
 import { ErrorResponse } from '@/types/errorResponse';
 import { User } from '@/types/user';
@@ -34,7 +35,7 @@ export async function getUser({
   } catch (e) {
     const error = e as AxiosError<ErrorResponse>;
     throw new Error(
-      error.response?.data?.error || 'something wrong happened fetching user'
+      error.response?.data?.error || 'Something wrong happened fetching user'
     );
   }
 }
@@ -48,8 +49,9 @@ export async function createUser(payload: User): Promise<{ message: string }> {
     return response.data;
   } catch (e) {
     const error = e as AxiosError<ErrorResponse>;
-    throw new Error(
-      error.response?.data?.error || 'something wrong happened creating user'
+    throw new HttpError(
+      error.response?.status as number,
+      error.response?.data?.error || 'Something went wrong creating user'
     );
   }
 }

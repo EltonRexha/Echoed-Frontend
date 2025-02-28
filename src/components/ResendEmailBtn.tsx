@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '@/services/state/redux/store';
 import {
   setTimer,
   substractSecond,
-} from '@/services/state/redux/slices/emailVerificationTimeout';
+} from '@/services/state/redux/slices/emailVerificationTimeoutSlice';
 
 const ResendEmailButton = ({ onClick }: { onClick: () => void }) => {
   const emailTimedOut = useSelector(
@@ -35,7 +35,12 @@ const ResendEmailButton = ({ onClick }: { onClick: () => void }) => {
   }, [emailTimedOut.ticking, dispatch]);
 
   return (
-    <Button onClick={resendEmail} disabled={isCooldown} type="button" className='cursor-pointer'>
+    <Button
+      onClick={resendEmail}
+      disabled={isCooldown}
+      type="button"
+      className="cursor-pointer"
+    >
       {isCooldown
         ? `Resend available in ${Math.floor(
             emailTimedOut.timeRemaining / 60
