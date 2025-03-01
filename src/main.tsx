@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import OAuthErrorPage from './pages/OAuthErrorPage';
+import SignupOptionsPage from './pages/sign-up/SignupOptionsPage';
+import EmailSignupPage from './pages/sign-up/EmailSignupPage';
 
 const queryClient = new QueryClient();
 
@@ -26,13 +28,14 @@ function AccountRoutes() {
   );
 }
 
-// /sign-up/Ahotu / error;
-
 // eslint-disable-next-line react-refresh/only-export-components
 function SignUpRoutes() {
   return (
     <Routes>
-      <Route index={true} element={<SignupPage />} />
+      <Route element={<SignupPage />}>
+        <Route index element={<SignupOptionsPage />}></Route>
+        <Route path="email" element={<EmailSignupPage />}></Route>
+      </Route>
       <Route path="oauth/error" element={<OAuthErrorPage />}></Route>
     </Routes>
   );

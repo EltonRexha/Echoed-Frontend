@@ -6,7 +6,7 @@ import {
   FieldErrors,
   UseFormWatch,
 } from 'react-hook-form';
-import StepDescriptionIndicator from './ui/StepDescriptionIndicator';
+import StepDescriptionIndicator from '@/components/ui/StepDescriptionIndicator';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { countries } from 'countries-list';
@@ -15,15 +15,16 @@ import getMonthName from '@/utils/getMonthName';
 import getDaysInMonth from '@/utils/getDaysInMonth';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createUser, getUser } from '@/services/api/User';
-import SubmitButton from './SubmitButton';
-import FadeIn from './ui/FadeIn';
+import SubmitButton from '@/components/SubmitButton';
+import FadeIn from '@/components/ui/FadeIn';
 import { User } from '@/types/user';
 import convertGenderString from '@/utils/convertGenderString';
 import { toast } from 'sonner';
-import NextButton from './NextButton';
-import PrevButton from './PrevButton';
-import ResendEmailButton from './ResendEmailBtn';
+import NextButton from '@/components/NextButton';
+import PrevButton from '@/components/PrevButton';
+import ResendEmailButton from '@/components/ResendEmailBtn';
 import { sendVerificationEmail } from '@/services/api/Email';
+import { useNavigate } from 'react-router-dom';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -83,7 +84,7 @@ const schema = z.object({
 
 type Inputs = z.infer<typeof schema>;
 
-function EmailSignup(): JSX.Element {
+function EmailSignupPage(): JSX.Element {
   const {
     register,
     handleSubmit,
@@ -93,6 +94,7 @@ function EmailSignup(): JSX.Element {
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+  const navigate = useNavigate();
 
   const createUserMutation = useMutation({
     mutationFn: createUser,
@@ -101,15 +103,8 @@ function EmailSignup(): JSX.Element {
       toast.success(success.message);
     },
     onError: (e) => {
-      toast.error(e.message, {
-        description: 'Try again',
-        action: {
-          label: 'Go to the start',
-          onClick: () => {
-            window.location.href = '/sign-up';
-          },
-        },
-      });
+      toast.error(e.message);
+      navigate('/sign-up');
     },
   });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -151,7 +146,7 @@ function EmailSignup(): JSX.Element {
   ];
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
       <div className="justify-self-start">
         <div className="hidden sm:block">
           <StepDescriptionIndicator
@@ -176,7 +171,7 @@ function EmailSignup(): JSX.Element {
           {inputBoxes[currentInputBox]}
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -615,4 +610,4 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
   );
 }
 
-export default EmailSignup;
+export default EmailSignupPage;
