@@ -4,11 +4,13 @@ import { Eye, EyeOff } from 'lucide-react';
 interface PasswordInputProps {
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   labelProps?: React.LabelHTMLAttributes<HTMLLabelElement>;
+  labelText?: string;
 }
 
 const PasswordInput = ({
   inputProps,
   labelProps,
+  labelText = 'Password',
 }: PasswordInputProps): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,7 +32,7 @@ const PasswordInput = ({
           labelProps?.className || ''
         }`}
       >
-        Password
+        {labelText}
       </label>
       <button
         type="button"

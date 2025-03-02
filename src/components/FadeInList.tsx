@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { HTMLMotionProps, motion, Variants } from 'framer-motion';
 
 interface Props {
   children: ReactNode;
+  parentProps?: HTMLMotionProps<'div'>;
 }
 
 const containerVariants: Variants = {
@@ -25,12 +26,16 @@ const itemVariants: Variants = {
   },
 };
 
-export default function FadeInList({ children }: Props): JSX.Element {
+export default function FadeInList({
+  children,
+  parentProps
+}: Props): JSX.Element {
   return (
     <motion.div
       variants={containerVariants}
       initial="initial"
       whileInView="animate"
+      {...parentProps}
       viewport={{ once: true, amount: 0.2 }}
     >
       {Array.isArray(children) ? (

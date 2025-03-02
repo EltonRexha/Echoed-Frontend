@@ -26,6 +26,8 @@ import ResendEmailButton from '@/components/ResendEmailBtn';
 import { sendVerificationEmail } from '@/services/api/Email';
 import { useNavigate } from 'react-router-dom';
 import CustomInput from '@/components/ui/CustomInput';
+import PasswordInput from '@/components/ui/PasswordInput';
+import FadeInList from '@/components/FadeInList';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -121,7 +123,7 @@ function EmailSignupPage(): JSX.Element {
     };
     createUserMutation.mutate(user);
   };
-  const [currentInputBox, setCurrentInputBox] = useState(0);
+  const [currentInputBox, setCurrentInputBox] = useState(2);
   const incrementCurrentInputBox = () => {
     setCurrentInputBox(currentInputBox + 1);
   };
@@ -196,6 +198,8 @@ function FirstInputGroup({
   const year = watch('year');
   const day = watch('day');
 
+  console.log({ email });
+
   const { data: userData } = useQuery({
     queryFn: () => getUser({ email }),
     queryKey: ['user', { email }],
@@ -236,8 +240,12 @@ function FirstInputGroup({
   return (
     <FadeIn>
       <div className="relative h-full flex flex-col font-sans">
-        <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
-          <li className="flex flex-col sm:flex-row gap-3 w-full">
+        <FadeInList
+          parentProps={{
+            className: 'flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1',
+          }}
+        >
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
             <div className="relative z-0 w-full mb-5 group">
               <CustomInput
                 inputProps={{ ...register('firstName'), id: 'first_name' }}
@@ -262,9 +270,9 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
+          </div>
 
-          <li className="w-full">
+          <div className="w-full">
             <div className="relative z-0 w-full mb-5 group">
               <CustomInput
                 inputProps={{ ...register('email'), id: 'email' }}
@@ -282,8 +290,8 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
-          <li className="w-full">
+          </div>
+          <div className="w-full">
             <div className="w-full mb-5 flex flex-col gap-2 mt-5">
               <label
                 htmlFor="gender"
@@ -307,8 +315,8 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
-          <li className="w-full">
+          </div>
+          <div className="w-full">
             <div className="w-full mb-5 flex flex-col gap-2">
               <label
                 htmlFor="country"
@@ -332,9 +340,9 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
+          </div>
 
-          <li className="w-full">
+          <div className="w-full">
             <div className="w-full mb-5 flex flex-col gap-2">
               <label className="text-sm text-gray-500 dark:text-gray-400 ">
                 Date of birth
@@ -356,7 +364,9 @@ function FirstInputGroup({
                   <option value="unkown">Month</option>
                 </select>{' '}
                 <select
-                  {...register('day', { setValueAs: (value) => Number(value) })}
+                  {...register('day', {
+                    setValueAs: (value) => Number(value),
+                  })}
                   defaultValue="unkown"
                   className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 flex-1"
                 >
@@ -404,8 +414,8 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
-        </ul>
+          </div>
+        </FadeInList>
 
         {/* Show Next button only if all fields are filled */}
         {formIsValid() && <NextButton onClick={next} />}
@@ -455,8 +465,12 @@ function SecondInputGroup({
     <div className="h-full">
       <FadeIn>
         <div className="relative h-full flex flex-col">
-          <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
-            <li className="w-full">
+          <FadeInList
+            parentProps={{
+              className: 'flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1',
+            }}
+          >
+            <div className="w-full">
               <div className="relative z-0 w-full mb-5 group">
                 <CustomInput
                   inputProps={{ ...register('username'), id: 'username' }}
@@ -474,13 +488,12 @@ function SecondInputGroup({
                   </p>
                 )}
               </div>
-            </li>
-            <li className="w-full">
+            </div>
+            <div className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <CustomInput
+                <PasswordInput
                   inputProps={{ ...register('password'), id: 'password' }}
                   labelProps={{ id: 'password' }}
-                  labelText="Password"
                 />
                 {errors.password && (
                   <p className="text-red-600 text-sm font-semibold font-sans">
@@ -488,10 +501,10 @@ function SecondInputGroup({
                   </p>
                 )}
               </div>
-            </li>
-            <li className="w-full">
+            </div>
+            <div className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <CustomInput
+                <PasswordInput
                   inputProps={{
                     ...register('confirmPassword'),
                     id: 'confirm_password',
@@ -510,8 +523,8 @@ function SecondInputGroup({
                   </p>
                 )}
               </div>
-            </li>
-          </ul>
+            </div>
+          </FadeInList>
           {/* Show Next button only if all fields are filled */}
           <div className="flex pr-10 ml-10 mt-auto">
             <div className="mr-auto">
@@ -539,28 +552,30 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
   const email = watch('email');
 
   return (
-    <FadeIn>
-      <div className="h-full flex flex-col items-center pt-20 gap-2">
-        <h1 className="text-center text-4xl text-purple-shade-300 dark:text-purple-shade-100">
-          Verify Email
-        </h1>
-        <p className="text-light-primary dark:text-dark-primary text-pretty text-lg">
-          All what is left now is to verify your email
-        </p>
-        <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
-          Go to <span className="font-bold">{email}</span>
-        </p>
-        <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
-          Cannot find you email?{' '}
-          <span className="font-bold">Check your spams</span>
-        </p>
-        <ResendEmailButton
-          onClick={() => {
-            emailVerificationMutation.mutate(email);
-          }}
-        />
-      </div>
-    </FadeIn>
+    <FadeInList
+      parentProps={{
+        className: 'h-full flex flex-col items-center pt-20 gap-2',
+      }}
+    >
+      <h1 className="text-center text-4xl text-purple-shade-300 dark:text-purple-shade-100">
+        Verify Email
+      </h1>
+      <p className="text-light-primary dark:text-dark-primary text-pretty text-lg">
+        All what is left now is to verify your email
+      </p>
+      <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+        Go to <span className="font-bold">{email}</span>
+      </p>
+      <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+        Cannot find you email?{' '}
+        <span className="font-bold">Check your spams</span>
+      </p>
+      <ResendEmailButton
+        onClick={() => {
+          emailVerificationMutation.mutate(email);
+        }}
+      />
+    </FadeInList>
   );
 }
 

@@ -23,7 +23,7 @@ function SignupOptions() {
         </Button>
       </Link>
       <a href={googleSignupEndpoint}>
-        <Button variant="outline" className="w-full cursor-pointer">
+        <Button variant="secondary" className="w-full cursor-pointer">
           <svg
             className="mr-2 h-4 w-4"
             viewBox="0 0 24 24"
@@ -51,7 +51,7 @@ function SignupOptions() {
       </a>
 
       <a href={githubSignupEndpoint}>
-        <Button variant="outline" className="w-full cursor-pointer">
+        <Button variant="secondary" className="w-full cursor-pointer">
           <Github className="mr-2 h-4 w-4" />
           Sign up with GitHub
         </Button>
