@@ -55,3 +55,47 @@ export async function createUser(payload: User): Promise<{ message: string }> {
     );
   }
 }
+
+export async function loginUserWithEmail(payload: {
+  email: string;
+  password: string;
+}): Promise<{ message: string }> {
+  try {
+    const response: AxiosResponse<{ message: string }> = await axios.post(
+      '/auth/login',
+      payload,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (e) {
+    const error = e as AxiosError<ErrorResponse>;
+    throw new HttpError(
+      error.response?.status as number,
+      error.response?.data?.error || 'Something went wrong loging you in'
+    );
+  }
+}
+
+export async function loginUserWithUsername(payload: {
+  username: string;
+  password: string;
+}): Promise<{ message: string }> {
+  try {
+    const response: AxiosResponse<{ message: string }> = await axios.post(
+      '/auth/login',
+      payload,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
+  } catch (e) {
+    const error = e as AxiosError<ErrorResponse>;
+    throw new HttpError(
+      error.response?.status as number,
+      error.response?.data?.error || 'Something went wrong loging you in'
+    );
+  }
+}

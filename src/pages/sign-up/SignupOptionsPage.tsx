@@ -17,13 +17,13 @@ function SignupOptions() {
   return (
     <div className="flex flex-col space-y-4 w-full max-w-sm mx-auto">
       <Link to={'email'}>
-        <Button className="w-full cursor-pointer">
+        <Button className="w-full cursor-pointer font-sans">
           <Mail className="mr-2 h-4 w-4" />
           Sign up with Email
         </Button>
       </Link>
       <a href={googleSignupEndpoint}>
-        <Button variant="secondary" className="w-full cursor-pointer">
+        <Button variant="secondary" className="w-full cursor-pointer font-sans">
           <svg
             className="mr-2 h-4 w-4"
             viewBox="0 0 24 24"
@@ -51,7 +51,7 @@ function SignupOptions() {
       </a>
 
       <a href={githubSignupEndpoint}>
-        <Button variant="secondary" className="w-full cursor-pointer">
+        <Button variant="secondary" className="w-full cursor-pointer font-sans">
           <Github className="mr-2 h-4 w-4" />
           Sign up with GitHub
         </Button>

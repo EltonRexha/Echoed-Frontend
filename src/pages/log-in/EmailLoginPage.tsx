@@ -1,10 +1,14 @@
 import { Button } from '@/components/ui/button';
 import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
+import HttpError from '@/Errors/httpError';
+import { loginUserWithEmail } from '@/services/api/User';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import { Github } from 'lucide-react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -16,18 +20,32 @@ const googleSignupEndpoint = `${import.meta.env.VITE_API_BASE_URL}/auth/google`;
 const githubSignupEndpoint = `${import.meta.env.VITE_API_BASE_URL}/auth/github`;
 
 type Inputs = z.infer<typeof schema>;
+
 function EmailLoginPage() {
+  const navigate = useNavigate();
+  const [errorLogin, setErrorLogin] = useState<string | null>(null);
+  const loginMutation = useMutation({
+    mutationFn: (user: Inputs) => loginUserWithEmail(user),
+    onError: (e: HttpError) => {
+      setErrorLogin(e.message);
+    },
+    onSuccess: () => {
+      navigate('/');
+    },
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {};
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    loginMutation.mutate(data);
+  };
+
   return (
     <div className="w-96 p-2">
       <h1 className="text-2xl font-raleway font-semibold text-light-primary dark:text-dark-primary mb-10">
@@ -58,6 +76,11 @@ function EmailLoginPage() {
             labelProps={{ id: 'password' }}
           />
         </div>
+        {errorLogin && (
+          <p className="font-sans text-red-600 dark:text-red-500 text-sm my-3">
+            {errorLogin}
+          </p>
+        )}
         <div className="my-10 flex flex-col gap-1">
           <p className="font-sans text-light-secondary dark:text-dark-secondary text-sm">
             <span className="hover:opacity-100 opacity-80 transition-opacity ease-in-out">
@@ -71,15 +94,18 @@ function EmailLoginPage() {
           </p>
         </div>
 
-        <Button className="w-full cursor-pointer">Log in</Button>
+        <Button className="w-full cursor-pointer font-sans">Log in</Button>
       </form>
       <div className="my-3">
         <h1 className="text-light-secondary dark:text-dark-secondary text-center mb-3">
-          Or
+          or
         </h1>
         <div className=" flex flex-col gap-2">
           <a href={googleSignupEndpoint}>
-            <Button variant="secondary" className="w-full cursor-pointer">
+            <Button
+              variant="secondary"
+              className="w-full cursor-pointer font-sans"
+            >
               <svg
                 className="mr-2 h-4 w-4"
                 viewBox="0 0 24 24"
@@ -107,7 +133,10 @@ function EmailLoginPage() {
           </a>
 
           <a href={githubSignupEndpoint}>
-            <Button variant="secondary" className="w-full cursor-pointer">
+            <Button
+              variant="secondary"
+              className="w-full cursor-pointer font-sans"
+            >
               <Github className="mr-2 h-4 w-4" />
               Login with GitHub
             </Button>
