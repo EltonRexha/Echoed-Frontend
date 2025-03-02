@@ -25,6 +25,9 @@ import PrevButton from '@/components/PrevButton';
 import ResendEmailButton from '@/components/ResendEmailBtn';
 import { sendVerificationEmail } from '@/services/api/Email';
 import { useNavigate } from 'react-router-dom';
+import CustomInput from '@/components/ui/CustomInput';
+import PasswordInput from '@/components/ui/PasswordInput';
+import FadeInList from '@/components/FadeInList';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -195,6 +198,8 @@ function FirstInputGroup({
   const year = watch('year');
   const day = watch('day');
 
+  console.log({ email });
+
   const { data: userData } = useQuery({
     queryFn: () => getUser({ email }),
     queryKey: ['user', { email }],
@@ -235,22 +240,18 @@ function FirstInputGroup({
   return (
     <FadeIn>
       <div className="relative h-full flex flex-col font-sans">
-        <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
-          <li className="flex flex-col sm:flex-row gap-3 w-full">
+        <FadeInList
+          parentProps={{
+            className: 'flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1',
+          }}
+        >
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
             <div className="relative z-0 w-full mb-5 group">
-              <input
-                id="first_name"
-                {...register('firstName')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
+              <CustomInput
+                inputProps={{ ...register('firstName'), id: 'first_name' }}
+                labelProps={{ id: 'first_name' }}
+                labelText="First name"
               />
-              <label
-                htmlFor="first_name"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                First Name
-              </label>
               {errors.firstName && (
                 <p className="text-red-600 text-sm font-semibold font-sans">
                   {errors.firstName.message}
@@ -258,42 +259,26 @@ function FirstInputGroup({
               )}
             </div>
             <div className="relative z-0 w-full mb-5 group">
-              <input
-                id="last_name"
-                {...register('lastName')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
+              <CustomInput
+                inputProps={{ ...register('lastName'), id: 'last_name' }}
+                labelProps={{ id: 'last_name' }}
+                labelText="Last name"
               />
-              <label
-                htmlFor="last_name"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Last Name
-              </label>
               {errors.lastName && (
                 <p className="text-red-600 text-sm font-semibold font-sans">
                   {errors.lastName.message}
                 </p>
               )}
             </div>
-          </li>
+          </div>
 
-          <li className="w-full">
+          <div className="w-full">
             <div className="relative z-0 w-full mb-5 group">
-              <input
-                id="email"
-                {...register('email')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
+              <CustomInput
+                inputProps={{ ...register('email'), id: 'email' }}
+                labelProps={{ id: 'email' }}
+                labelText="Email"
               />
-              <label
-                htmlFor="email"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Email
-              </label>
               {errors.email && (
                 <p className="text-red-600 text-sm font-semibold font-sans">
                   {errors.email.message}
@@ -305,8 +290,8 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
-          <li className="w-full">
+          </div>
+          <div className="w-full">
             <div className="w-full mb-5 flex flex-col gap-2 mt-5">
               <label
                 htmlFor="gender"
@@ -330,8 +315,8 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
-          <li className="w-full">
+          </div>
+          <div className="w-full">
             <div className="w-full mb-5 flex flex-col gap-2">
               <label
                 htmlFor="country"
@@ -355,9 +340,9 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
+          </div>
 
-          <li className="w-full">
+          <div className="w-full">
             <div className="w-full mb-5 flex flex-col gap-2">
               <label className="text-sm text-gray-500 dark:text-gray-400 ">
                 Date of birth
@@ -379,7 +364,9 @@ function FirstInputGroup({
                   <option value="unkown">Month</option>
                 </select>{' '}
                 <select
-                  {...register('day', { setValueAs: (value) => Number(value) })}
+                  {...register('day', {
+                    setValueAs: (value) => Number(value),
+                  })}
                   defaultValue="unkown"
                   className="border-b-2 border-gray-300 p-2 dark:bg-purple-shade-400 dark:border-gray-600 flex-1"
                 >
@@ -427,8 +414,8 @@ function FirstInputGroup({
                 </p>
               )}
             </div>
-          </li>
-        </ul>
+          </div>
+        </FadeInList>
 
         {/* Show Next button only if all fields are filled */}
         {formIsValid() && <NextButton onClick={next} />}
@@ -478,22 +465,18 @@ function SecondInputGroup({
     <div className="h-full">
       <FadeIn>
         <div className="relative h-full flex flex-col">
-          <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
-            <li className="w-full">
+          <FadeInList
+            parentProps={{
+              className: 'flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1',
+            }}
+          >
+            <div className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <input
-                  id="username"
-                  {...register('username')}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                  placeholder=" "
-                  required
+                <CustomInput
+                  inputProps={{ ...register('username'), id: 'username' }}
+                  labelProps={{ id: 'username' }}
+                  labelText="Username"
                 />
-                <label
-                  htmlFor="username"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Username
-                </label>
                 {errors.username && (
                   <p className="text-red-600 text-sm font-semibold font-sans">
                     {errors.username.message}
@@ -505,46 +488,30 @@ function SecondInputGroup({
                   </p>
                 )}
               </div>
-            </li>
-            <li className="w-full">
+            </div>
+            <div className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <input
-                  type="password"
-                  id="password"
-                  {...register('password')}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                  placeholder=" "
-                  required
+                <PasswordInput
+                  inputProps={{ ...register('password'), id: 'password' }}
+                  labelProps={{ id: 'password' }}
                 />
-                <label
-                  htmlFor="password"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Password
-                </label>
                 {errors.password && (
                   <p className="text-red-600 text-sm font-semibold font-sans">
                     {errors.password.message}
                   </p>
                 )}
               </div>
-            </li>
-            <li className="w-full">
+            </div>
+            <div className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  {...register('confirmPassword')}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                  placeholder=" "
-                  required
+                <PasswordInput
+                  inputProps={{
+                    ...register('confirmPassword'),
+                    id: 'confirm_password',
+                  }}
+                  labelProps={{ id: 'confirm_password' }}
+                  labelText="Confirm Password"
                 />
-                <label
-                  htmlFor="confirmPassword"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  confirm password
-                </label>
                 {errors.confirmPassword && (
                   <p className="text-red-600 text-sm font-semibold font-sans">
                     {errors.confirmPassword.message}
@@ -556,8 +523,8 @@ function SecondInputGroup({
                   </p>
                 )}
               </div>
-            </li>
-          </ul>
+            </div>
+          </FadeInList>
           {/* Show Next button only if all fields are filled */}
           <div className="flex pr-10 ml-10 mt-auto">
             <div className="mr-auto">
@@ -585,28 +552,30 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
   const email = watch('email');
 
   return (
-    <FadeIn>
-      <div className="h-full flex flex-col items-center pt-20 gap-2">
-        <h1 className="text-center text-4xl text-purple-shade-300 dark:text-purple-shade-100">
-          Verify Email
-        </h1>
-        <p className="text-light-primary dark:text-dark-primary text-pretty text-lg">
-          All what is left now is to verify your email
-        </p>
-        <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
-          Go to <span className="font-bold">{email}</span>
-        </p>
-        <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
-          Cannot find you email?{' '}
-          <span className="font-bold">Check your spams</span>
-        </p>
-        <ResendEmailButton
-          onClick={() => {
-            emailVerificationMutation.mutate(email);
-          }}
-        />
-      </div>
-    </FadeIn>
+    <FadeInList
+      parentProps={{
+        className: 'h-full flex flex-col items-center pt-20 gap-2',
+      }}
+    >
+      <h1 className="text-center text-4xl text-purple-shade-300 dark:text-purple-shade-100">
+        Verify Email
+      </h1>
+      <p className="text-light-primary dark:text-dark-primary text-pretty text-lg">
+        All what is left now is to verify your email
+      </p>
+      <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+        Go to <span className="font-bold">{email}</span>
+      </p>
+      <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+        Cannot find you email?{' '}
+        <span className="font-bold">Check your spams</span>
+      </p>
+      <ResendEmailButton
+        onClick={() => {
+          emailVerificationMutation.mutate(email);
+        }}
+      />
+    </FadeInList>
   );
 }
 
