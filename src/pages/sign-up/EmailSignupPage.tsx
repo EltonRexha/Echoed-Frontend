@@ -25,6 +25,7 @@ import PrevButton from '@/components/PrevButton';
 import ResendEmailButton from '@/components/ResendEmailBtn';
 import { sendVerificationEmail } from '@/services/api/Email';
 import { useNavigate } from 'react-router-dom';
+import CustomInput from '@/components/ui/CustomInput';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -238,19 +239,11 @@ function FirstInputGroup({
         <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
           <li className="flex flex-col sm:flex-row gap-3 w-full">
             <div className="relative z-0 w-full mb-5 group">
-              <input
-                id="first_name"
-                {...register('firstName')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
+              <CustomInput
+                inputProps={{ ...register('firstName'), id: 'first_name' }}
+                labelProps={{ id: 'first_name' }}
+                labelText="First name"
               />
-              <label
-                htmlFor="first_name"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                First Name
-              </label>
               {errors.firstName && (
                 <p className="text-red-600 text-sm font-semibold font-sans">
                   {errors.firstName.message}
@@ -258,19 +251,11 @@ function FirstInputGroup({
               )}
             </div>
             <div className="relative z-0 w-full mb-5 group">
-              <input
-                id="last_name"
-                {...register('lastName')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
+              <CustomInput
+                inputProps={{ ...register('lastName'), id: 'last_name' }}
+                labelProps={{ id: 'last_name' }}
+                labelText="Last name"
               />
-              <label
-                htmlFor="last_name"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Last Name
-              </label>
               {errors.lastName && (
                 <p className="text-red-600 text-sm font-semibold font-sans">
                   {errors.lastName.message}
@@ -281,19 +266,11 @@ function FirstInputGroup({
 
           <li className="w-full">
             <div className="relative z-0 w-full mb-5 group">
-              <input
-                id="email"
-                {...register('email')}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                placeholder=" "
-                required
+              <CustomInput
+                inputProps={{ ...register('email'), id: 'email' }}
+                labelProps={{ id: 'email' }}
+                labelText="Email"
               />
-              <label
-                htmlFor="email"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Email
-              </label>
               {errors.email && (
                 <p className="text-red-600 text-sm font-semibold font-sans">
                   {errors.email.message}
@@ -481,19 +458,11 @@ function SecondInputGroup({
           <ul className="flex flex-col gap-3 px-2 sm:px-15 pt-10 flex-1">
             <li className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <input
-                  id="username"
-                  {...register('username')}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                  placeholder=" "
-                  required
+                <CustomInput
+                  inputProps={{ ...register('username'), id: 'username' }}
+                  labelProps={{ id: 'username' }}
+                  labelText="Username"
                 />
-                <label
-                  htmlFor="username"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Username
-                </label>
                 {errors.username && (
                   <p className="text-red-600 text-sm font-semibold font-sans">
                     {errors.username.message}
@@ -508,20 +477,11 @@ function SecondInputGroup({
             </li>
             <li className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <input
-                  type="password"
-                  id="password"
-                  {...register('password')}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                  placeholder=" "
-                  required
+                <CustomInput
+                  inputProps={{ ...register('password'), id: 'password' }}
+                  labelProps={{ id: 'password' }}
+                  labelText="Password"
                 />
-                <label
-                  htmlFor="password"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Password
-                </label>
                 {errors.password && (
                   <p className="text-red-600 text-sm font-semibold font-sans">
                     {errors.password.message}
@@ -531,20 +491,14 @@ function SecondInputGroup({
             </li>
             <li className="w-full">
               <div className="relative z-0 w-full mb-5 group">
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  {...register('confirmPassword')}
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-purple-shade-200 focus:outline-none focus:ring-0 focus:purple-shade-300 peer"
-                  placeholder=" "
-                  required
+                <CustomInput
+                  inputProps={{
+                    ...register('confirmPassword'),
+                    id: 'confirm_password',
+                  }}
+                  labelProps={{ id: 'confirm_password' }}
+                  labelText="Confirm Password"
                 />
-                <label
-                  htmlFor="confirmPassword"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-purple-shade-200 peer-focus:dark:text-purple-shade-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  confirm password
-                </label>
                 {errors.confirmPassword && (
                   <p className="text-red-600 text-sm font-semibold font-sans">
                     {errors.confirmPassword.message}

@@ -12,6 +12,9 @@ import VerifyEmailPage from './pages/VerifyEmailPage';
 import OAuthErrorPage from './pages/OAuthErrorPage';
 import SignupOptionsPage from './pages/sign-up/SignupOptionsPage';
 import EmailSignupPage from './pages/sign-up/EmailSignupPage';
+import LoginPage from './pages/LoginPage';
+import EmailLoginPage from './pages/log-in/emailLoginPage';
+import UsernameLoginPage from './pages/log-in/UsernameLoginPage';
 
 const queryClient = new QueryClient();
 
@@ -33,10 +36,21 @@ function SignUpRoutes() {
   return (
     <Routes>
       <Route element={<SignupPage />}>
-        <Route index element={<SignupOptionsPage />}></Route>
-        <Route path="email" element={<EmailSignupPage />}></Route>
+        <Route index element={<SignupOptionsPage />} />
+        <Route path="email" element={<EmailSignupPage />} />
       </Route>
-      <Route path="oauth/error" element={<OAuthErrorPage />}></Route>
+    </Routes>
+  );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+function LoginRoutes() {
+  return (
+    <Routes>
+      <Route element={<LoginPage />}>
+        <Route index element={<EmailLoginPage />} />
+        <Route path="username" element={<UsernameLoginPage />} />
+      </Route>
     </Routes>
   );
 }
@@ -50,6 +64,8 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/" element={<GettingStartedPage />} />
             <Route path="/sign-up/*" element={<SignUpRoutes />} />
             <Route path="/account/*" element={<AccountRoutes />} />
+            <Route path="/log-in/*" element={<LoginRoutes />} />
+            <Route path="/oauth/error" element={<OAuthErrorPage />} />
           </Routes>
         </BrowserRouter>
         <Toaster />

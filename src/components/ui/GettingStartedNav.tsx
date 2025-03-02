@@ -12,7 +12,7 @@ export default function GettingStartedNav(): JSX.Element {
             <img src={lightLogo} alt="Logo" />
           </div>
           <div className="block dark:hidden w-full h-full">
-            <img src={darkLogo} alt="Logo"  />
+            <img src={darkLogo} alt="Logo" />
           </div>
         </Link>
       </div>
