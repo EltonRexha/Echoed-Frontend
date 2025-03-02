@@ -102,14 +102,14 @@ function EmailLoginPage() {
                   fill="#EA4335"
                 />
               </svg>
-              Sign up with Google
+              Login with Google
             </Button>
           </a>
 
           <a href={githubSignupEndpoint}>
             <Button variant="secondary" className="w-full cursor-pointer">
               <Github className="mr-2 h-4 w-4" />
-              Sign up with GitHub
+              Login with GitHub
             </Button>
           </a>
         </div>
