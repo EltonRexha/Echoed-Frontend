@@ -19,14 +19,14 @@ export default function GettingStartedNav(): JSX.Element {
 
       <Link to="/sign-up" className="justify-self-end relative ml-auto">
         <Line color="#560090" height={2}>
-          <button className="text-light-secondary dark:text-dark-secondary-darker cursor-pointer pb-1 ">
+          <button className="text-light-secondary-text dark:text-dark-secondary-text-darker-text cursor-pointer pb-1 ">
             Sign up
           </button>
         </Line>
       </Link>
       <Link to="/log-in" className="justify-self-start relative">
         <Line color="#560090" height={2}>
-          <button className="text-light-secondary dark:text-dark-secondary-darker cursor-pointer pb-1">
+          <button className="text-light-secondary-text dark:text-dark-secondary-text-darker-text cursor-pointer pb-1">
             Log in
           </button>
         </Line>

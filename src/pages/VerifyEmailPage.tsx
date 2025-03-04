@@ -44,16 +44,16 @@ function VerifyEmailPage(): JSX.Element {
 
   if (!token || !encodedEmail) {
     return (
-      <div className="overflow-x-hidden font-raleway bg-lighter dark:bg-purple-shade-400">
+      <div className="overflow-x-hidden font-raleway bg-lighter-background dark:bg-purple-shade-400">
         <FadeIn>
-          <div className="min-h-[100vh] bg-lighter dark:bg-purple-shade-400 pl-2 pr-2 sm:pl-10 sm:pr-10 relative flex flex-col">
+          <div className="min-h-[100vh] bg-lighter-background dark:bg-purple-shade-400 pl-2 pr-2 sm:pl-10 sm:pr-10 relative flex flex-col">
             <GettingStartedNav />
             <div className="w-full flex flex-col sm:items-center sm:justify-center flex-1">
-              <h1 className="text-light-primary dark:text-dark-primary font-bold text-bold text-3xl">
+              <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold text-3xl">
                 {' '}
                 You have a broken link
               </h1>
-              <p className="text-light-secondary dark:text-dark-secondary mt-2">
+              <p className="text-light-secondary-text dark:text-dark-secondary-text mt-2">
                 what a shame
               </p>
             </div>
@@ -66,9 +66,9 @@ function VerifyEmailPage(): JSX.Element {
   const email = decode(encodedEmail);
 
   return (
-    <div className="overflow-x-hidden font-raleway bg-lighter dark:bg-purple-shade-400">
+    <div className="overflow-x-hidden font-raleway bg-lighter-background dark:bg-purple-shade-400">
       <FadeIn>
-        <div className="min-h-[100vh] bg-lighter dark:bg-purple-shade-400 pl-2 pr-2 sm:pl-10 sm:pr-10 relative flex flex-col">
+        <div className="min-h-[100vh] bg-lighter-background dark:bg-purple-shade-400 pl-2 pr-2 sm:pl-10 sm:pr-10 relative flex flex-col">
           <GettingStartedNav />
           <div className="w-full flex flex-col sm:items-center sm:justify-center flex-1">
             {verifyEmailMutation.isSuccess && <VerifySuccess />}
@@ -89,13 +89,13 @@ function VerifySuccess() {
   return (
     <div className="text-center">
       <FadeInList>
-        <h1 className="text-light-primary dark:text-dark-primary font-bold text-bold text-3xl">
+        <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold text-3xl">
           Successfully verified your email
         </h1>
-        <p className="text-light-secondary dark:text-dark-secondary mt-2">
+        <p className="text-light-secondary-text dark:text-dark-secondary-text mt-2">
           Your email was successfully verified
         </p>
-        <p className="text-light-secondary-lighter dark:text-dark-secondary-darker mt-2 font-sans">
+        <p className="text-light-secondary-lighter-text-text dark:text-dark-secondary-text-darker-text mt-2 font-sans">
           redirecting in {timeToRedirect}s
         </p>
       </FadeInList>
@@ -128,10 +128,10 @@ function VerifyError({
   return (
     <div className="text-center">
       <FadeInList>
-        <h1 className="text-light-primary dark:text-dark-primary font-bold text-bold text-3xl">
+        <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold text-3xl">
           Something wrong happened
         </h1>
-        <p className="text-light-secondary dark:text-dark-secondary mt-2">
+        <p className="text-light-secondary-text dark:text-dark-secondary-text mt-2">
           Could not verify your email
         </p>
         {!verified && (
@@ -153,7 +153,7 @@ function VerifyError({
 function VerifyPending() {
   return (
     <div className="text-center">
-      <h1 className="text-light-primary dark:text-dark-primary font-bold text-bold text-3xl">
+      <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold text-3xl">
         Loading...
       </h1>
     </div>
