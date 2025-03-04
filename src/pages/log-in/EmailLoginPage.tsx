@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
+import VerifyEmailModal from '@/components/VerifyEmailModal';
 import { loginUserWithEmail } from '@/services/api/User';
 import ResponseError from '@/types/responseError';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +14,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 const schema = z.object({
-  email: z.string().email('Invalid email'),
+  email: z.string(),
   password: z.string(),
 });
 
@@ -25,12 +26,23 @@ type Inputs = z.infer<typeof schema>;
 function EmailLoginPage() {
   const navigate = useNavigate();
   const [errorLogin, setErrorLogin] = useState<string | null>(null);
+  const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
   const loginMutation = useMutation({
     mutationFn: (user: Inputs) => loginUserWithEmail(user),
     onError: (e: ResponseError) => {
       if (e.response) {
-        setErrorLogin(e.response.data.error.message);
-        return;
+        const error = e.response.data.error;
+        if (
+          error.messageCode === 'EMAIL_NOT_VERIFIED' &&
+          error.details &&
+          typeof error.details.email === 'string'
+        ) {
+          setShowVerifyEmailModal(true);
+          setEmail(error.details.email);
+          setErrorLogin(error.message);
+          return;
+        }
       }
 
       toast.error('Could not log you in');
@@ -53,7 +65,14 @@ function EmailLoginPage() {
   };
 
   return (
-    <div className="w-96 p-2">
+    <div className="w-[90%] sm:w-96 p-2">
+      <VerifyEmailModal
+        close={() => {
+          setShowVerifyEmailModal(false);
+        }}
+        email={email ? email : ''}
+        isOpen={showVerifyEmailModal}
+      />
       <h1 className="text-2xl font-raleway font-semibold text-light-primary-text dark:text-dark-primary-text mb-10">
         Log in
       </h1>
@@ -65,7 +84,10 @@ function EmailLoginPage() {
       >
         <div className="relative z-0 w-full mb-5 group">
           <CustomInput
-            inputProps={{ ...register('email'), id: 'email' }}
+            inputProps={{
+              ...register('email'),
+              id: 'email',
+            }}
             labelProps={{ id: 'email' }}
             labelText="Email"
           />
