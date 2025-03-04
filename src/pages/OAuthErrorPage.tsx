@@ -2,9 +2,16 @@ import FadeInList from '@/components/FadeInList';
 import FadeIn from '@/components/ui/FadeIn';
 import GettingStartedNav from '@/components/ui/GettingStartedNav';
 import useTimedRedirect from '@/hooks/useTimedRedirect';
+import decodeFromHex from '@/utils/decodeHex';
+import { useLocation } from 'react-router-dom';
 
 function OAuthErrorPage() {
   const timeToRedirect = useTimedRedirect(10, '/sign-up');
+  const location = useLocation();
+
+  const urlParams = new URLSearchParams(location.search);
+  const message = urlParams.get('m');
+  const decodedMessage = message ? decodeFromHex(message) : null;
 
   return (
     <div className="overflow-x-hidden font-raleway bg-lighter-background dark:bg-purple-shade-400">
@@ -17,8 +24,11 @@ function OAuthErrorPage() {
                 <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold text-3xl">
                   Could not continue with OAuth
                 </h1>
+
                 <p className="text-light-secondary-text dark:text-dark-secondary-text mt-2">
-                  please allow Echoed to use your third party account
+                  {decodedMessage
+                    ? decodedMessage
+                    : 'please allow Echoed to use your third party account'}
                 </p>
                 <p className="text-light-secondary-lighter-text-text dark:text-dark-secondary-text-darker-text mt-2 font-sans">
                   redirecting in {timeToRedirect}s
