@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GettingStartedPage from './pages/GettingStartedPage';
 import SignupPage from './pages/SignupPage';
 import { Provider } from 'react-redux';
@@ -13,7 +13,7 @@ import OAuthErrorPage from './pages/OAuthErrorPage';
 import SignupOptionsPage from './pages/sign-up/SignupOptionsPage';
 import EmailSignupPage from './pages/sign-up/EmailSignupPage';
 import LoginPage from './pages/LoginPage';
-import EmailLoginPage from './pages/log-in/emailLoginPage';
+import EmailLoginPage from './pages/log-in/EmailLoginPage';
 import UsernameLoginPage from './pages/log-in/UsernameLoginPage';
 
 const queryClient = new QueryClient();
@@ -23,10 +23,6 @@ function AccountRoutes() {
   return (
     <Routes>
       <Route path="verify" element={<VerifyEmailPage />} />
-      <Route
-        path="tokens"
-        element={<Navigate to={'/'} replace={true} />}
-      ></Route>
     </Routes>
   );
 }

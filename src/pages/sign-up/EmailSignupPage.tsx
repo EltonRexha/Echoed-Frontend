@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
 import FadeInList from '@/components/FadeInList';
+import ResponseError from '@/types/responseError';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -105,8 +106,12 @@ function EmailSignupPage(): JSX.Element {
       incrementCurrentInputBox();
       toast.success(success.message);
     },
-    onError: (e) => {
-      toast.error(e.message);
+    onError: (e: ResponseError) => {
+      if (e.response) {
+        toast.error(e.response.data.error.message);
+      }else{
+        toast.error('Something wrong happened creating user');
+      }
       navigate('/sign-up');
     },
   });
@@ -544,8 +549,13 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
     onSuccess: (success) => {
       toast.success(success.message);
     },
-    onError: (e) => {
-      toast.error(e.message);
+    onError: (e: ResponseError) => {
+      if (e.response) {
+        toast.error(e.response.data.error.message);
+        return;
+      }
+
+      toast.error('Something wrong happened sending email');
     },
   });
 

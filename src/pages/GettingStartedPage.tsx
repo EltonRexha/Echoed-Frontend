@@ -3,7 +3,7 @@ import CycleComponents from '@/components/ui/CycleComponents';
 import GettingStartedNav from '@/components/ui/GettingStartedNav';
 import { Link } from 'react-router-dom';
 import Line from '@/components/ui/LineAnimation';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { AnimatePresence, useInView, Variants } from 'framer-motion';
 import postDark from '@/assets/images/layout/postDark.svg';
 import postLight from '@/assets/images/layout/postLight.svg';
@@ -18,7 +18,6 @@ import messageLight from '@/assets/images/layout/messageLight.svg';
 import StepIndicator from '@/components/ui/StepIndicator';
 import FadeInView from '@/components/FadeinView';
 import FadeInList from '@/components/FadeInList';
-import axios from '@/services/axios';
 
 const postExampleVariant: Variants = {
   initial: {
@@ -56,13 +55,6 @@ function GettingStartedPage(): JSX.Element {
     [0, 1],
     POST_EXAMPLE_LAYOUT_CHANGE_DELAY
   );
-
-  useEffect(() => {
-    (async function () {
-      const res = await axios.get('/auth/protected', {withCredentials: true});
-      console.log(res);
-    })();
-  }, []);
 
   return (
     <div className="overflow-x-hidden font-raleway">

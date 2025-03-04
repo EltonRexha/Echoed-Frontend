@@ -1,8 +1,6 @@
-import HttpError from '@/Errors/httpError';
 import axios from '@/services/axios';
-import { ErrorResponse } from '@/types/errorResponse';
 import { User } from '@/types/user';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
 interface SearchUser {
   email?: string;
@@ -22,80 +20,49 @@ export async function getUser({
   username,
   id,
 }: SearchUser): Promise<{ user: BasicUserInfo }> {
-  try {
-    const users = await axios.get('/user', {
-      params: {
-        email: email,
-        username: username,
-        id: id,
-      },
-    });
+  const users = await axios.get('/user', {
+    params: {
+      email: email,
+      username: username,
+      id: id,
+    },
+  });
 
-    return { user: users.data.users[0] };
-  } catch (e) {
-    const error = e as AxiosError<ErrorResponse>;
-    throw new Error(
-      error.response?.data?.error || 'Something wrong happened fetching user'
-    );
-  }
+  return { user: users.data.users[0] };
 }
 
 export async function createUser(payload: User): Promise<{ message: string }> {
-  try {
-    const response: AxiosResponse<{ message: string }> = await axios.post(
-      '/auth/user',
-      payload
-    );
-    return response.data;
-  } catch (e) {
-    const error = e as AxiosError<ErrorResponse>;
-    throw new HttpError(
-      error.response?.status as number,
-      error.response?.data?.error || 'Something went wrong creating user'
-    );
-  }
+  const response: AxiosResponse<{ message: string }> = await axios.post(
+    '/auth/user',
+    payload
+  );
+  return response.data;
 }
 
 export async function loginUserWithEmail(payload: {
   email: string;
   password: string;
 }): Promise<{ message: string }> {
-  try {
-    const response: AxiosResponse<{ message: string }> = await axios.post(
-      '/auth/login',
-      payload,
-      {
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (e) {
-    const error = e as AxiosError<ErrorResponse>;
-    throw new HttpError(
-      error.response?.status as number,
-      error.response?.data?.error || 'Something went wrong loging you in'
-    );
-  }
+  const response: AxiosResponse<{ message: string }> = await axios.post(
+    '/auth/login',
+    payload,
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
 }
 
 export async function loginUserWithUsername(payload: {
   username: string;
   password: string;
 }): Promise<{ message: string }> {
-  try {
-    const response: AxiosResponse<{ message: string }> = await axios.post(
-      '/auth/login',
-      payload,
-      {
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (e) {
-    const error = e as AxiosError<ErrorResponse>;
-    throw new HttpError(
-      error.response?.status as number,
-      error.response?.data?.error || 'Something went wrong loging you in'
-    );
-  }
+  const response: AxiosResponse<{ message: string }> = await axios.post(
+    '/auth/login',
+    payload,
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
 }

@@ -1,14 +1,15 @@
 import { Button } from '@/components/ui/button';
 import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
-import HttpError from '@/Errors/httpError';
 import { loginUserWithUsername } from '@/services/api/User';
+import ResponseError from '@/types/responseError';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Github } from 'lucide-react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -26,8 +27,13 @@ function EmailLoginPage() {
   const [errorLogin, setErrorLogin] = useState<string | null>(null);
   const loginMutation = useMutation({
     mutationFn: (user: Inputs) => loginUserWithUsername(user),
-    onError: (e: HttpError) => {
-      setErrorLogin(e.message);
+    onError: (e: ResponseError) => {
+      if (e.response) {
+        setErrorLogin(e.response.data.error.message);
+        return;
+      }
+
+      toast.error('Could not log you in');
     },
     onSuccess: () => {
       navigate('/');

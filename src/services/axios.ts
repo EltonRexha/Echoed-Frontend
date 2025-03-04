@@ -30,9 +30,14 @@ axios.interceptors.response.use(
       retryCount += 1;
 
       //try to refresh token
-      await axios.post('/auth/refresh', null, {
-        withCredentials: true,
-      });
+      try {
+        await axios.post('/auth/refresh', null, {
+          withCredentials: true,
+        });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (e) {
+        return Promise.reject(error);
+      }
 
       return axios(config);
     }

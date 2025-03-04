@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { decode } from 'js-base64';
-import HttpError from '@/Errors/httpError';
+import ResponseError from '@/types/responseError';
 
 function VerifyEmailPage(): JSX.Element {
   const location = useLocation();
@@ -21,11 +21,16 @@ function VerifyEmailPage(): JSX.Element {
 
   const verifyEmailMutation = useMutation({
     mutationFn: () => verifyEmail(token as string),
-    onError: (e: HttpError) => {
-      if (e.code === 409) {
-        setEmailVerifiedBefore(true);
+    onError: (e: ResponseError) => {
+      if (e.response) {
+        if (e.response.data.error.messageCode === 'EMAIL_VERIFIED') {
+          setEmailVerifiedBefore(true);
+        }
+        toast.error(e.response.data.error.message);
+        return;
       }
-      toast.error(e.message);
+
+      toast.error('Unexpected Error');
     },
     onSuccess: (success) => {
       toast.success(success.message);
@@ -110,8 +115,13 @@ function VerifyError({
     onSuccess: (success) => {
       toast.success(success.message);
     },
-    onError: (e) => {
-      toast.error(e.message);
+    onError: (e: ResponseError) => {
+      if (e.response) {
+        toast.error(e.response.data.error.message);
+        return;
+      }
+
+      toast.error('Unexpected Error');
     },
   });
 
