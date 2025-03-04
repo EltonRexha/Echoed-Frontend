@@ -109,7 +109,7 @@ function EmailSignupPage(): JSX.Element {
     onError: (e: ResponseError) => {
       if (e.response) {
         toast.error(e.response.data.error.message);
-      }else{
+      } else {
         toast.error('Something wrong happened creating user');
       }
       navigate('/sign-up');
@@ -154,7 +154,7 @@ function EmailSignupPage(): JSX.Element {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
+    <div className="flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary-text dark:text-dark-primary-text">
       <div className="justify-self-start">
         <div className="hidden sm:block">
           <StepDescriptionIndicator
@@ -170,7 +170,7 @@ function EmailSignupPage(): JSX.Element {
         </div>
       </div>
 
-      <div className="mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary dark:text-dark-primary">
+      <div className="mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 sm:h-[650px] rounded text-light-primary-text dark:text-dark-primary-text">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex-1 h-full"
@@ -570,13 +570,13 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
       <h1 className="text-center text-4xl text-purple-shade-300 dark:text-purple-shade-100">
         Verify Email
       </h1>
-      <p className="text-light-primary dark:text-dark-primary text-pretty text-lg">
+      <p className="text-light-primary-text dark:text-dark-primary-text text-pretty text-lg">
         All what is left now is to verify your email
       </p>
-      <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+      <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
         Go to <span className="font-bold">{email}</span>
       </p>
-      <p className="text-light-secondary dark:text-dark-secondary text-pretty text-sm">
+      <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
         Cannot find you email?{' '}
         <span className="font-bold">Check your spams</span>
       </p>

@@ -14,13 +14,13 @@ const buttonVariants: Variants = {
     },
   },
 };
-// font-bold font-sans mb-5 ml-5 px-5 py-2 rounded-2xl text-light-primary dark:text-dark-primary
+
 export default function SubmitButton() {
   return (
     <>
       <div className="inline-block sm:hidden fixed bottom-0 right-0">
         <button
-          className="font-bold font-sans mb-5 mr-5 px-5 py-2 bg-purple-shade-200 rounded text-dark-primary flex items-center gap-2"
+          className="font-bold font-sans mb-5 mr-5 px-5 py-2 bg-purple-shade-200 rounded text-dark-primary-text flex items-center gap-2"
           type="submit"
         >
           <Send className="h-4 w-4" /> <p>Submit</p>

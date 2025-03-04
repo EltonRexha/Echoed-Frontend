@@ -54,7 +54,7 @@ function EmailLoginPage() {
 
   return (
     <div className="w-96 p-2">
-      <h1 className="text-2xl font-raleway font-semibold text-light-primary dark:text-dark-primary mb-10">
+      <h1 className="text-2xl font-raleway font-semibold text-light-primary-text dark:text-dark-primary-text mb-10">
         Log in
       </h1>
 
@@ -88,12 +88,12 @@ function EmailLoginPage() {
           </p>
         )}
         <div className="my-10 flex flex-col gap-1">
-          <p className="font-sans text-light-secondary dark:text-dark-secondary text-sm">
+          <p className="font-sans text-light-secondary-text dark:text-dark-secondary-text text-sm">
             <span className="hover:opacity-100 opacity-80 transition-opacity ease-in-out">
               <Link to="username">Continue with username?</Link>
             </span>
           </p>
-          <p className="font-sans text-light-secondary dark:text-dark-secondary text-sm">
+          <p className="font-sans text-light-secondary-text dark:text-dark-secondary-text text-sm">
             <span className="hover:opacity-100 opacity-80 transition-opacity ease-in-out">
               <Link to="username">Forgot password?</Link>
             </span>
@@ -103,7 +103,7 @@ function EmailLoginPage() {
         <Button className="w-full cursor-pointer font-sans">Log in</Button>
       </form>
       <div className="my-3">
-        <h1 className="text-light-secondary dark:text-dark-secondary text-center mb-3">
+        <h1 className="text-light-secondary-text dark:text-dark-secondary-text text-center mb-3">
           or
         </h1>
         <div className=" flex flex-col gap-2">

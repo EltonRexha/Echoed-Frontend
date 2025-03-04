@@ -11,14 +11,15 @@
   --color-purple-shade-200: #560090;
   --color-purple-shade-300: #140021;
   --color-purple-shade-400: #0c0014;
-  --color-dark-primary: #f3f4f6;
-  --color-dark-secondary: #d1d5db;
-  --color-dark-secondary-darker: #9ca3af;
-  --color-light-primary: #09090b;
-  --color-light-secondary: #27272a;
-  --color-light-secondary-lighter: #27272a;
-  --color-light: #d4d4d8;
-  --color-lighter: #f3f4f6;
+  --color-dark-primary-text: #f3f4f6;
+  --color-dark-secondary-text: #d1d5db;
+  --color-dark-secondary-text-darker-text: #9ca3af;
+  --color-light-primary-text: #09090b;
+  --color-light-secondary-text: #27272a;
+  --color-light-secondary-lighter-text: #27272a;
+  --color-light-background: #d4d4d8;
+  --color-lighter-background: #f3f4f6;
+  --color-dark-background: #030712;
 }
 
 @layer base {
