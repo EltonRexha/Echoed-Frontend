@@ -112,7 +112,7 @@ function EmailLoginPage() {
         <div className="my-10 flex flex-col gap-1">
           <p className="font-sans text-light-secondary-text dark:text-dark-secondary-text text-sm">
             <span className="hover:opacity-100 opacity-80 transition-opacity ease-in-out">
-              <Link to="username">Continue with username?</Link>
+              <Link to="/log-in">Continue with email?</Link>
             </span>
           </p>
           <p className="font-sans text-light-secondary-text dark:text-dark-secondary-text text-sm">
