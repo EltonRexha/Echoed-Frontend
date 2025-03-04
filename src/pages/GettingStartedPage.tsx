@@ -58,7 +58,7 @@ function GettingStartedPage(): JSX.Element {
 
   return (
     <div className="overflow-x-hidden font-raleway">
-      <div className="min-h-[101vh] bg-mountain pl-2 pr-2 sm:pl-10 sm:pr-10 relative">
+      <div className="min-h-[100vh] bg-mountain pl-2 pr-2 sm:pl-10 sm:pr-10 relative">
         <FadeInView>
           <GettingStartedNav />
         </FadeInView>
@@ -107,11 +107,7 @@ function GettingStartedPage(): JSX.Element {
           </div>
         </FadeInView>
       </div>
-      <div
-        className="relative min-h-[100vh] bg-blob"
-        id="post-example"
-        ref={postsExample}
-      >
+      <div className="relative min-h-[100vh] bg-blob py-10" ref={postsExample}>
         {postExampleInView && (
           <>
             <div className="hidden sm:block">
@@ -132,7 +128,10 @@ function GettingStartedPage(): JSX.Element {
             </div>
           </>
         )}
-        <div className="w-full min-h-[100vh] ">
+        <div
+          className="w-full min-h-[100vh] flex flex-col justify-center"
+          id="post-example"
+        >
           <div className="pb-4 pt-5 w-max m-auto flex gap-2 items-center h-max">
             <StepIndicator
               currentIndex={postExampleCurrentIndex}
