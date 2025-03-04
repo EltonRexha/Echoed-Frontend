@@ -37,7 +37,7 @@ const PasswordInput = ({
       <button
         type="button"
         onClick={() => setShowPassword((prev) => !prev)}
-        className="absolute right-2 top-2 text-gray-500 dark:text-gray-400 focus:outline-none"
+        className="absolute right-2 top-2 text-gray-500 dark:text-gray-400 focus:outline-none cursor-pointer"
       >
         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
       </button>
