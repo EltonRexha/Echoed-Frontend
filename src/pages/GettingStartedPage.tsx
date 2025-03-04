@@ -139,7 +139,7 @@ function GettingStartedPage(): JSX.Element {
               stepsAmount={2}
             />
           </div>
-          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center items-center min-h-[80vh] p-2 sm:p-20 sm:pt-5">
+          <div className="overflow-hidden grid gap-2 lg:grid-cols-2 justify-items-center items-center min-h-[80vh] p-2 sm:p-20 sm:pt-5 py-10">
             <div className="self-center">
               <CycleComponents delay={POST_EXAMPLE_LAYOUT_CHANGE_DELAY}>
                 <AnimatePresence mode="popLayout">

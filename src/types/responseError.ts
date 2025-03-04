@@ -4,6 +4,7 @@ interface backendError {
   error: {
     message: string;
     messageCode?: string;
+    details?: Record<string, unknown>;
   };
 }
 
