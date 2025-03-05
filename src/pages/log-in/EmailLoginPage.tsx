@@ -14,7 +14,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 const schema = z.object({
-  email: z.string(),
+  email: z.string().email(),
   password: z.string(),
 });
 

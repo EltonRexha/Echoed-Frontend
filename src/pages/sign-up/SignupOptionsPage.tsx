@@ -7,7 +7,7 @@ const githubSignupEndpoint = `${import.meta.env.VITE_API_BASE_URL}/auth/github`;
 
 export default function SignupOptionsPage() {
   return (
-    <div className="justify-self-center flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 h-[80vh] sm:h-[650px] rounded text-light-primary-text dark:text-dark-primary-text">
+    <div className="justify-self-center flex flex-col items-center justify-center mt-5 sm:mt-0 w-full sm:w-[650px] font-sans p-2 h-[80vh] sm:h-[650px] rounded text-light-primary-text dark:text-dark-primary-text ">
       <SignupOptions />
     </div>
   );
