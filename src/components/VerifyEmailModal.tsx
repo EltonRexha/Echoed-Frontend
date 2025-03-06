@@ -4,6 +4,8 @@ import Modal from './ui/Modal';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import ResponseError from '@/types/responseError';
+import { createPortal } from 'react-dom';
+import { Loader } from './ui/Loader';
 
 interface ModalProps {
   isOpen: boolean;
@@ -27,28 +29,51 @@ function VerifyEmailModal({ email, ...props }: ModalProps) {
     },
   });
 
-  return (
+  return createPortal(
     <Modal {...props} title="Verify email">
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex flex-col items-center gap-1">
-          <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
-            Go to <span className="font-bold">{email}</span>
-          </p>
-          <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
-            Cannot find you email?{' '}
-            <span className="font-bold">Check your spams</span>
-          </p>
-        </div>
+      {emailVerificationMutation.isPending ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-1">
+            {emailVerificationMutation.isIdle && (
+              <>
+                <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold">
+                  Your account is not verified
+                </h1>
+                <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
+                  Send verify email
+                </p>
+              </>
+            )}
 
-        <div>
-          <ResendEmailButton
-            onClick={() => {
-              emailVerificationMutation.mutate(email);
-            }}
-          />
+            {emailVerificationMutation.isSuccess && (
+              <>
+                <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold">
+                  We've send a email to verify your account
+                </h1>
+                <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
+                  Go to <span className="font-bold">{email}</span>
+                </p>
+                <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
+                  Cannot find you email?{' '}
+                  <span className="font-bold">Check your spams</span>
+                </p>
+              </>
+            )}
+          </div>
+
+          <div>
+            <ResendEmailButton
+              onClick={() => {
+                emailVerificationMutation.mutate(email);
+              }}
+            />
+          </div>
         </div>
-      </div>
-    </Modal>
+      )}
+    </Modal>,
+    document.getElementById('modal-portal')!
   );
 }
 

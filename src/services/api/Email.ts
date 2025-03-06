@@ -20,3 +20,11 @@ export async function verifyEmail(token: string): Promise<{ message: string }> {
   );
   return response.data;
 }
+
+export async function sendResetPasswordEmail(email: string) {
+  const response: AxiosResponse<{ message: string }> = await axios.post(
+    'auth/user/email/send-reset-password',
+    { email }
+  );
+  return response.data;
+}
