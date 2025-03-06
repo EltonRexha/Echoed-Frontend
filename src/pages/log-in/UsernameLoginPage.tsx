@@ -1,3 +1,4 @@
+import ResetPasswordModal from '@/components/resetPasswordModal';
 import { Button } from '@/components/ui/button';
 import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
@@ -12,6 +13,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { motion } from 'framer-motion';
 
 const schema = z.object({
   username: z.string(),
@@ -27,7 +29,7 @@ function EmailLoginPage() {
   const navigate = useNavigate();
   const [errorLogin, setErrorLogin] = useState<string | null>(null);
   const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
-  const [email, setEmail] = useState<string | null>(null);
+  const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
   const loginMutation = useMutation({
     mutationFn: (user: Inputs) => loginUserWithUsername(user),
     onError: (e: ResponseError) => {
@@ -39,7 +41,6 @@ function EmailLoginPage() {
           typeof error.details.email === 'string'
         ) {
           setShowVerifyEmailModal(true);
-          setEmail(error.details.email);
           setErrorLogin(error.message);
           return;
         }
@@ -51,14 +52,18 @@ function EmailLoginPage() {
       navigate('/');
     },
   });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+
+  const username = watch('username');
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     loginMutation.mutate(data);
@@ -66,11 +71,18 @@ function EmailLoginPage() {
 
   return (
     <div className="w-[90%] sm:w-96 p-2">
+      <ResetPasswordModal
+        close={() => {
+          setShowResetPasswordModal(false);
+        }}
+        isOpen={showResetPasswordModal}
+        user={{ username }}
+      />
       <VerifyEmailModal
         close={() => {
           setShowVerifyEmailModal(false);
         }}
-        email={email ? email : ''}
+        user={{ username }}
         isOpen={showVerifyEmailModal}
       />
       <h1 className="text-2xl font-raleway font-semibold text-light-primary-text dark:text-dark-primary-text mb-10">
@@ -115,11 +127,32 @@ function EmailLoginPage() {
               <Link to="/log-in">Continue with email?</Link>
             </span>
           </p>
-          <p className="font-sans text-light-secondary-text dark:text-dark-secondary-text text-sm">
-            <span className="hover:opacity-100 opacity-80 transition-opacity ease-in-out">
-              <Link to="username">Forgot password?</Link>
-            </span>
-          </p>
+          {!errors.username && username ? (
+            <motion.p
+              className="font-sans text-light-secondary-text dark:text-dark-secondary-text text-sm cursor-pointer"
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                duration: 1,
+                ease: 'easeInOut',
+              }}
+            >
+              <span
+                className="hover:opacity-100 opacity-80 transition-opacity ease-in-out"
+                onClick={() => {
+                  setShowResetPasswordModal(true);
+                }}
+              >
+                Forgot password?
+              </span>
+            </motion.p>
+          ) : (
+            <p className="h-4"></p>
+          )}
         </div>
 
         <Button className="w-full cursor-pointer font-sans">Log in</Button>

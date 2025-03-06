@@ -9,12 +9,17 @@ import { Loader } from './ui/Loader';
 interface ModalProps {
   isOpen: boolean;
   close: () => void;
-  email: string;
+  user: {
+    email?: string;
+    username?: string;
+    userId?: string;
+  };
 }
 
-function ResetPasswordModal({ email, ...props }: ModalProps) {
+function ResetPasswordModal({ user, ...props }: ModalProps) {
   const resetPasswordMutation = useMutation({
-    mutationFn: () => sendResetPasswordEmail(email),
+    mutationFn: () =>
+      sendResetPasswordEmail(user.email, user.username, user.userId),
     onError: (e: ResponseError) => {
       if (e.response && e.response.status === 429) {
         toast.error('Too many requests, try again later');
@@ -38,9 +43,6 @@ function ResetPasswordModal({ email, ...props }: ModalProps) {
                 <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold">
                   We've send a email to reset password
                 </h1>
-                <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
-                  Go to <span className="font-bold">{email}</span>
-                </p>
                 <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
                   Cannot find you email?{' '}
                   <span className="font-bold">Check your spams</span>

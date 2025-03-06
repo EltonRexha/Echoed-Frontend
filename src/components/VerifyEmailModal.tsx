@@ -10,12 +10,17 @@ import { Loader } from './ui/Loader';
 interface ModalProps {
   isOpen: boolean;
   close: () => void;
-  email: string;
+  user: {
+    email?: string;
+    username?: string;
+    userId?: string;
+  };
 }
 
-function VerifyEmailModal({ email, ...props }: ModalProps) {
+function VerifyEmailModal({ user, ...props }: ModalProps) {
   const emailVerificationMutation = useMutation({
-    mutationFn: (email: string) => sendVerificationEmail(email),
+    mutationFn: () =>
+      sendVerificationEmail(user.email, user.username, user.userId),
     onSuccess: (success) => {
       toast.success(success.message);
     },
@@ -53,9 +58,6 @@ function VerifyEmailModal({ email, ...props }: ModalProps) {
                   We've send a email to verify your account
                 </h1>
                 <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
-                  Go to <span className="font-bold">{email}</span>
-                </p>
-                <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
                   Cannot find you email?{' '}
                   <span className="font-bold">Check your spams</span>
                 </p>
@@ -66,7 +68,7 @@ function VerifyEmailModal({ email, ...props }: ModalProps) {
           <div>
             <ResendEmailButton
               onClick={() => {
-                emailVerificationMutation.mutate(email);
+                emailVerificationMutation.mutate();
               }}
             />
           </div>

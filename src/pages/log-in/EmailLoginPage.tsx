@@ -75,13 +75,13 @@ function EmailLoginPage() {
           setShowResetPasswordModal(false);
         }}
         isOpen={showResetPasswordModal}
-        email={email ? email : ''}
+        user={{ email }}
       />
       <VerifyEmailModal
         close={() => {
           setShowVerifyEmailModal(false);
         }}
-        email={email ? email : ''}
+        user={{ email }}
         isOpen={showVerifyEmailModal}
       />
       <h1 className="text-2xl font-raleway font-semibold text-light-primary-text dark:text-dark-primary-text mb-10">
