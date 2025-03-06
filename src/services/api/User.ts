@@ -66,3 +66,14 @@ export async function loginUserWithUsername(payload: {
   );
   return response.data;
 }
+
+export async function resetPassword(payload: {
+  password: string;
+  reset_password_token: string;
+}): Promise<{ message: string }> {
+  const response: AxiosResponse<{ message: string }> = await axios.put(
+    '/auth/user/reset-password',
+    payload
+  );
+  return response.data;
+}

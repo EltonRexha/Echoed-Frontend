@@ -21,13 +21,12 @@ function ResetPasswordModal({ user, ...props }: ModalProps) {
     mutationFn: () =>
       sendResetPasswordEmail(user.email, user.username, user.userId),
     onError: (e: ResponseError) => {
-      if (e.response && e.response.status === 429) {
-        toast.error('Too many requests, try again later');
-        props.close();
+      if (e.response) {
+        toast.error(e.response.data.error.message);
         return;
       }
-      toast.error('Could not send reset password email');
-      props.close();
+
+      toast.error('Something wrong happened sending email');
     },
   });
 

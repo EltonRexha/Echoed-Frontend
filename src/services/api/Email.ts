@@ -31,7 +31,7 @@ export async function sendResetPasswordEmail(
   email?: string,
   username?: string,
   userId?: string
-) {
+): Promise<{ message: string }> {
   const response: AxiosResponse<{ message: string }> = await axios.post(
     'auth/user/email/send-reset-password',
     {

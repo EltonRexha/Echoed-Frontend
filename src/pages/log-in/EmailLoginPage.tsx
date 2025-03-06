@@ -44,6 +44,11 @@ function EmailLoginPage() {
           setErrorLogin(error.message);
           return;
         }
+
+        if (e.response.status === 401) {
+          setErrorLogin('Invalid credentials');
+          return;
+        }
       }
 
       toast.error('Could not log you in');
