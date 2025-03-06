@@ -15,6 +15,7 @@ import EmailSignupPage from './pages/sign-up/EmailSignupPage';
 import LoginPage from './pages/LoginPage';
 import EmailLoginPage from './pages/log-in/EmailLoginPage';
 import UsernameLoginPage from './pages/log-in/UsernameLoginPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ function AccountRoutes() {
   return (
     <Routes>
       <Route path="verify" element={<VerifyEmailPage />} />
+      <Route path="reset-password" element={<ResetPasswordPage />} />
     </Routes>
   );
 }

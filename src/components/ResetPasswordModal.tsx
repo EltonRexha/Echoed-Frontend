@@ -1,0 +1,75 @@
+import { useMutation } from '@tanstack/react-query';
+import ResendResetPasswordButton from './ResendResetPasswordBtn';
+import Modal from './ui/Modal';
+import { sendResetPasswordEmail } from '@/services/api/Email';
+import { toast } from 'sonner';
+import ResponseError from '@/types/responseError';
+import { Loader } from './ui/Loader';
+
+interface ModalProps {
+  isOpen: boolean;
+  close: () => void;
+  user: {
+    email?: string;
+    username?: string;
+    userId?: string;
+  };
+}
+
+function ResetPasswordModal({ user, ...props }: ModalProps) {
+  const resetPasswordMutation = useMutation({
+    mutationFn: () =>
+      sendResetPasswordEmail(user.email, user.username, user.userId),
+    onError: (e: ResponseError) => {
+      if (e.response) {
+        toast.error(e.response.data.error.message);
+        return;
+      }
+
+      toast.error('Something wrong happened sending email');
+    },
+  });
+
+  return (
+    <Modal {...props} title="Reset password">
+      {resetPasswordMutation.isPending ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-1 text-center">
+            {resetPasswordMutation.isSuccess && (
+              <>
+                <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold">
+                  We've send a email to reset password
+                </h1>
+                <p className="text-light-secondary-text dark:text-dark-secondary-text text-pretty text-sm">
+                  Cannot find you email?{' '}
+                  <span className="font-bold">Check your spams</span>
+                </p>
+              </>
+            )}
+          </div>
+
+          <div>
+            {resetPasswordMutation.isSuccess ? (
+              <ResendResetPasswordButton
+                onClick={() => {
+                  resetPasswordMutation.mutate();
+                }}
+              />
+            ) : (
+              <ResendResetPasswordButton
+                text="Send reset password email"
+                onClick={() => {
+                  resetPasswordMutation.mutate();
+                }}
+              />
+            )}
+          </div>
+        </div>
+      )}
+    </Modal>
+  );
+}
+
+export default ResetPasswordModal;
