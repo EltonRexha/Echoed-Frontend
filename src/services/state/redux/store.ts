@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import emailVerificationReducer from './slices/emailVerificationTimeoutSlice';
+import resetPasswordReducer from './slices/resetPasswordTimeoutSlice';
 
 const store = configureStore({
   reducer: {
-    emailVerificationTimedOut: emailVerificationReducer,
+    emailVerificationTimeout: emailVerificationReducer,
+    resetPasswordTimeout: resetPasswordReducer,
   },
 });
 

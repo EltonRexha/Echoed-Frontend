@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '@/services/state/redux/store';
 import {
   setTimer,
   substractSecond,
-} from '@/services/state/redux/slices/emailVerificationTimeoutSlice';
+} from '@/services/state/redux/slices/resetPasswordTimeoutSlice';
 
 interface ResendEmailButtonProps {
   onClick: () => void;
@@ -14,7 +14,7 @@ interface ResendEmailButtonProps {
 
 const ResendEmailButton = ({ onClick, text }: ResendEmailButtonProps) => {
   const emailTimedOut = useSelector(
-    (state: RootState) => state.emailVerificationTimedOut
+    (state: RootState) => state.resetPasswordTimeout
   );
   const dispatch: AppDispatch = useDispatch();
   const isCooldown = emailTimedOut.timeRemaining !== 0;

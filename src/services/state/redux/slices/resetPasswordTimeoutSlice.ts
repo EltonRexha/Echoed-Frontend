@@ -12,12 +12,12 @@ const initalState: Timeout = {
   timeRemaining: 0,
   //10 minutes
   counter:
-    60 * parseInt(import.meta.env.VITE_EMAIL_VERIFICATION_RESEND_TOKEN_TIMEOUT),
+    60 * parseInt(import.meta.env.VITE_RESET_PASSWORD_RESEND_TOKEN_TIMEOUT),
   ticking: false,
 };
 
 const slice = createSlice({
-  name: 'emailVerificationTimeout',
+  name: 'resetPasswordTimeout',
   initialState: initalState,
   reducers: {
     substractSecond: (state) => {

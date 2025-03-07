@@ -14,7 +14,7 @@ interface ResendEmailButtonProps {
 
 const ResendEmailButton = ({ onClick, text }: ResendEmailButtonProps) => {
   const emailTimedOut = useSelector(
-    (state: RootState) => state.emailVerificationTimedOut
+    (state: RootState) => state.emailVerificationTimeout
   );
   const dispatch: AppDispatch = useDispatch();
   const isCooldown = emailTimedOut.timeRemaining !== 0;
@@ -50,7 +50,9 @@ const ResendEmailButton = ({ onClick, text }: ResendEmailButtonProps) => {
         ? `Resend available in ${Math.floor(
             emailTimedOut.timeRemaining / 60
           )}:${String(emailTimedOut.timeRemaining % 60).padStart(2, '0')}`
-        : text ? text : 'Resend Email'}
+        : text
+        ? text
+        : 'Resend Email'}
     </Button>
   );
 };
