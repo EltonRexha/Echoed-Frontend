@@ -84,7 +84,7 @@ function GettingStartedPage(): JSX.Element {
         <div className="hidden sm:block">
           <FadeInList>
             <p className="text-md mt-0 sm:mt-5 text-center text-light-secondary dark:text-dark-secondary-darker max-w-md mx-auto font-mono">
-              A Place To Share Your Ideas, Create Firends,{' '}
+              A Place To Share Your Ideas, Make Firends,{' '}
               <span className="text-purple-500">And Go Open.</span>
             </p>
             <div className="mt-10 text-purple-shade-300 dark:text-purple-300 text-2xl mx-auto sm:text-3xl font-mono w-max">

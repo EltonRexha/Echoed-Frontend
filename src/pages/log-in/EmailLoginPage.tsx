@@ -1,4 +1,3 @@
-import ResetPasswordModal from '@/components/resetPasswordModal';
 import { Button } from '@/components/ui/button';
 import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
@@ -14,6 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
+import ResetPasswordModal from '@/components/ResetPasswordModal';
 
 const schema = z.object({
   email: z.string().email(),
@@ -57,6 +57,7 @@ function EmailLoginPage() {
       navigate('/');
     },
   });
+
   const {
     register,
     handleSubmit,

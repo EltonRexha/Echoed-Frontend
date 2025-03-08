@@ -1,4 +1,7 @@
 import Axios from 'axios';
+import store from './state/redux/store';
+import { login, logout } from './state/redux/slices/AuthSlice';
+import { getCurrentUser } from './api/User';
 
 const axios = Axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -23,6 +26,7 @@ axios.interceptors.response.use(
         await axios.post('/auth/logout', null, {
           withCredentials: true,
         });
+        store.dispatch(logout());
 
         return Promise.reject(error);
       }
@@ -34,7 +38,10 @@ axios.interceptors.response.use(
         await axios.post('/auth/refresh', null, {
           withCredentials: true,
         });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+        const response = await getCurrentUser();
+        store.dispatch(login(response.user));
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         return Promise.reject(error);
       }

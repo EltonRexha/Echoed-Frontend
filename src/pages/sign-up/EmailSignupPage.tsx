@@ -29,6 +29,9 @@ import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
 import FadeInList from '@/components/FadeInList';
 import ResponseError from '@/types/responseError';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/services/state/redux/store';
+import { resetTimer } from '@/services/state/redux/slices/emailVerificationTimeoutSlice';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -115,6 +118,8 @@ function EmailSignupPage(): JSX.Element {
       navigate('/sign-up');
     },
   });
+
+  const dispatch: AppDispatch = useDispatch();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const user: User = {
       firstName: data.firstName,
@@ -127,6 +132,7 @@ function EmailSignupPage(): JSX.Element {
       password: data.password,
     };
     createUserMutation.mutate(user);
+    dispatch(resetTimer());
   };
   const [currentInputBox, setCurrentInputBox] = useState(0);
   const incrementCurrentInputBox = () => {
