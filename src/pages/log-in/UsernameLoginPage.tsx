@@ -1,4 +1,4 @@
-import ResetPasswordModal from '@/components/resetPasswordModal';
+import ResetPasswordModal from '@/components/ResetPasswordModal';
 import { Button } from '@/components/ui/button';
 import CustomInput from '@/components/ui/CustomInput';
 import PasswordInput from '@/components/ui/PasswordInput';
@@ -25,7 +25,7 @@ const githubSignupEndpoint = `${import.meta.env.VITE_API_BASE_URL}/auth/github`;
 
 type Inputs = z.infer<typeof schema>;
 
-function EmailLoginPage() {
+function UsernameLoginPage() {
   const navigate = useNavigate();
   const [errorLogin, setErrorLogin] = useState<string | null>(null);
   const [showVerifyEmailModal, setShowVerifyEmailModal] = useState(false);
@@ -53,6 +53,7 @@ function EmailLoginPage() {
 
       toast.error('Could not log you in');
     },
+
     onSuccess: () => {
       navigate('/');
     },
@@ -213,4 +214,4 @@ function EmailLoginPage() {
   );
 }
 
-export default EmailLoginPage;
+export default UsernameLoginPage;

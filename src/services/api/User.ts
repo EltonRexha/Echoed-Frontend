@@ -1,4 +1,7 @@
 import axios from '@/services/axios';
+import GithubUser from '@/types/githubUser';
+import GoogleUser from '@/types/googleUser';
+import LocalUser from '@/types/localUser';
 import { User } from '@/types/user';
 import { AxiosResponse } from 'axios';
 
@@ -20,7 +23,7 @@ export async function getUser({
   username,
   id,
 }: SearchUser): Promise<{ user: BasicUserInfo }> {
-  const users = await axios.get('/user', {
+  const users = await axios.get('/users', {
     params: {
       email: email,
       username: username,
@@ -33,7 +36,7 @@ export async function getUser({
 
 export async function createUser(payload: User): Promise<{ message: string }> {
   const response: AxiosResponse<{ message: string }> = await axios.post(
-    '/auth/user',
+    '/users',
     payload
   );
   return response.data;
@@ -72,8 +75,15 @@ export async function resetPassword(payload: {
   reset_password_token: string;
 }): Promise<{ message: string }> {
   const response: AxiosResponse<{ message: string }> = await axios.put(
-    '/auth/user/reset-password',
+    '/auth/users/reset-password',
     payload
   );
+  return response.data;
+}
+
+export async function getCurrentUser() {
+  const response: AxiosResponse<{
+    user: LocalUser | GoogleUser | GithubUser;
+  }> = await axios.get('/users/me', { withCredentials: true });
   return response.data;
 }
