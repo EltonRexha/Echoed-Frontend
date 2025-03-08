@@ -10,7 +10,7 @@ import { Toaster } from 'sonner';
 import OAuthErrorPage from './pages/OAuthErrorPage';
 import LocalUserRoute from './routes/guards/LocalUserRouteGuard';
 import GetUserInfo from './components/GetUserInfo';
-import PublicRoute from './routes/guards/PublicRoute';
+import PublicRoute from './routes/guards/PublicRouteGuard';
 import SignUpRoutes from './routes/SignupRoutes';
 import AccountRoutes from './routes/AccountRoutes';
 import LoginRoutes from './routes/LoginRoutes';
