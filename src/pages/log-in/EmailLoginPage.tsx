@@ -54,7 +54,7 @@ function EmailLoginPage() {
       toast.error('Could not log you in');
     },
     onSuccess: () => {
-      navigate('/');
+      navigate('/home');
     },
   });
 

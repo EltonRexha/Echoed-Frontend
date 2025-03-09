@@ -55,7 +55,7 @@ function UsernameLoginPage() {
     },
 
     onSuccess: () => {
-      navigate('/');
+      navigate('/home');
     },
   });
 

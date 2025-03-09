@@ -32,6 +32,7 @@ import ResponseError from '@/types/responseError';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/services/state/redux/store';
 import { resetTimer } from '@/services/state/redux/slices/emailVerificationTimeoutSlice';
+import { Loader } from '@/components/ui/Loader';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -132,6 +133,7 @@ function EmailSignupPage(): JSX.Element {
       password: data.password,
     };
     createUserMutation.mutate(user);
+    incrementCurrentInputBox();
     dispatch(resetTimer());
   };
   const [currentInputBox, setCurrentInputBox] = useState(0);
@@ -156,6 +158,7 @@ function EmailSignupPage(): JSX.Element {
       watch={watch}
       previous={decrementCurrentInputBox}
     />,
+    <LoaderBox />,
     <VerifyEmail watch={watch} />,
   ];
 
@@ -208,8 +211,6 @@ function FirstInputGroup({
   const month = watch('month');
   const year = watch('year');
   const day = watch('day');
-
-  console.log({ email });
 
   const { data: userData } = useQuery({
     queryFn: () => getUser({ email }),
@@ -592,6 +593,16 @@ function VerifyEmail({ watch }: { watch: UseFormWatch<Inputs> }): JSX.Element {
         }}
       />
     </FadeInList>
+  );
+}
+
+function LoaderBox() {
+  return (
+    <div className="h-full">
+      <div className="relative h-full flex flex-col items-center justify-center">
+        <Loader />
+      </div>
+    </div>
   );
 }
 

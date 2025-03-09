@@ -7,7 +7,7 @@ interface Props {
   delay: number;
 }
 
-function CycleHeader({ children, delay }: Props): JSX.Element {
+function CycleComponents({ children, delay }: Props): JSX.Element {
   if (!Array.isArray(children)) {
     children = [children];
   }
@@ -16,4 +16,4 @@ function CycleHeader({ children, delay }: Props): JSX.Element {
   return <>{currentContent}</>;
 }
 
-export default CycleHeader;
+export default CycleComponents;
