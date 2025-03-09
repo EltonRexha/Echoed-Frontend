@@ -21,53 +21,53 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <GetUserInfo>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/home"
-                element={
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/home"
+              element={
+                <GetUserInfo>
                   <LocalUserRoute>
                     <h1>This is home</h1>
                   </LocalUserRoute>
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  <PublicRoute>
-                    <GettingStartedPage />
-                  </PublicRoute>
-                }
-              />
-              <Route
-                path="/sign-up/*"
-                element={
-                  <PublicRoute>
-                    <SignUpRoutes />
-                  </PublicRoute>
-                }
-              />
-              <Route path="/account/*" element={<AccountRoutes />} />
-              <Route
-                path="/log-in/*"
-                element={
-                  <PublicRoute>
-                    <LoginRoutes />
-                  </PublicRoute>
-                }
-              />
-              <Route
-                path="/oauth/error"
-                element={
-                  <PublicRoute>
-                    <OAuthErrorPage />
-                  </PublicRoute>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </GetUserInfo>
+                </GetUserInfo>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <PublicRoute>
+                  <GettingStartedPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/sign-up/*"
+              element={
+                <PublicRoute>
+                  <SignUpRoutes />
+                </PublicRoute>
+              }
+            />
+            <Route path="/account/*" element={<AccountRoutes />} />
+            <Route
+              path="/log-in/*"
+              element={
+                <PublicRoute>
+                  <LoginRoutes />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/oauth/error"
+              element={
+                <PublicRoute>
+                  <OAuthErrorPage />
+                </PublicRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
         <Toaster />
       </QueryClientProvider>
     </Provider>
