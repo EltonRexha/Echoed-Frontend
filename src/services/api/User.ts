@@ -87,3 +87,17 @@ export async function getCurrentUser() {
   }> = await axios.get('/users/me', { withCredentials: true });
   return response.data;
 }
+
+export async function convertOAuthUserToLocalUser(payload: {
+  firstName: string;
+  lastName: string;
+  username: string;
+  dateOfBirth: Date;
+}) {
+  const response: AxiosResponse<{ message: string }> = await axios.post(
+    '/users/oauth',
+    payload,
+    { withCredentials: true }
+  );
+  return response.data;
+}

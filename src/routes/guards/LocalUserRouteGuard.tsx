@@ -12,11 +12,15 @@ export default function LocalUserRoute({ children }: { children: ReactNode }) {
   );
 
   if (!isAuth) {
-    return <Navigate to={'/log-in'} />;
+    return <Navigate to={'/log-in'} replace />;
   }
 
-  if (user && (user.UserType.toLowerCase() === 'github' || user.UserType.toLowerCase() === 'google')) {
-    return <Navigate to={'/account/complete-profile'} />;
+  if (
+    user &&
+    (user.UserType.toLowerCase() === 'github' ||
+      user.UserType.toLowerCase() === 'google')
+  ) {
+    return <Navigate to={'/account/complete-profile'} replace />;
   }
 
   return children;

@@ -44,18 +44,22 @@ createRoot(document.getElementById('root')!).render(
             <Route
               path="/sign-up/*"
               element={
-                <PublicRoute>
-                  <SignUpRoutes />
-                </PublicRoute>
+                <GetUserInfo>
+                  <PublicRoute>
+                    <SignUpRoutes />
+                  </PublicRoute>
+                </GetUserInfo>
               }
             />
             <Route path="/account/*" element={<AccountRoutes />} />
             <Route
               path="/log-in/*"
               element={
-                <PublicRoute>
-                  <LoginRoutes />
-                </PublicRoute>
+                <GetUserInfo>
+                  <PublicRoute>
+                    <LoginRoutes />
+                  </PublicRoute>
+                </GetUserInfo>
               }
             />
             <Route

@@ -10,11 +10,11 @@ export default function OAuthUserRoute({ children }: { children: ReactNode }) {
   );
 
   if (!isAuth) {
-    return <Navigate to={'/log-in'} />;
+    return <Navigate to={'/log-in'} replace />;
   }
 
   if (user && user.UserType === 'local') {
-    return <Navigate to={'/home'} />;
+    return <Navigate to={'/home'} replace />;
   }
 
   return children;

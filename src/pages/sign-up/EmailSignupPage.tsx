@@ -33,6 +33,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/services/state/redux/store';
 import { resetTimer } from '@/services/state/redux/slices/emailVerificationTimeoutSlice';
 import { Loader } from '@/components/ui/Loader';
+import { differenceInYears } from 'date-fns';
 
 const COUNTRIES = Object.values(countries)
   .map((country) => country.name)
@@ -82,10 +83,7 @@ const schema = z.object({
     ),
   country: z.enum(COUNTRIES as [string, ...string[]]),
   gender: z.enum(genders as [string, ...string[]]),
-  year: z
-    .number()
-    .max(NOW.getFullYear() - MIN_AGE, 'You are too young')
-    .min(1900, 'Stop lying about your age'),
+  year: z.number(),
   month: z.number().min(1, 'Invalid month').max(12, 'Invalid month'),
   day: z.number().min(1, 'Invalid day').max(31, 'Invalid day'),
 });
@@ -245,6 +243,7 @@ function FirstInputGroup({
           'month',
         ].includes(item)
       ).length === 0 &&
+      differenceInYears(NOW, new Date(year, month, day)) >= MIN_AGE &&
       !emailAlreadyInUse
     );
   }
@@ -423,6 +422,11 @@ function FirstInputGroup({
               {errors.month && (
                 <p className="text-red-600 text-sm font-semibold font-sans">
                   {errors.month.message}
+                </p>
+              )}
+              {differenceInYears(NOW, new Date(year, month, day)) < MIN_AGE && (
+                <p className="text-red-600 text-sm font-semibold font-sans">
+                  You must be {MIN_AGE} to use this app
                 </p>
               )}
             </div>

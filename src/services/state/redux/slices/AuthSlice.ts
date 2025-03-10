@@ -10,7 +10,10 @@ interface UserState {
   isAuthenticated: boolean;
 }
 
-const inital: UserState = { user: null, isAuthenticated: false };
+const inital: UserState = {
+  user: null,
+  isAuthenticated: false,
+};
 
 const user = createSlice({
   name: 'User',
