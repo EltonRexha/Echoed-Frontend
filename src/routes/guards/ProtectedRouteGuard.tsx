@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
     (state: RootState) => state.Authentication.isAuthenticated
   );
 
-  if (!isAuth) return <Navigate to={'/log-in'} />;
+  if (!isAuth) return <Navigate to={'/log-in'} replace />;
 
   return children;
 }

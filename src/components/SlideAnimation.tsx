@@ -27,7 +27,7 @@ function SlideAnimation({
       transform: `translateX(${endX}%)`,
       transition: {
         duration: duration,
-        ease: 'ease-out',
+        ease: 'easeOut',
         delay: delay,
       },
     },

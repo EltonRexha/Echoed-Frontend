@@ -2,17 +2,33 @@ import ResetPasswordPage from '@/pages/ResetPasswordPage';
 import VerifyEmailPage from '@/pages/VerifyEmailPage';
 import { Route, Routes } from 'react-router-dom';
 import OAuthUserRoute from './guards/OAuthUserRouteGuard';
+import PublicRoute from './guards/PublicRouteGuard';
+import CompleteProfilePage from '@/pages/CompleteProfilePage';
 
 export default function AccountRoutes() {
   return (
     <Routes>
-      <Route path="verify" element={<VerifyEmailPage />} />
-      <Route path="reset-password" element={<ResetPasswordPage />} />
+      <Route
+        path="verify"
+        element={
+          <PublicRoute>
+            <VerifyEmailPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="reset-password"
+        element={
+          <PublicRoute>
+            <ResetPasswordPage />
+          </PublicRoute>
+        }
+      />
       <Route
         path="complete-profile"
         element={
           <OAuthUserRoute>
-            <h1>Please complete your account</h1>
+            <CompleteProfilePage />
           </OAuthUserRoute>
         }
       />

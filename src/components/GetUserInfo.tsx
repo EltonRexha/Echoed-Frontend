@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../services/state/redux/store';
 import { useQuery } from '@tanstack/react-query';
@@ -19,14 +19,17 @@ export function GetUserInfo({ children }: { children: ReactNode }) {
     retry: 1,
   });
 
-  if (user.isSuccess) {
-    dispatch(login(user.data.user));
-  }
+  useEffect(() => {
+    if (user.isSuccess) {
+      dispatch(login(user.data.user));
+    }
+  }, [user.isSuccess, dispatch, user.data, isAuth]);
 
   if (user.isLoading) {
     return <LoadingPage />;
   }
 
-  return children;
+  return <>{children}</>;
 }
+
 export default GetUserInfo;

@@ -9,7 +9,7 @@ export default function PublicRoute({ children }: { children: ReactNode }) {
     (state: RootState) => state.Authentication.isAuthenticated
   );
 
-  if (isAuth) return <Navigate to={'/home'} />;
+  if (isAuth) return <Navigate to={'/home'} replace />;
 
   return children;
 }
