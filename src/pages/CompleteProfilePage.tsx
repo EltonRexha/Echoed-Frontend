@@ -103,8 +103,9 @@ function CompleteProfilePage() {
     }) => convertOAuthUserToLocalUser(payload),
     onSuccess: () => {
       toast.success('Successfully finished account');
+      //Log out the OAuth user
       dispatch(logout());
-      navigate('/home');
+      window.location.reload();
     },
     onError: () => {
       navigate('/');
@@ -113,7 +114,6 @@ function CompleteProfilePage() {
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log('submit');
     migrateUserMutation.mutate({
       firstName: data.firstName,
       lastName: data.lastName,
