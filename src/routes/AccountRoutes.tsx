@@ -5,13 +5,13 @@ import OAuthUserRoute from './guards/OAuthUserRouteGuard';
 import PublicRoute from './guards/PublicRouteGuard';
 import CompleteProfilePage from '@/pages/CompleteProfilePage';
 
-export default function AccountRoutes({ loading }: { loading: boolean }) {
+export default function AccountRoutes() {
   return (
     <Routes>
       <Route
         path="verify"
         element={
-          <PublicRoute loading={loading}>
+          <PublicRoute showLoading={false}>
             <VerifyEmailPage />
           </PublicRoute>
         }
@@ -19,7 +19,7 @@ export default function AccountRoutes({ loading }: { loading: boolean }) {
       <Route
         path="reset-password"
         element={
-          <PublicRoute loading={loading}>
+          <PublicRoute showLoading={false}>
             <ResetPasswordPage />
           </PublicRoute>
         }
@@ -27,7 +27,7 @@ export default function AccountRoutes({ loading }: { loading: boolean }) {
       <Route
         path="complete-profile"
         element={
-          <OAuthUserRoute loading={loading}>
+          <OAuthUserRoute showLoading={true}>
             <CompleteProfilePage />
           </OAuthUserRoute>
         }

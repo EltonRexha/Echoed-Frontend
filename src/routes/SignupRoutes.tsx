@@ -9,7 +9,7 @@ export default function SignUpRoutes() {
     <Routes>
       <Route
         element={
-          <PublicRoute loading={false}>
+          <PublicRoute showLoading={false}>
             <SignupPage />
           </PublicRoute>
         }

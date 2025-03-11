@@ -84,7 +84,7 @@ function VerifyEmailPage(): JSX.Element {
 }
 
 function VerifySuccess() {
-  const timeToRedirect = useTimedRedirect(10, '/login');
+  const timeToRedirect = useTimedRedirect(10, '/log-in');
 
   return (
     <div className="text-center">
