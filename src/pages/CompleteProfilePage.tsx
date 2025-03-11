@@ -127,12 +127,12 @@ function CompleteProfilePage() {
     <div className="overflow-x-hidden font-raleway  bg-lighter-background dark:bg-purple-shade-400">
       <FadeIn>
         <div className="w-full min-h-[100vh] flex flex-col items-center justify-center flex-1">
-          <div className="w-full sm:w-[650px] font-sans px-17 rounded text-light-primary-text dark:text-dark-primary-text">
+          <div className="w-full sm:w-[650px] font-sans px-8 sm:px-17 rounded text-light-primary-text dark:text-dark-primary-text">
             <h1 className="text-xl font-raleway font-semibold text-light-primary-text dark:text-dark-primary-text mb-1">
               Finish setting up your account
             </h1>
             <p className="text-sm font-sans text-light-secondary-text dark:text-dark-secondary-text mb-10">
-              We need just a little of your info...
+              Just a little bit of info, and we'll be all set!
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="relative h-full flex flex-col font-sans">

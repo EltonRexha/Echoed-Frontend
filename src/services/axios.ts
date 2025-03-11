@@ -2,6 +2,7 @@ import Axios from 'axios';
 import store from './state/redux/store';
 import { login, logout } from './state/redux/slices/AuthSlice';
 import { getCurrentUser } from './api/User';
+import logoutUser from '@/utils/logoutUser';
 
 const axios = Axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -23,10 +24,10 @@ axios.interceptors.response.use(
         retryCount = 0;
 
         //In case refresh didn't work we might as well logout user
-        await axios.post('/auth/logout', null, {
-          withCredentials: true,
-        });
-        store.dispatch(logout());
+        const isAuth = store.getState().Authentication.isAuthenticated;
+        if (isAuth) {
+          logoutUser();
+        }
 
         return Promise.reject(error);
       }
