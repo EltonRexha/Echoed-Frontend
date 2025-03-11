@@ -9,7 +9,7 @@ export default function LoginRoutes() {
     <Routes>
       <Route
         element={
-          <PublicRoute loading={false}>
+          <PublicRoute showLoading={false}>
             <LoginPage />
           </PublicRoute>
         }

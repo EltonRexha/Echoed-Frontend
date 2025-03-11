@@ -75,7 +75,7 @@ export async function resetPassword(payload: {
   reset_password_token: string;
 }): Promise<{ message: string }> {
   const response: AxiosResponse<{ message: string }> = await axios.put(
-    '/auth/users/reset-password',
+    '/auth/user/reset-password',
     payload
   );
   return response.data;

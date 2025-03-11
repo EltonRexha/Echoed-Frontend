@@ -1,3 +1,4 @@
+import useLoadUserInfo from '@/hooks/useLoadUserInfo';
 import LoadingPage from '@/pages/LoadingPage';
 import { RootState } from '@/services/state/redux/store';
 import { ReactNode } from 'react';
@@ -7,17 +8,19 @@ import { Navigate } from 'react-router-dom';
 //Routes which will only be available to OAuth users
 export default function OAuthUserRoute({
   children,
-  loading,
+  showLoading,
 }: {
   children: ReactNode;
-  loading: boolean;
+  showLoading: boolean;
 }) {
+  const { loading } = useLoadUserInfo();
+
   const { isAuthenticated: isAuth, user } = useSelector(
     (state: RootState) => state.Authentication
   );
 
   //The user information is being loaded
-  if (loading) {
+  if (loading && showLoading && !isAuth) {
     return <LoadingPage />;
   }
 
