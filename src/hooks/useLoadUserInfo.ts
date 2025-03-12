@@ -5,7 +5,7 @@ import { getCurrentUser } from '../services/api/User';
 import { login } from '../services/state/redux/slices/AuthSlice';
 import { useEffect, useState } from 'react';
 
-const MIN_LOADING_TIME_MS = 1000;
+const MIN_LOADING_TIME_MS = 300;
 
 /**
  * Loads the user and in order to prevent flashing it will

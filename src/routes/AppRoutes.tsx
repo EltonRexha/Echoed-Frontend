@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import PublicRoute from './guards/PublicRouteGuard';
 import LocalUserRoute from './guards/LocalUserRouteGuard';
 import GettingStartedPage from '@/pages/GettingStartedPage';
@@ -16,6 +16,7 @@ export default function AppRoutes() {
         element={
           <LocalUserRoute showLoading={true}>
             <h1>This is home</h1>
+            <Link to={'/log-in'}>Landing</Link>
           </LocalUserRoute>
         }
       />
