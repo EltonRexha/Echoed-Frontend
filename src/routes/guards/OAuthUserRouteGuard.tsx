@@ -1,7 +1,7 @@
 import useLoadUserInfo from '@/hooks/useLoadUserInfo';
 import LoadingPage from '@/pages/LoadingPage';
 import { RootState } from '@/services/state/redux/store';
-import { ReactNode } from 'react';
+import { ReactNode, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
@@ -14,13 +14,21 @@ export default function OAuthUserRoute({
   showLoading: boolean;
 }) {
   const { loading } = useLoadUserInfo();
-
   const { isAuthenticated: isAuth, user } = useSelector(
     (state: RootState) => state.Authentication
   );
 
+  const firstTimeRender = useRef(true);
+
+  if (firstTimeRender.current) {
+    firstTimeRender.current = false;
+    if (isAuth && user?.UserType !== 'local') {
+      return children;
+    }
+  }
+
   //The user information is being loaded
-  if (loading && showLoading && !isAuth) {
+  if (loading && showLoading) {
     return <LoadingPage />;
   }
 

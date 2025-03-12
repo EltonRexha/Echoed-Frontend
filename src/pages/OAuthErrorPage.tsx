@@ -6,7 +6,7 @@ import decodeFromHex from '@/utils/decodeHex';
 import { useLocation } from 'react-router-dom';
 
 function OAuthErrorPage() {
-  const timeToRedirect = useTimedRedirect(10, '/sign-up');
+  const timeToRedirect = useTimedRedirect(5, '/sign-up');
   const location = useLocation();
 
   const urlParams = new URLSearchParams(location.search);
@@ -22,13 +22,13 @@ function OAuthErrorPage() {
             <div className="text-center">
               <FadeInList>
                 <h1 className="text-light-primary-text dark:text-dark-primary-text font-bold text-bold text-3xl">
-                  Could not continue with OAuth
-                </h1>
-
-                <p className="text-light-secondary-text dark:text-dark-secondary-text mt-2">
                   {decodedMessage
                     ? decodedMessage
                     : 'please allow Echoed to use your third party account'}
+                </h1>
+
+                <p className="text-light-secondary-text dark:text-dark-secondary-text mt-2">
+                  Could not continue with OAuth
                 </p>
                 <p className="text-light-secondary-lighter-text-text dark:text-dark-secondary-text-darker-text mt-2 font-sans">
                   redirecting in {timeToRedirect}s
