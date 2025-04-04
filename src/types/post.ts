@@ -16,4 +16,6 @@ export interface PostPreview {
     id: string;
     name: string;
   }[];
+  isLiked: boolean;
+  isSaved: boolean;
 }

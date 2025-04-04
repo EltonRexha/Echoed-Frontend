@@ -111,7 +111,7 @@ function CompleteProfilePage() {
     },
     onError: () => {
       navigate('/');
-      toast.error('Something went wrong finshing your account');
+      toast.error('Something went wrong finishing your account');
     },
   });
 

@@ -49,7 +49,7 @@ function HomePage() {
         </Tabs>
       </header>
 
-      <main className="container mx-auto p-4">
+      <main className="container mx-auto p-1">
         {showForYouPosts ? (
           <div className="for-you-content">
             <ForYouPosts />
