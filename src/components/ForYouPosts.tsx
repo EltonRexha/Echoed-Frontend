@@ -19,7 +19,6 @@ function ForYouPosts() {
     return <Loader />;
  }
 
- console.log(posts.data);
 
   return (
     <div>
