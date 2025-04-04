@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import store from './state/redux/store';
-import { login, logout } from './state/redux/slices/AuthSlice';
+import { login } from './state/redux/slices/AuthSlice';
 import { getCurrentUser } from './api/User';
 import logoutUser from '@/utils/logoutUser';
 
@@ -26,6 +26,7 @@ axios.interceptors.response.use(
         //In case refresh didn't work we might as well logout user
         const isAuth = store.getState().Authentication.isAuthenticated;
         if (isAuth) {
+          alert('Logging out user');
           logoutUser();
         }
 

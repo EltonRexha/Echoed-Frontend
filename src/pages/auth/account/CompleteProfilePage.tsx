@@ -45,7 +45,7 @@ const schema = z.object({
 
 type Inputs = z.infer<typeof schema>;
 
-//Will get more information about a user and make a request to the backend to migrate oauth user to a localuser
+//Will get more information about a user and make a request to the backend to migrate oauth user to a local user
 function CompleteProfilePage() {
   const { user } = useSelector((state: RootState) => state.Authentication);
 
@@ -72,6 +72,8 @@ function CompleteProfilePage() {
     queryKey: ['user', { username }],
     enabled: !!(!errors.username && username),
   });
+
+  console.log(userData)
 
   const usernameInUse = !!userData?.user;
 

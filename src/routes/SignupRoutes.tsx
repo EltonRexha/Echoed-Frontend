@@ -1,6 +1,6 @@
-import EmailSignupPage from '@/pages/sign-up/EmailSignupPage';
-import SignupOptionsPage from '@/pages/sign-up/SignupOptionsPage';
-import SignupPage from '@/pages/SignupPage';
+import EmailSignupPage from '@/pages/auth/sign-up/EmailSignupPage';
+import SignupOptionsPage from '@/pages/auth/sign-up/SignupOptionsPage';
+import SignupPage from '@/pages/auth/sign-up/SignupPage';
 import { Route, Routes } from 'react-router-dom';
 import PublicRoute from './guards/PublicRouteGuard';
 

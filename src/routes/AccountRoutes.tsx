@@ -1,9 +1,9 @@
-import ResetPasswordPage from '@/pages/ResetPasswordPage';
-import VerifyEmailPage from '@/pages/VerifyEmailPage';
+import ResetPasswordPage from '@/pages/auth/account/ResetPasswordPage';
+import VerifyEmailPage from '@/pages/auth/account/VerifyEmailPage';
 import { Route, Routes } from 'react-router-dom';
 import OAuthUserRoute from './guards/OAuthUserRouteGuard';
 import PublicRoute from './guards/PublicRouteGuard';
-import CompleteProfilePage from '@/pages/CompleteProfilePage';
+import CompleteProfilePage from '@/pages/auth/account/CompleteProfilePage';
 
 export default function AccountRoutes() {
   return (

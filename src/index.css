@@ -55,6 +55,7 @@
     background-size: cover;
   }
 }
+
 @layer base {
   :root {
     --background: hsl(0, 0%, 100%);
