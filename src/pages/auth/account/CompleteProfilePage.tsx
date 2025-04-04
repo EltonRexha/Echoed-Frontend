@@ -73,10 +73,8 @@ function CompleteProfilePage() {
     enabled: !!(!errors.username && username),
   });
 
-  console.log(userData)
 
   const usernameInUse = !!userData?.user;
-
   function formIsValid(): boolean {
     return (
       Object.keys(errors).filter((item) =>
