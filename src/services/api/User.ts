@@ -1,8 +1,8 @@
 import axios from '@/services/axios';
+import { Gender } from '@/types/gender';
 import GithubUser from '@/types/githubUser';
 import GoogleUser from '@/types/googleUser';
 import LocalUser from '@/types/localUser';
-import { User } from '@/types/user';
 import { AxiosResponse } from 'axios';
 
 interface SearchUser {
@@ -34,7 +34,16 @@ export async function getUser({
   return { user: users.data.users[0] };
 }
 
-export async function createUser(payload: User): Promise<{ message: string }> {
+export async function createUser(payload: {
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  gender: Gender;
+  country: string;
+  dateOfBirth: Date;
+}): Promise<{ message: string }> {
   const response: AxiosResponse<{ message: string }> = await axios.post(
     '/users',
     payload

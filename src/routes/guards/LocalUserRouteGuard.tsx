@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 //Routes which will only be available to local users and not OAuth users
-//As OAuth users will be prompted to a seperate page to finsih their account
+//As OAuth users will be prompted to a separate page to finish their account
 //Which will create for them a local user
 export default function LocalUserRoute({
   children,

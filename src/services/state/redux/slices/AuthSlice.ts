@@ -1,25 +1,23 @@
-import GithubUser from '@/types/githubUser';
-import GoogleUser from '@/types/googleUser';
-import LocalUser from '@/types/localUser';
+import { User } from '@/types/user';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type User = LocalUser | GithubUser | GoogleUser | null;
+type OptionalUser = User | null;
 
 interface UserState {
-  user: User;
+  user: OptionalUser;
   isAuthenticated: boolean;
 }
 
-const inital: UserState = {
+const initial: UserState = {
   user: null,
   isAuthenticated: false,
 };
 
 const user = createSlice({
   name: 'User',
-  initialState: inital,
+  initialState: initial,
   reducers: {
-    login(state, action: PayloadAction<User>) {
+    login(state, action: PayloadAction<OptionalUser>) {
       state.user = action.payload;
       state.isAuthenticated = true;
     },

@@ -1,10 +1,8 @@
-import SlideAnimation from '@/components/SlideAnimation';
 import CycleComponents from '@/components/ui/CycleComponents';
 import GettingStartedNav from '@/components/ui/GettingStartedNav';
 import { Link } from 'react-router-dom';
 import Line from '@/components/ui/LineAnimation';
-import { useRef } from 'react';
-import { AnimatePresence, useInView, Variants } from 'framer-motion';
+import { AnimatePresence, Variants } from 'framer-motion';
 import postDark from '@/assets/images/layout/postDark.svg';
 import postLight from '@/assets/images/layout/postLight.svg';
 import trendingDark from '@/assets/images/layout/trendingDark.svg';
@@ -47,8 +45,6 @@ const postExampleVariant: Variants = {
 const POST_EXAMPLE_LAYOUT_CHANGE_DELAY = 12000;
 
 function GettingStartedPage(): JSX.Element {
-  const postsExample = useRef(null);
-  const postExampleInView = useInView(postsExample, { once: true });
   //This will switch from 0 to 1 in some delay
   //It is used to tell which of the post example layout it is currently displaying
   const postExampleCurrentIndex = useAutoCycle(
@@ -62,11 +58,11 @@ function GettingStartedPage(): JSX.Element {
         <FadeInView>
           <GettingStartedNav />
         </FadeInView>
-        <div className="p-5 h-32 text-center text-light-primary dark:text-dark-primary mt-32">
+        <div className="p-5 h-16 sm:h-32 text-center text-light-primary dark:text-dark-primary mt-32">
           <CycleComponents delay={9000}>
             <div key={'Welcome to echoed'}>
               <FadeInView>
-                <h1 className="sm:text-4xl text-2xl md:text-5xl text-dark-secondary font-semiBold w-max mx-auto mt-7">
+                <h1 className="sm:text-4xl text-2xl md:text-5xl text-dark-secondary font-semiBold w-max mx-auto sm:mt-7">
                   Welcome to Echoed
                 </h1>
               </FadeInView>
@@ -81,10 +77,10 @@ function GettingStartedPage(): JSX.Element {
           </CycleComponents>
         </div>
 
-        <div className="hidden sm:block">
+        <div className="block">
           <FadeInList>
-            <p className="text-md mt-0 sm:mt-5 text-center text-light-secondary dark:text-dark-secondary-darker max-w-md mx-auto font-mono">
-              A Place To Share Your Ideas, Make Firends,{' '}
+            <p className="text-md mt-10 sm:mt-5 text-center text-light-secondary dark:text-dark-secondary-darker max-w-md mx-auto font-mono ">
+              A Place To Share Your Ideas, Make Friends,{' '}
               <span className="text-purple-500">And Go Open.</span>
             </p>
             <div className="mt-10 text-purple-shade-300 dark:text-purple-300 text-2xl mx-auto sm:text-3xl font-mono w-max">
@@ -107,27 +103,7 @@ function GettingStartedPage(): JSX.Element {
           </div>
         </FadeInView>
       </div>
-      <div className="relative min-h-[100vh] bg-blob py-10" ref={postsExample}>
-        {postExampleInView && (
-          <>
-            <div className="hidden sm:block">
-              <SlideAnimation
-                duration={0.5}
-                delay={0}
-                bgColor="#7700c6"
-                startX={100}
-                endX={-100}
-              />
-              <SlideAnimation
-                duration={0.5}
-                delay={0.2}
-                bgColor="#560090"
-                startX={100}
-                endX={-100}
-              />
-            </div>
-          </>
-        )}
+      <div className="relative min-h-[100vh] bg-blob py-10">
         <div
           className="w-full min-h-[100vh] flex flex-col justify-center"
           id="post-example"

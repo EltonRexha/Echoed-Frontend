@@ -3,7 +3,7 @@ type GithubUser = {
   firstName?: string | null;
   lastName?: string | null;
   OAuth: boolean;
-  profileUrl?: string | null;
+  profileUrl: string | null;
   userId?: string | null;
   githubUserId?: string;
   UserType: 'github'

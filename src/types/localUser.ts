@@ -5,7 +5,7 @@ type LocalUser = {
   username: string;
   firstName: string;
   lastName: string;
-  profileImage: string | undefined;
+  profileUrl: string | null;
   gender: Gender;
   country: string;
   dateOfBirth: Date;

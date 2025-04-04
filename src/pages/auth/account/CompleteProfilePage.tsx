@@ -45,7 +45,7 @@ const schema = z.object({
 
 type Inputs = z.infer<typeof schema>;
 
-//Will get more information about a user and make a request to the backend to migrate oauth user to a localuser
+//Will get more information about a user and make a request to the backend to migrate oauth user to a local user
 function CompleteProfilePage() {
   const { user } = useSelector((state: RootState) => state.Authentication);
 
@@ -73,8 +73,8 @@ function CompleteProfilePage() {
     enabled: !!(!errors.username && username),
   });
 
-  const usernameInUse = !!userData?.user;
 
+  const usernameInUse = !!userData?.user;
   function formIsValid(): boolean {
     return (
       Object.keys(errors).filter((item) =>
@@ -109,7 +109,7 @@ function CompleteProfilePage() {
     },
     onError: () => {
       navigate('/');
-      toast.error('Something went wrong finshing your account');
+      toast.error('Something went wrong finishing your account');
     },
   });
 

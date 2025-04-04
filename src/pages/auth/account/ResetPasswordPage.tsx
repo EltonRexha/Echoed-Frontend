@@ -56,7 +56,7 @@ function ResetPasswordPage(): JSX.Element {
   const location = useLocation();
 
   const urlParams = new URLSearchParams(location.search);
-  const resetPasswordToken = urlParams.get('k');
+  const ResetPasswordToken = urlParams.get('k');
 
   const resetPasswordMutation = useMutation({
     mutationFn: (payload: { password: string; reset_password_token: string }) =>
@@ -75,7 +75,7 @@ function ResetPasswordPage(): JSX.Element {
     },
   });
 
-  if (!resetPasswordToken) {
+  if (!ResetPasswordToken) {
     return (
       <div className="overflow-x-hidden font-raleway bg-lighter-background dark:bg-purple-shade-400">
         <FadeIn>
@@ -97,7 +97,7 @@ function ResetPasswordPage(): JSX.Element {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     resetPasswordMutation.mutate({
       password: data.password,
-      reset_password_token: resetPasswordToken,
+      reset_password_token: ResetPasswordToken,
     });
   };
 

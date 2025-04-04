@@ -1,33 +1,18 @@
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import PublicRoute from './guards/PublicRouteGuard';
-import LocalUserRoute from './guards/LocalUserRouteGuard';
 import GettingStartedPage from '@/pages/GettingStartedPage';
 import SignUpRoutes from './SignupRoutes';
 import LoginRoutes from './LoginRoutes';
-import OAuthErrorPage from '@/pages/OAuthErrorPage';
+import OAuthErrorPage from '@/pages/auth/account/OAuthErrorPage';
 import AccountRoutes from './AccountRoutes';
-import LogoutPage from '@/pages/LogoutPage';
+import LogoutPage from '@/pages/auth/log-in/LogoutPage';
+import UserRootRoutes from './UserRootRoutes';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route
-        path="/home"
-        element={
-          <LocalUserRoute showLoading={true}>
-            <h1>This is home</h1>
-            <Link to={'/log-in'}>Landing</Link>
-          </LocalUserRoute>
-        }
-      />
-      <Route
-        path="/"
-        element={
-          <PublicRoute showLoading={false}>
-            <GettingStartedPage />
-          </PublicRoute>
-        }
-      />
+      <Route path="/" element={<GettingStartedPage />} />
+      <Route path="/*" element={<UserRootRoutes />} />
       <Route path="/sign-up/*" element={<SignUpRoutes />} />
       <Route path="/account/*" element={<AccountRoutes />} />
       <Route path="/log-in/*" element={<LoginRoutes />} />
@@ -40,6 +25,7 @@ export default function AppRoutes() {
           </PublicRoute>
         }
       />
+      <Route path="*" element={<h1>Not found</h1>} />
     </Routes>
   );
 }

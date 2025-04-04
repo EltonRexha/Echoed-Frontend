@@ -1,12 +1,5 @@
-import { Gender } from '@/types/gender';
+import GithubUser from "./githubUser";
+import GoogleUser from "./googleUser";
+import LocalUser from "./localUser";
 
-export interface User {
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  country: string;
-  gender: Gender;
-  dateOfBirth: Date;
-}
+export type User = LocalUser | GithubUser | GoogleUser;  

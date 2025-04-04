@@ -1,6 +1,6 @@
-import EmailLoginPage from '@/pages/log-in/EmailLoginPage';
-import UsernameLoginPage from '@/pages/log-in/UsernameLoginPage';
-import LoginPage from '@/pages/LoginPage';
+import EmailLoginPage from '@/pages/auth/log-in/EmailLoginPage';
+import UsernameLoginPage from '@/pages/auth/log-in/UsernameLoginPage';
+import LoginPage from '@/pages/auth/log-in/LoginPage';
 import { Route, Routes } from 'react-router-dom';
 import PublicRoute from './guards/PublicRouteGuard';
 

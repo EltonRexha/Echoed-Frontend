@@ -5,7 +5,7 @@ type GoogleUser = {
   lastName?: string | null;
   googleUserId: string;
   OAuth: boolean;
-  profileUrl?: string | null;
+  profileUrl: string | null;
   userId?: string | null;
   UserType: 'google';
 };

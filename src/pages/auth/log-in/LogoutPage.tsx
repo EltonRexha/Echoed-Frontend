@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import LoadingPage from './LoadingPage';
+import LoadingPage from '@/pages/LoadingPage';
 import logoutUser from '@/utils/logoutUser';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
