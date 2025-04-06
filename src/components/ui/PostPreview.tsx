@@ -16,7 +16,17 @@ const MAX_CONTENT_LENGTH = 400;
 const MAX_CONTENT_LENGTH_MOBILE = MAX_CONTENT_LENGTH / 2;
 const FULL_NAME_MAX_SIZE = 20;
 
-function PostPreview({ post }: { post: Post }) {
+function PostPreview({
+  post,
+  loading = false,
+}: {
+  post?: Post;
+  loading?: boolean;
+}) {
+  if (loading || !post) {
+    return <PostPreviewLoadingSkeleton />;
+  }
+
   const fullName = post.author.firstName + ' ' + post.author.lastName;
   return (
     <div className="p-2 hover:bg-muted/20 transition-colors font-sans">
@@ -49,10 +59,14 @@ function PostPreview({ post }: { post: Post }) {
             </Button>
           </div>
           <p className="mt-1 mb-3 text-pretty hidden sm:block">
-            {post.content.slice(0, MAX_CONTENT_LENGTH)}
+            {post.content.length > MAX_CONTENT_LENGTH
+              ? post.content.slice(0, MAX_CONTENT_LENGTH) + '...'
+              : post.content}
           </p>
           <p className="mt-1 mb-3 text-pretty block sm:hidden">
-            {post.content.slice(0, MAX_CONTENT_LENGTH_MOBILE)}
+            {post.content.length > MAX_CONTENT_LENGTH_MOBILE
+              ? post.content.slice(0, MAX_CONTENT_LENGTH_MOBILE) + '...'
+              : post.content}
           </p>
           {/* {image && (
             <div className="mt-2 mb-3 rounded-xl overflow-hidden">
@@ -92,6 +106,31 @@ function PostPreview({ post }: { post: Post }) {
               <Send className="h-4 w-4" />
             </Button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PostPreviewLoadingSkeleton() {
+  return (
+    <div className="p-2 hover:bg-muted/20 transition-colors font-sans">
+      <div className="flex gap-1">
+        <Avatar className="h-8 w-8 ">
+          <AvatarImage
+            className="h-6 w-6 mt-1 @[400px]:h-8 @[400px]:w-8"
+            src={defaultProfile}
+          />
+          <AvatarFallback className="h-12 w-12"></AvatarFallback>
+        </Avatar>
+        <div className="flex-1">
+          <div className="flex items-center gap-1">
+            <span className="font-semibold rounded-sm w-20 h-5 skeleton "></span>
+            <span className="text-muted-foreground text-sm hidden sm:block skeleton w-30 h-5"></span>
+          </div>
+          <p className="mt-1 mb-3 w-full h-20 text-pretty skeleton"></p>
+          <div className="mt-2 mb-3 rounded-sm overflow-hidden w-full skeleton h-50"></div>
+          <div className="flex justify-between mt-2 text-muted-foreground skeleton w-full h-5"></div>
         </div>
       </div>
     </div>
