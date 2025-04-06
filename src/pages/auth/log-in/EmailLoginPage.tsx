@@ -50,7 +50,6 @@ function EmailLoginPage() {
           return;
         }
       }
-
       toast.error('Could not log you in');
     },
     onSuccess: () => {
