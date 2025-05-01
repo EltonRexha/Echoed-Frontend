@@ -11,6 +11,9 @@ import {
 } from 'lucide-react';
 import { Button } from './button';
 import { formatDistanceToNow } from 'date-fns';
+import { useMutation } from '@tanstack/react-query';
+import { likePost } from '@/services/api/Posts';
+import { useState } from 'react';
 
 const MAX_CONTENT_LENGTH = 400;
 const MAX_CONTENT_LENGTH_MOBILE = MAX_CONTENT_LENGTH / 2;
@@ -23,6 +26,17 @@ function PostPreview({
   post?: Post;
   loading?: boolean;
 }) {
+  const [isLiked, setIsLiked] = useState<boolean>(post ? post.isLiked : false);
+  const likePostMutation = useMutation({
+    mutationFn: () => {
+      if (!post) return Promise.resolve(undefined);
+      return likePost({ postId: post.id, like: !isLiked });
+    },
+    onSuccess: () => {
+      setIsLiked(!isLiked);
+    },
+  });
+
   if (loading || !post) {
     return <PostPreviewLoadingSkeleton />;
   }
@@ -86,8 +100,13 @@ function PostPreview({
               <Repeat2 className="h-4 w-4" />
               <span className="text-xs">{post._count.Reposts}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="gap-1 px-2">
-              {post.isLiked ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1 px-2"
+              onClick={() => likePostMutation.mutate()}
+            >
+              {isLiked ? (
                 <Heart className="h-4 w-4 text-red-500" />
               ) : (
                 <Heart className="h-4 w-4" />
@@ -126,11 +145,11 @@ function PostPreviewLoadingSkeleton() {
         <div className="flex-1">
           <div className="flex items-center gap-1">
             <span className="font-semibold rounded-sm w-20 h-5 skeleton "></span>
-            <span className="text-muted-foreground text-sm hidden sm:block skeleton w-30 h-5"></span>
+            <span className="text-muted-foreground text-sm hidden sm:block rounded skeleton w-30 h-5"></span>
           </div>
-          <p className="mt-1 mb-3 w-full h-20 text-pretty skeleton"></p>
+          <p className="mt-1 mb-3 w-full h-20 text-pretty rounded-sm skeleton"></p>
           <div className="mt-2 mb-3 rounded-sm overflow-hidden w-full skeleton h-50"></div>
-          <div className="flex justify-between mt-2 text-muted-foreground skeleton w-full h-5"></div>
+          <div className="flex justify-between mt-2 text-muted-foreground rounded-sm skeleton w-full h-5"></div>
         </div>
       </div>
     </div>

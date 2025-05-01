@@ -1,17 +1,22 @@
-import ForYouPosts from '@/components/ForYouPosts';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RootState } from '@/services/state/redux/store';
 import { User } from '@/types/user';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import defaultProfile from '@/assets/images/icons/defaultProfile.svg';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 function HomePage() {
   let { profileUrl } = useSelector(
     (state: RootState) => state.Authentication.user
   ) as User;
+  const location = useLocation();
 
-  const [showForYouPosts, setShowForYouPosts] = useState(true);
+  // Determine active tab based on pathname
+  const getActiveTab = () => {
+    const path = location.pathname;
+    if (path.includes('following')) return 'following';
+    return 'for-you';
+  };
 
   if (!profileUrl) {
     profileUrl = defaultProfile;
@@ -27,42 +32,29 @@ function HomePage() {
             className="w-8 h-8 rounded-full m-auto"
           />
         </div>
-        <Tabs
-          defaultValue="for-you"
-          className="w-[250px] p-2"
-          onValueChange={(value) => setShowForYouPosts(value === 'for-you')}
-        >
+        <Tabs value={getActiveTab()} className="w-[250px] p-2">
           <TabsList className="grid w-full grid-cols-2 bg-light-background dark:bg-dark-background">
             <TabsTrigger
               value="for-you"
               className="cursor-pointer text-light-secondary-text dark:text-dark-secondary-text font-semibold"
             >
-              For You
+              <Link to={'for-you'}>For You</Link>
             </TabsTrigger>
+
             <TabsTrigger
               value="following"
               className="cursor-pointer text-light-secondary-text dark:text-dark-secondary-text font-semibold"
             >
-              Following
+              <Link to={'following'}>Following</Link>
             </TabsTrigger>
           </TabsList>
         </Tabs>
       </header>
 
       <main className="container mx-auto p-1">
-        {showForYouPosts ? (
-          <div className="for-you-content">
-            <ForYouPosts />
-          </div>
-        ) : (
-          <div className="following-content">
-            {/* Following Content */}
-            <h2 className="text-xl font-semibold text-light-primary-text dark:text-dark-primary-text mb-4">
-              Following
-            </h2>
-            {/* Content will be added here */}
-          </div>
-        )}
+        <div className="for-you-content">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
