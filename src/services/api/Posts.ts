@@ -51,3 +51,20 @@ export async function likePost({
   );
   return response.data;
 }
+
+export async function savePost({
+  postId,
+  save,
+}: {
+  postId: string;
+  save: boolean;
+}) {
+  const response = await axios.post(
+    `/posts/${postId}/save`,
+    {
+      save,
+    },
+    { withCredentials: true }
+  );
+  return response.data;
+}

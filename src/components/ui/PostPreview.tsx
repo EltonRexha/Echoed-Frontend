@@ -12,7 +12,7 @@ import {
 import { Button } from './button';
 import { formatDistanceToNow } from 'date-fns';
 import { useMutation } from '@tanstack/react-query';
-import { likePost } from '@/services/api/Posts';
+import { likePost, savePost } from '@/services/api/Posts';
 import { useState } from 'react';
 
 const MAX_CONTENT_LENGTH = 400;
@@ -27,6 +27,8 @@ function PostPreview({
   loading?: boolean;
 }) {
   const [isLiked, setIsLiked] = useState<boolean>(post ? post.isLiked : false);
+  const [isSaved, setIsSaved] = useState<boolean>(post ? post.isSaved : false);
+
   const likePostMutation = useMutation({
     mutationFn: () => {
       if (!post) return Promise.resolve(undefined);
@@ -34,6 +36,16 @@ function PostPreview({
     },
     onSuccess: () => {
       setIsLiked(!isLiked);
+    },
+  });
+
+  const savePostMutation = useMutation({
+    mutationFn: () => {
+      if (!post) return Promise.resolve(undefined);
+      return savePost({ postId: post.id, save: !isSaved });
+    },
+    onSuccess: () => {
+      setIsSaved(!isSaved);
     },
   });
 
@@ -113,8 +125,13 @@ function PostPreview({
               )}
               <span className="text-xs">{post._count.likedBy}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="gap-1 px-2">
-              {post.isSaved ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1 px-2"
+              onClick={() => savePostMutation.mutate()}
+            >
+              {isSaved ? (
                 <Bookmark className="h-4 w-4 text-yellow-500" />
               ) : (
                 <Bookmark className="h-4 w-4" />
