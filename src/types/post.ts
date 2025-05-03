@@ -16,6 +16,11 @@ export interface PostPreview {
     id: string;
     name: string;
   }[];
+  Media: {
+    path: string;
+    byteSize: number;
+    mimeType: string;
+  }[];
   isLiked: boolean;
   isSaved: boolean;
 }

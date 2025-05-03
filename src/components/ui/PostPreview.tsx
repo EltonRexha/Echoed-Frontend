@@ -14,6 +14,15 @@ import { formatDistanceToNow } from 'date-fns';
 import { useMutation } from '@tanstack/react-query';
 import { likePost, savePost } from '@/services/api/Posts';
 import { useState } from 'react';
+import cld from '@/services/cloudinary';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import getFileType from '@/utils/getFileTypeByMimeType';
 
 const MAX_CONTENT_LENGTH = 400;
 const MAX_CONTENT_LENGTH_MOBILE = MAX_CONTENT_LENGTH / 2;
@@ -94,15 +103,48 @@ function PostPreview({
               ? post.content.slice(0, MAX_CONTENT_LENGTH_MOBILE) + '...'
               : post.content}
           </p>
-          {/* {image && (
+          {post.Media.length > 0 && (
             <div className="mt-2 mb-3 rounded-xl overflow-hidden">
-              <img
-                src={image || '/placeholder.svg'}
-                alt="Post image"
-                className="w-full h-auto"
-              />
+              <Carousel className="w-full max-w-md m-auto">
+                <CarouselContent>
+                  {post.Media.map((media) => {
+                    const mediaType = getFileType(media.mimeType);
+
+                    if (mediaType === 'image') {
+                      const cldImage = cld.image(media.path);
+
+                      return (
+                        <CarouselItem key={media.path}>
+                          <img
+                            className="w-full h-full max-h-[500px] object-contain"
+                            src={cldImage.toURL()}
+                          ></img>
+                        </CarouselItem>
+                      );
+                    }
+
+                    if (mediaType === 'video') {
+                      const cldVideo = cld.video(media.path);
+                      return (
+                        <CarouselItem key={media.path}>
+                          <video className="w-full h-full" controls>
+                            <source
+                              src={cldVideo.toURL()}
+                              type={media.mimeType}
+                            />
+                            Your browser does not support the video tag.
+                          </video>
+                        </CarouselItem>
+                      );
+                    }
+                  })}
+                </CarouselContent>
+
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
             </div>
-          )} */}
+          )}
           <div className="flex justify-between mt-2 text-muted-foreground">
             <Button variant="ghost" size="sm" className="gap-1 px-2">
               <MessageCircle className="h-4 w-4" />
